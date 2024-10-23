@@ -1,8 +1,8 @@
 ---
 title: "OWEB Data Dictionary"
 author:
-  - Joshua Hatch^[NEFSC/PEMAD/OWEB, joshua.hatch@noaa.gov]
-  - Nicole Mucci^[NEFSC/PEMAD/OWEB, nicole.mucci@noaa.gov]
+  - Joshua Hatch
+  - Nicole Mucci
 date: '`r Sys.Date()`'
 site: bookdown::bookdown_site
 output:
