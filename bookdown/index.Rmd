@@ -1,6 +1,8 @@
 ---
 title: "OWEB Data Dictionary"
-author: "Joshua Hatch & Nicole Mucci"
+author:
+  - Joshua Hatch^[NEFSC/PEMAD/OWEB, joshua.hatch@noaa.gov]
+  - Nicole Mucci^[NEFSC/PEMAD/OWEB, nicole.mucci@noaa.gov]
 date: '`r Sys.Date()`'
 site: bookdown::bookdown_site
 output:
@@ -15,11 +17,11 @@ monofontoptions: "Scale=0.7"
 link-citations: yes
 colorlinks: yes
 graphics: yes
-description: "Data dictionary for OWEB's spatial database."
+description: "Data dictionary for the OWEB spatial db."
 github-repo: jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary
 rmd_files: ["index.Rmd"]
 ---
 
 # Introduction
 
-Data dictionary.
+Test. More coming soon.
