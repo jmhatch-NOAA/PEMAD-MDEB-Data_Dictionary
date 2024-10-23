@@ -1,0 +1,25 @@
+---
+title: "OWEB Data Dictionary"
+author: "Joshua Hatch & Nicole Mucci"
+date: '`r Sys.Date()`'
+site: bookdown::bookdown_site
+output:
+  bookdown::bs4_book:
+    repo:
+      base: https://github.com/jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary
+      branch: main
+      subdir: bookdown
+documentclass: krantz
+monofont: "Source Code Pro"
+monofontoptions: "Scale=0.7"
+link-citations: yes
+colorlinks: yes
+graphics: yes
+description: "Data dictionary for OWEB's spatial database."
+github-repo: jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary
+rmd_files: ["index.Rmd"]
+---
+
+# Introduction
+
+Data dictionary.
