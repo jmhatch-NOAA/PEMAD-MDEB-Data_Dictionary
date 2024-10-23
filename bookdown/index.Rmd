@@ -24,5 +24,4 @@ rmd_files: ["index.Rmd"]
 
 # Introduction
 
-The Offshore Wind Ecology Branch database (OWEBdb) contains geospatial data related to the science of understanding interactions with offshore wind development. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC).
-
+The Offshore Wind Ecology Branch database (OWEBdb) contains geospatial data related to the science of understanding interactions with offshore wind development. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC), and embodies the "shared database, separate schemas" approach for projects.
