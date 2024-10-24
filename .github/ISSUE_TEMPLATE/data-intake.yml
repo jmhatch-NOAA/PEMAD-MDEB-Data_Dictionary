@@ -67,20 +67,16 @@ body:
     validations:
       required: false
   - type: checkboxes
-    id: spatial
+    id: operating-systems
     attributes:
-      label: Spatial information
-      description: |
-        Spatial reference / coordinate system
-        Geographic extent
-        Measurement system (meters, feet, etc)
-        Data resolution
-        Metadata
+      label: Which operating systems have you used?
+      description: You may select more than one.
       options:
-        - label: Yes
-        - label: No
-      validations:
-        required: true
+        - label: macOS
+        - label: Windows
+        - label: Linux
+    validations:
+      required: true
   - type: textarea
     id: metadata
     attributes:
