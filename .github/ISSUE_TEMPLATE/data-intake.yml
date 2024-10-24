@@ -70,15 +70,12 @@ body:
     id: spatial
     attributes:
       label: Spatial Information
-      description: Is spatial metadata included in the data? |
-        Spatial reference / coordinate system
-        Geographic extent
-        Measurement system (meters, feet, etc)
-        Data resolution
-        Metadata
+      description: What spatial metadata is included with the data?
       options:
-        - label: Blob
-        - label: No Blob
+        - label: Spatial reference / coordinate system
+        - label: Geographic extent
+        - label: Measurement system (meters, feet, etc)
+        - label: Data resolution
     validations:
       required: true
   - type: textarea
