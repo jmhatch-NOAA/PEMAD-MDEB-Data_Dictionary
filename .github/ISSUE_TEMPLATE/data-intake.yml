@@ -50,7 +50,7 @@ body:
     id: data-type
     attributes:
       label: What is the type of data?
-      description: Spatial data type for the data intake.
+      description: Spatial data type.
       multiple: false
       options:
         - Shapefile
@@ -70,14 +70,12 @@ body:
     id: spatial
     attributes:
       label: Spatial Information
-      description: What spatial metadata is included with the data?
+      description: What spatial metadata are included?
       options:
         - label: Spatial reference / coordinate system
         - label: Geographic extent
         - label: Measurement system (meters, feet, etc)
         - label: Data resolution
-    validations:
-      required: true
   - type: textarea
     id: metadata
     attributes:
