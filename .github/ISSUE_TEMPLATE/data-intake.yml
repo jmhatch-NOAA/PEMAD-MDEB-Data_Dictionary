@@ -66,16 +66,6 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
-  - type: checkboxes
-    id: spatial
-    attributes:
-      label: Spatial Information
-      description: What spatial metadata are included?
-      options:
-        - label: Spatial reference / coordinate system
-        - label: Geographic extent
-        - label: Measurement system (meters, feet, etc)
-        - label: Data resolution
   - type: textarea
     id: metadata
     attributes:
@@ -91,3 +81,13 @@ body:
       render: markdown
     validations:
       required: true
+  - type: checkboxes
+    id: spatial
+    attributes:
+      label: Spatial Information
+      description: What spatial metadata are included?
+      options:
+        - label: Spatial reference / coordinate system
+        - label: Geographic extent
+        - label: Measurement system (meters, feet, etc)
+        - label: Data resolution
