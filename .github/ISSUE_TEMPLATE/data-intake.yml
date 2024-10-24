@@ -1,0 +1,17 @@
+name: OWEB Data Intake Questionnaire
+description: Data intake questionnaire for OWEBdb.
+title: "[Request]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this data intake questionnaire!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@noaa.gov
+    validations:
+      required: true
