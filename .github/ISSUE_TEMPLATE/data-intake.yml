@@ -77,9 +77,8 @@ body:
         Data resolution
         Metadata
       options:
-        - label: macOS
-      -     label: Windows
-      - label: Linux
+        - label: Yes
+        - label: No
   - type: textarea
     id: metadata
     attributes:
