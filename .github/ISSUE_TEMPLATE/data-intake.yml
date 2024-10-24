@@ -38,12 +38,12 @@ body:
       default: 0
     validations:
       required: true
-  - type: textarea
+  - type: input
     id: location
     attributes:
       label: Data location
       description: Where are data currently stored?
-      render: markdown
+      placeholder: ex. nefscdb1
     validations:
       required: true
   - type: dropdown
@@ -66,17 +66,32 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
+  - type: checkboxes
+    id: spatial
+    attributes:
+      label: Spatial information
+      description: |
+        Spatial reference / coordinate system
+        Geographic extent
+        Measurement system (meters, feet, etc)
+        Data resolution
+        Metadata
+      options:
+        - label: macOS
+      -     label: Windows
+      - label: Linux
   - type: textarea
     id: metadata
     attributes:
-      label: Data processing
-      description: Where are the data currently stored?
+      label: Metadata
+      description: Are we receiving raw data or data in a processed and 'final' form?
       value: |
-        Data processing procedures, code repository for data processing
+        Data processing procedures or a code repository for data processing
         Data collection methods
         Frequency of data collection
-        How often is data both collected and updated?
-        Are we receiving data in a processed and ‘final’ form?
+          - How often is data both collected and updated?
+        Where is metadata currently stored?
+        Process for producing and maintaining metadata
       render: markdown
     validations:
       required: true
