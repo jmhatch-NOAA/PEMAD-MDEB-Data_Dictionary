@@ -2,6 +2,7 @@ name: OWEB Data Intake Questionnaire
 description: File a data intake questionnaire for OWEBdb.
 title: "[Data Intake]: "
 labels: ["documentation"]
+assignees: ["jmhatch", "NMucci1"]
 body:
   - type: markdown
     attributes:
@@ -24,5 +25,16 @@ body:
         Email:
         Phone:
       render: markdown
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Project / program
+      description: What project or program is this data a part of?
+      options:
+        - Survey Mitigation
+        - IHA Protected Species Monitoring
+      default: 0
     validations:
       required: true
