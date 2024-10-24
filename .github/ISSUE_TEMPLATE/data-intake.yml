@@ -66,11 +66,3 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
-  - type: textarea
-    id: metadata
-    attributes:
-      label: Data processing
-      description: Where are the data currently stored?
-      render: markdown
-    validations:
-      required: true
