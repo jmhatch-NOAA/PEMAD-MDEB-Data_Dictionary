@@ -74,8 +74,8 @@ body:
       options:
        - label: Yes
        - label: No
-      validations:
-        required: true
+    validations:
+      required: true
   - type: textarea
     id: metadata
     attributes:
