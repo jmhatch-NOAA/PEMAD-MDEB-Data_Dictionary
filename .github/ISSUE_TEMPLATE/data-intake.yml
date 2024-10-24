@@ -66,21 +66,11 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
-  - type: checkboxes
-    id: data-process
-    attributes:
-      label: Which operating systems have you used?
-      description: Are the data raw or processed?
-      options:
-       - label: Yes
-       - label: No
-    validations:
-      required: true
   - type: textarea
     id: metadata
     attributes:
       label: Data processing
-      description: Where are data currently stored?
+      description: Where are the data currently stored?
       render: markdown
     validations:
       required: true
