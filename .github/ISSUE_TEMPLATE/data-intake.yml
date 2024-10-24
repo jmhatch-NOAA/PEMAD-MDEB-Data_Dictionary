@@ -16,8 +16,7 @@ body:
     id: owner
     attributes:
       label: Data owner / manager
-      description: |
-        Add description
+      description: Who is the main point of contact for all communication and information related to the data?
       value: |
         Name:
         Title:
@@ -28,13 +27,34 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: type
+    id: project
     attributes:
       label: Project / program
-      description: What project or program is this data a part of?
+      description: What project or program are the data a part of?
+      multiple: false
       options:
         - Survey Mitigation
         - IHA Protected Species Monitoring
       default: 0
     validations:
       required: true
+  - type: dropdown
+    id: data-type
+    attributes:
+      label: What is the type of data?
+      description: Spatial data type for the data intake.
+      multiple: false
+      options:
+        - Shapefile
+        - Raster
+        - Other (please specify below)
+    validations:
+      required: true
+  - type: input
+    id: data-type-other
+    attributes:
+      label: If Other, please specify data type
+      description: If you selected Other from the dropdown menu above, please specify the spatial data type.
+      placeholder: ex. Geodatabase (*.gdb)
+    validations:
+      required: false
