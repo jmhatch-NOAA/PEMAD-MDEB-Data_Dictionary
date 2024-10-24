@@ -38,6 +38,14 @@ body:
       default: 0
     validations:
       required: true
+  - type: textarea
+    id: location
+    attributes:
+      label: Data location
+      description: Where are data currently stored?
+      render: markdown
+    validations:
+      required: true
   - type: dropdown
     id: data-type
     attributes:
@@ -58,3 +66,21 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
+  - type: checkboxes
+    id: data-process
+    attributes:
+      label: Which operating systems have you used?
+      description: Are the data raw or processed?
+      options:
+       - label: Yes
+       - label: No
+      validations:
+        required: true
+  - type: textarea
+    id: metadata
+    attributes:
+      label: Data processing
+      description: Where are data currently stored?
+      render: markdown
+    validations:
+      required: true
