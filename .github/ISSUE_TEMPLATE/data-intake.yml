@@ -10,27 +10,19 @@ body:
   - type: markdown
     attributes:
       value: |
-        **General data description**
-  - type: input
-    id: contact
-    attributes:
-      label: Contact details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@noaa.gov
-    validations:
-      required: true
+        ### General data description
   - type: textarea
+    id: owner
     attributes:
-      label: Environment
+      label: Data owner / manager
       description: |
-        examples:
-          - **OS**: Ubuntu 20.04
-          - **Node**: 13.14.0
-          - **npm**: 7.6.3
+        Add description
       value: |
-          - OS:
-          - Node:
-          - npm:
+          - Name:
+          - Title:
+          - Affiliation:
+          - Email:
+          - Phone:
       render: markdown
     validations:
-      required: false
+      required: true
