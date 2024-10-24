@@ -66,3 +66,17 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
+  - type: textarea
+    id: metadata
+    attributes:
+      label: Data processing
+      description: Where are the data currently stored?
+      value: |
+        Data processing procedures, code repository for data processing
+        Data collection methods
+        Frequency of data collection
+        How often is data both collected and updated?
+        Are we receiving data in a processed and ‘final’ form?
+      render: markdown
+    validations:
+      required: true
