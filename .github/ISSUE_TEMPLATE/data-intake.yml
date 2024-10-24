@@ -78,8 +78,8 @@ body:
         Metadata
       multiple: false
       options:
-        - label: Yes
-        - label: No
+        - label: Blob
+        - label: No Blob
     validations:
       required: true
   - type: textarea
