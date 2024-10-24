@@ -76,7 +76,6 @@ body:
         Measurement system (meters, feet, etc)
         Data resolution
         Metadata
-      multiple: false
       options:
         - label: Blob
         - label: No Blob
