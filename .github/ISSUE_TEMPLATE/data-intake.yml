@@ -42,7 +42,7 @@ body:
     id: location
     attributes:
       label: Data location
-      description: Where are data currently stored?
+      description: Where are the data currently stored?
       placeholder: ex. nefscdb1
     validations:
       required: true
