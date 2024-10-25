@@ -91,6 +91,10 @@ body:
         - label: Geographic extent
         - label: Measurement system (meters, feet, etc)
         - label: Data resolution
+  - type: markdown
+    attributes:
+      value: |
+        # Background information
   - type: textarea
     id: background
     attributes:
