@@ -26,9 +26,16 @@ arc.check_portal()
 #by using a feature layer or feature server url
 
 #create an example map of USA using REST API Layer:USA Counties
-#provide feature server url and feature layer
+#provide feature server url/feature layer
 feature_server_url <- "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/TIGERweb_Counties_v1/FeatureServer/0"
 #create a feature layer object
 data <- arc_open(feature_server_url)
 #query the feature layer and return the layer as an sf (simple feature) object
-sf <- arc_select(data)
+sf_data <- arc_select(data)
+
+#create map from sf object
+USA_map <- ggplot(data = sf_data)+
+            geom_sf()+
+            theme_classic()
+
+
