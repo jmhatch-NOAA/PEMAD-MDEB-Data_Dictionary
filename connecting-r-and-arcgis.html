@@ -60,12 +60,13 @@
 <h1>
 <span class="header-section-number">2</span> Connecting R and ArcGIS<a class="anchor" aria-label="anchor" href="#connecting-r-and-arcgis"><i class="fas fa-link"></i></a>
 </h1>
-<p>You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found <a href="https://r.esri.com/bin/">here</a>. Once downloaded, you will need to unzip and install the package in R from the local file. Alternatively, you can install from ESRI directly in R</p>
+<p>You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found <a href="https://r.esri.com/bin/">here</a>. Once downloaded, you will need to unzip and install the package in R from the local file. Alternatively, you can install from ESRI directly in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"arcgisbinding"</span>, repos <span class="op">=</span> <span class="st">"&lt;https://r.esri.com&gt;"</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span> </span></code></pre></div>
-<p>For more documentation of R-Bridge for ArcGIS, see <a href="https://developers.arcgis.com/r-bridge/installation/">here</a>. Also, you will need to install the ArcGIS metapackage, which is still in development and currently includes the <code>arcgislayers</code> and <code>arcgisutils</code> packages. For updates, see <a href="https://github.com/R-ArcGIS/arcgis">here</a>.</p>
+<p>For more documentation of R-Bridge for ArcGIS, see <a href="https://developers.arcgis.com/r-bridge/installation/">here</a>. Also, you will need to install the ArcGIS metapackage, which is still in development and currently includes the <code>arcgislayers</code> and <code>arcgisutils</code> packages.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"R-ArcGIS/arcgis"</span><span class="op">)</span></span></code></pre></div>
+<p>For updates, see <a href="https://github.com/R-ArcGIS/arcgis">here</a>.</p>
 <p>An example is presented below on how to pull data from ArcGIS online by using a feature layer or feature server url.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load libraries</span></span>
@@ -94,6 +95,12 @@
 <span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">USA_map</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<img src="img/USA_map.png" alt="Map of the USA." width="100%"><p class="caption">
+Figure 2.1: Map of the USA.
+</p>
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
