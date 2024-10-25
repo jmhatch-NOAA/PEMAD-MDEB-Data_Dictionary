@@ -42,7 +42,7 @@ body:
     id: location
     attributes:
       label: Data location
-      description: Where are data currently stored?
+      description: Where are the data currently stored?
       placeholder: ex. nefscdb1
     validations:
       required: true
@@ -91,3 +91,24 @@ body:
         - label: Geographic extent
         - label: Measurement system (meters, feet, etc)
         - label: Data resolution
+  - type: markdown
+    attributes:
+      value: |
+        # Background information
+  - type: textarea
+    id: background
+    attributes:
+      label: General description of project purpose and summary
+      description: Provide any links to related websites/background information.
+      value: |
+        To attach files,
+          1) Open a blank issue after submitting the Data Intake Questionnaire.
+          2) Attach files to the description section of the new blank issue.
+          3) Reference the number of the submitted Data Intake Questionnaire in the title or description of the new blank issue.
+          4) Submit the new blank issue (don't forget an informative title).
+        For example,
+          "Attaching report files as pdfs. Addresses PEMAD-OWEB-Data_Dictionary#1."
+          In the example above, #1 is the number assigned to the corresponding Data Intake Questionnaire.
+      render: markdown
+    validations:
+      required: false
