@@ -101,11 +101,14 @@ body:
       label: General description of project purpose and summary
       description: Provide any links to related websites/background information.
       value: |
-        To attach files, open a blank issue after submitting the Data Intake Questionnaire.
-        Attach files to the description section of the new blank issue.
-        Then reference the Data Intake Questionnaire number in the title or description of the new blank issue.
+        To attach files,
+          1) Open a blank issue after submitting the Data Intake Questionnaire.
+          2) Attach files to the description section of the new blank issue.
+          3) Then reference the Data Intake Questionnaire number in the title or description of the new blank issue.
+          4) Submit the new blank issue (don't forget an informative title).
         For example,
           Attaching report files as pdfs. Addresses PEMAD-OWEB-Data_Dictionary#1.
+        In the example above, #1 is the number assigned to the corresponding Data Intake Questionnaire.
       render: markdown
     validations:
       required: false
