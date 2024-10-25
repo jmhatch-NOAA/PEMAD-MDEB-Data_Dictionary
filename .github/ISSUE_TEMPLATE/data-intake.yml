@@ -96,6 +96,6 @@ body:
     attributes:
       label: General description of project purpose and summary
       description: Provide any links to related websites/background information.
-      render: markdown
+      render: text
     validations:
       required: false
