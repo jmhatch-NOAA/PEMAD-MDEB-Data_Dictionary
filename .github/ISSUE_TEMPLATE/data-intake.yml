@@ -107,7 +107,7 @@ body:
           3) Reference the number of the submitted Data Intake Questionnaire in the title or description of the new blank issue.
           4) Submit the new blank issue (don't forget an informative title).
         For example,
-          Attaching report files as pdfs. Addresses PEMAD-OWEB-Data_Dictionary#1.
+          "Attaching report files as pdfs. Addresses PEMAD-OWEB-Data_Dictionary#1."
           In the example above, #1 is the number assigned to the corresponding Data Intake Questionnaire.
       render: markdown
     validations:
