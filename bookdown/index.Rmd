@@ -20,7 +20,7 @@ colorlinks: yes
 graphics: yes
 description: "Data dictionary for the OWEB spatial db."
 github-repo: jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary
-rmd_files: ["index.Rmd"]
+rmd_files: ["index.Rmd", "Examples.Rmd"]
 ---
 
 # Introduction
