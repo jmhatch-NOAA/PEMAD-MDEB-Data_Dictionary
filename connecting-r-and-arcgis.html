@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="180x180" href="img/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon_io/favicon-16x16.png">
+<link rel="manifest" href="img/favicon_io/site.webmanifest">
+<title>2 Connecting R and ArcGIS | OWEB Data Dictionary</title>
+<meta name="author" content="Joshua Hatch">
+<meta name="author" content="Nicole Mucci">
+<meta name="description" content="You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found here. Once downloaded, you will need to unzip and install the package in R from...">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
+<meta property="og:title" content="2 Connecting R and ArcGIS | OWEB Data Dictionary">
+<meta property="og:type" content="book">
+<meta property="og:description" content="You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found here. Once downloaded, you will need to unzip and install the package in R from...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 Connecting R and ArcGIS | OWEB Data Dictionary">
+<meta name="twitter:description" content="You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found here. Once downloaded, you will need to unzip and install the package in R from...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">OWEB Data Dictionary</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <img style="padding: 0px 0px 10px 0px;" src="img/OWEB_logo.png" width="200px" height="200px/"><div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="active" href="connecting-r-and-arcgis.html"><span class="header-section-number">2</span> Connecting R and ArcGIS</a></li>
+<li><a class="" href="connecting-python-and-arcgis.html"><span class="header-section-number">3</span> Connecting python and ArcGIS</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="connecting-r-and-arcgis" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Connecting R and ArcGIS<a class="anchor" aria-label="anchor" href="#connecting-r-and-arcgis"><i class="fas fa-link"></i></a>
+</h1>
+<p>You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found <a href="https://r.esri.com/bin/">here</a>. Once downloaded, you will need to unzip and install the package in R from the local file. Alternatively, you can install from ESRI directly in R</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"arcgisbinding"</span>, repos <span class="op">=</span> <span class="st">"&lt;https://r.esri.com&gt;"</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span> </span></code></pre></div>
+<p>For more documentation of R-Bridge for ArcGIS, see <a href="https://developers.arcgis.com/r-bridge/installation/">here</a>. Also, you will need to install the ArcGIS metapackage, which is still in development and currently includes the <code>arcgislayers</code> and <code>arcgisutils</code> packages. For updates, see <a href="https://github.com/R-ArcGIS/arcgis">here</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"R-ArcGIS/arcgis"</span><span class="op">)</span></span></code></pre></div>
+<p>An example is presented below on how to pull data from ArcGIS online by using a feature layer or feature server url.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">arcgisbinding</span><span class="op">)</span> </span>
+<span><span class="fu">arc.check_product</span><span class="op">(</span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r.esri.com/arcgislayers/">arcgislayers</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgisutils">arcgisutils</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># connect to ArcGIS.com</span></span>
+<span><span class="fu">arc.portal_connect</span><span class="op">(</span>url <span class="op">=</span>  <span class="st">"https://noaa.maps.arcgis.com"</span>, user <span class="op">=</span> <span class="st">""</span>, password <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="co"># enter ArcGIS.com username and password</span></span>
+<span><span class="fu">arc.check_portal</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create an example map of USA using REST API Layer:USA Counties</span></span>
+<span><span class="co"># provide feature server url and feature layer</span></span>
+<span><span class="va">feature_server_url</span> <span class="op">&lt;-</span> <span class="st">"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/TIGERweb_Counties_v1/FeatureServer/0"</span></span>
+<span></span>
+<span><span class="co"># create a feature layer object</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">arc_open</span><span class="op">(</span><span class="va">feature_server_url</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># query the feature layer and return the layer as an sf (simple feature) object</span></span>
+<span><span class="va">sf_data</span> <span class="op">&lt;-</span> <span class="fu">arc_select</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create map from sf object</span></span>
+<span><span class="va">USA_map</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sf_data</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">USA_map</span></span></code></pre></div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="connecting-python-and-arcgis.html"><span class="header-section-number">3</span> Connecting python and ArcGIS</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#connecting-r-and-arcgis"><span class="header-section-number">2</span> Connecting R and ArcGIS</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary/blob/main/bookdown/Examples.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/jmhatch-NOAA/PEMAD-OWEB-Data_Dictionary/edit/main/bookdown/Examples.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>OWEB Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2024-10-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

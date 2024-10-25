@@ -1,1 +1,3 @@
 introduction
+connecting-r-and-arcgis
+connecting-python-and-arcgis
