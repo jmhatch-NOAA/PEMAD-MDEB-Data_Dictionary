@@ -25,9 +25,10 @@ engine = create_engine(ENGINE_PATH_WIN_AUTH)
 
 
 #query spatial data in oracle db to create pandas dataframe
-
-new_df = pd.read_sql_query('SELECT SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS geometry_wkt, SHAPE_LENG FROM LLSTRATA', engine) #change QUERY to your desired SQL query
-#SDO_UTIL.TO_WKTGEOMETRY(COLUMN_NAME) AS geometry_wkt converts spatial data column to wkt (well known text) geometry 
+query = 'SELECT SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS geometry_wkt, SHAPE_LENG FROM LLSTRATA' #change query to your desired SQL query
+new_df = pd.read_sql_query(query, engine) 
+#SDO_UTIL.TO_WKTGEOMETRY(COLUMN_NAME) AS geometry_wkt converts a SDO spatial data column to wkt (well known text) geometry
+#WKT geometry is easier to manipulate using pandas 
 
 #close database connection 
 conn.close()
@@ -37,7 +38,9 @@ print(new_df.dtypes)
 
 
 #create a feature class in desired ArcGIS project
+#insert project path on local computer
 arcpy.management.CreateFeatureclass("C:/Users/Nicole.Mucci/Documents/ArcGIS/Projects/Database_Connect/Database_Connect.gdb", "LongLineStrata", "POLYGON", spatial_reference=4269) #change geometry type, spatial reference if necessary 
+#insert project path, including name of feature class
 output_featureclass = "C:/Users/Nicole.Mucci/Documents/ArcGIS/Projects/Database_Connect/Database_Connect.gdb/LongLineStrata"
 #add any non-spatial columns to the feature class, add column name and column type
 arcpy.AddField_management(output_featureclass, "shape_leng", "FLOAT")
