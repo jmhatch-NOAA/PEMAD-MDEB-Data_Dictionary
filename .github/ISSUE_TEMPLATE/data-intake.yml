@@ -72,12 +72,12 @@ body:
       label: Metadata
       description: |
         Are we receiving raw data or data in a processed and 'final' form?
-          - Data processing procedures or a code repository for data processing
-          - Data collection methods
-          - Frequency of data collection
-            - How often is data both collected and updated?
-          - Where is metadata currently stored?
-          - Process for producing and maintaining metadata
+        - Data processing procedures or a code repository for data processing
+        - Data collection methods
+        - Frequency of data collection
+          - How often is data both collected and updated?
+        - Where is metadata currently stored?
+        - Process for producing and maintaining metadata
     validations:
       required: true
   - type: dropdown
