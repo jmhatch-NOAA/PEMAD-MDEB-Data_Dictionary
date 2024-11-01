@@ -70,8 +70,7 @@ body:
     id: metadata
     attributes:
       label: Metadata
-      description: |
-        Are we receiving raw data or data in a processed and 'final' form?
+      description: Are we receiving raw data or data in a processed and 'final' form?
           - Data processing procedures or a code repository for data processing
           - Data collection methods
           - Frequency of data collection
