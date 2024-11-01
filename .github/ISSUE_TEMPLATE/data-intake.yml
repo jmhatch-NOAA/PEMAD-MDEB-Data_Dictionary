@@ -88,8 +88,8 @@ body:
       description: Non-satial data attributes.
       multiple: false
       options:
-        - Yes
-        - No
+        - 'Yes'
+        - 'No'
     validations:
       required: true
   - type: text
