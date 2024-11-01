@@ -92,7 +92,7 @@ body:
         - 'No'
     validations:
       required: true
-  - type: text
+  - type: textarea
     id: non-spatial-desc
     attributes:
       label: If you selected Yes above, please explain
