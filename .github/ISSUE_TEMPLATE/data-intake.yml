@@ -81,6 +81,23 @@ body:
       render: markdown
     validations:
       required: true
+  - type: dropdown
+    id: non-spatial
+    attributes:
+      label: Any data attributes that are non-spatial (e.g., stratum id)?
+      description: Non-satial data attributes.
+      multiple: false
+      options:
+        - Yes
+        - No
+    validations:
+      required: true
+  - type: text
+    id: non-spatial-desc
+    attributes:
+      label: If you selected Yes above, please explain
+    validations:
+      required: false
   - type: checkboxes
     id: spatial
     attributes:
