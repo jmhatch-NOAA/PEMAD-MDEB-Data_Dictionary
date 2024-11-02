@@ -1,5 +1,5 @@
 ---
-title: "OWEB Data Dictionary"
+title: "OWEBdb Data Dictionary"
 author:
   - Joshua Hatch
   - Nicole Mucci
