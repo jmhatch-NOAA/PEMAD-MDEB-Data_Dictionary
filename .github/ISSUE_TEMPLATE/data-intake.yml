@@ -119,7 +119,7 @@ body:
     validations:
       required: false
   - type: textarea
-    id: background
+    id: developer activity data
     attributes:
       label: Wind developer activity information
       description: Provide any information that you would need to receive from wind developers in near real-time to help in planning survey design.
