@@ -118,6 +118,10 @@ body:
       description: Provide any links to related websites/background information.
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        # Survey mitigation and planning
   - type: textarea
     id: developer-activity-data
     attributes:
