@@ -66,16 +66,15 @@ body:
       placeholder: ex. Geodatabase (*.gdb)
     validations:
       required: false
+
   - type: textarea
     id: metadata
     attributes:
       label: Metadata
       description: Are we receiving raw data or data in a processed and 'final' form?
       value: |
-        - Data processing procedures or a code repository for data processing
-        - Data collection methods
-        - Frequency of data collection
-          - How often is data both collected and updated?
+        - Program description
+        - Frequency of data update
         - Where is metadata currently stored?
         - Process for producing and maintaining metadata
     validations:
@@ -97,16 +96,29 @@ body:
       label: If Yes, please explain
     validations:
       required: false
-  - type: checkboxes
-    id: spatial
+  - type: markdown
     attributes:
-      label: Spatial Information
-      description: What spatial metadata are included?
-      options:
-        - label: Spatial reference / coordinate system
-        - label: Geographic extent
-        - label: Measurement system (meters, feet, etc)
-        - label: Data resolution
+      value: |
+        ## Spatial Information
+  - type: textarea
+    id: spat reference
+    attributes:
+      label: Spatial reference / coordinate system
+    validations:
+      required: false
+  - type: textarea
+    id: geo extent
+    attributes:
+      label: Geographic extent
+    validations:
+      required: false
+  - type: input
+    id: data-type-o
+    attributes:
+      label: Measurement system
+      description: Please specify measurement system (meters, feet, etc)
+    validations:
+      required: false
   - type: markdown
     attributes:
       value: |
