@@ -101,13 +101,13 @@ body:
       value: |
         ## Spatial Information
   - type: textarea
-    id: spat reference
+    id: spat-reference
     attributes:
       label: Spatial reference / coordinate system
     validations:
       required: false
   - type: textarea
-    id: geo extent
+    id: geo-extent
     attributes:
       label: Geographic extent
     validations:
