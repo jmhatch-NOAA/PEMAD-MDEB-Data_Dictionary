@@ -40,7 +40,7 @@ SQL_DRIVER = 'cx_oracle'
 USERNAME = '' #enter your username
 PASSWORD = '' #enter your password
 HOST = '' #enter the oracle db host url
-PORT =  # enter the oracle port number
+PORT = # enter the oracle port number
 SERVICE = '' # enter the oracle db service name
 ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD +'@' + HOST + ':' + str(PORT) + '/?service_name=' + SERVICE
 engine = create_engine(ENGINE_PATH_WIN_AUTH)
@@ -166,3 +166,40 @@ layer.manager.update_definition(data)
 #metadata contact information was added manually via arcgis.com
 #need to find a way to update metadata contact information programatically
 #this will probably include downloading xml file, changing file, and then adding updated xml file 
+
+#add fixed monitoring stataions point layer
+
+strata_table = 'ECOMONSTATIONS' #choose strata table that you would like to make into feature layer, choose table name from oracle db
+query = f"SELECT SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS geometry_wkt, em_seq, fixed_seq, name, region, strata, deployment, bongo_protocol, depth, lat, lon, survey_name, version_date FROM {strata_table}" #SQL query of data to pull from oracle db
+shp_folder = "ECOMON_stations" #name of folder that will be created to hold shapefile data
+zip_folder = "Ecosystem_Monitoring_Fixed_Oceanography_Stations" #name of zipfolder
+
+#PREPARE DATA
+#create pandas dataframe from SQL query
+df = pd.read_sql_query(query, engine)
+print(f"Data types of each column: {df.dtypes}")
+
+#close database connection
+connection.close()
+
+#convert dataframe to zipped shapefile (pandas to geopandas to shapefile)
+#EcoMon Oceanography Stations
+df['geometry'] = gpd.GeoSeries.from_wkt(df['geometry_wkt'])
+gdf = gpd.GeoDataFrame(df, geometry='geometry')
+gdf=gdf.drop(columns=['geometry_wkt'])
+gdf=gdf.set_crs(epsg=4269) #set coordinate system to NAD83
+#convert the geodataframe to zipped shapefile folder
+gdf.to_file(shp_folder, driver="ESRI Shapefile")
+shutil.make_archive(zip_folder, "zip", shp_folder)
+
+#the metadata will be the same for this layer
+
+#add the layer to the already created feature service
+flc=FeatureLayerCollection(url, gis)
+
+flc.manager.insert_layer('Ecosystem_Monitoring_Fixed_Oceanography_Stations.zip')
+
+#update metadata for layer (with same metadata for all other layers)
+url_layer= "https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Strata/FeatureServer/1"
+feature_layer = FeatureLayer(url_layer)
+feature_layer.manager.update_definition(item_properties)
