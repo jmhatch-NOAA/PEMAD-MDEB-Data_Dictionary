@@ -141,4 +141,3 @@ body:
       description: Provide any information that you would need to receive from wind developers in near real-time to help in planning survey design.
     validations:
       required: false
-
