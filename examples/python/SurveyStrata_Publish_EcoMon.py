@@ -6,8 +6,7 @@
 
 #IMPORT LIBRARIES
 import json
-import pandas as pd
-import geopandas
+import pandas as p
 import geopandas as gpd
 import shapely
 import xml.etree.ElementTree as ET

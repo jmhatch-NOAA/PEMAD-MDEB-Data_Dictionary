@@ -1,3 +1,7 @@
 .Rproj.user
 hidden.R
+narw_aerial_footprint.R
 /bookdown/_book/
+data/
+data-raw/
+inst/
