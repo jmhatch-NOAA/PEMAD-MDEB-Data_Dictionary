@@ -25,6 +25,6 @@ rmd_files: ["index.Rmd", "examples.Rmd"]
 
 # Introduction
 
-The Marine Development and Ecology Branch database (MDEBdb) contains geospatial data related to better understanding the interactions between offshore wind development and NOAA Fisheries trust resources. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC), and embodies the "shared database, shared schema" approach to data management.
+The Marine Development and Ecology Branch database (MDEBdb) contains geospatial data related to better understanding the interactions between marine development (like offshore wind) and NOAA Fisheries trust resources. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC), and embodies the "shared database, shared schema" approach to data management.
 
 This data dictionary is meant to catalog and communicate the structure and content of the MDEBdb, and provide meaningful descriptions of the data objects for users.
