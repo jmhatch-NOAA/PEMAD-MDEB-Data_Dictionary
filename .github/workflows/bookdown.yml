@@ -20,11 +20,25 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Create and populate .Renviron file
+        run: |
+          echo ARCGIS_CLIENT="$MAPPED_ARCGIS_CLIENT" >> ~/.Renviron
+          echo ARCGIS_SECRET="$MAPPED_ARCGIS_SECRET" >> ~/.Renviron
+        shell: bash
+        env:
+          MAPPED_ARCGIS_CLIENT: ${{ secrets.ARCGIS_CLIENT }}
+          MAPPED_ARCGIS_SECRET: ${{ secrets.ARCGIS_SECRET }}
+
       - name: Install R pkg linux dependencies
         run: |
           sudo apt update
           sudo apt-get install libcurl4-openssl-dev libnetcdf-dev libudunits2-dev libgdal-dev libharfbuzz-dev libfribidi-dev
         shell: bash
+
+      - name: Install arcgisutils
+        run: |
+          install.packages("arcgisutils", repos = "https://r-arcgis.r-universe.dev")
+        shell: Rscript {0}
 
       - name: Install bookdown
         run: |

@@ -1,0 +1,118 @@
+# Connecting R and ArcGIS
+
+You will need to install the R-ArcGIS Bridge for the appropriate version of R that you're using, which can be found [here](https://r.esri.com/bin/). Once downloaded, you will need to unzip and install the package in R from the local file. Alternatively, you can install from ESRI directly in R:
+
+```{r, eval = FALSE}
+install.packages("arcgisbinding", repos = "<https://r.esri.com>", type = "win.binary") 
+```
+
+For more documentation of R-Bridge for ArcGIS, see [here](https://developers.arcgis.com/r-bridge/installation/). Also, you will need to install the ArcGIS metapackage, which is still in development and currently includes the `arcgislayers` and `arcgisutils` packages.  
+
+```{r, eval = FALSE}
+remotes::install_github("R-ArcGIS/arcgis")
+```
+
+For updates, see [here](https://github.com/R-ArcGIS/arcgis).
+
+An example is presented below on how to pull data from ArcGIS online by using a feature layer or feature server url.
+
+```{r, eval = FALSE}
+# load libraries
+library(arcgisbinding) 
+arc.check_product() 
+library(arcgislayers)
+library(arcgisutils) 
+library(ggplot2)
+
+# connect to ArcGIS.com
+arc.portal_connect(url =  "https://noaa.maps.arcgis.com", user = "", password = "") # enter ArcGIS.com username and password
+arc.check_portal()
+
+# create an example map of USA using REST API Layer:USA Counties
+# provide feature server url and feature layer
+feature_server_url <- "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/TIGERweb_Counties_v1/FeatureServer/0"
+
+# create a feature layer object
+data <- arc_open(feature_server_url)
+
+# query the feature layer and return the layer as an sf (simple feature) object
+sf_data <- arc_select(data)
+
+# create map from sf object
+USA_map <- ggplot(data = sf_data) + 
+  geom_sf() +
+  theme_classic()
+USA_map
+```
+
+```{r, echo=FALSE, out.width="100%", fig.cap="Map of the USA."}
+knitr::include_graphics("img/USA_map.png")
+```
+
+# Connecting python and ArcGIS
+
+This code is for connecting to arcgis.com via the ArcGIS API for python, refer to https://github.com/Esri/arcgis-python-api for source code. Further documentation at https://developers.arcgis.com/python/latest/.
+
+```{python, eval = FALSE, python.reticulate = FALSE}
+# load libraries
+import arcpy
+import arcgis
+from arcgis.gis import GIS
+from arcgis.features import FeatureLayer
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from shapely.geometry import Polygon
+
+# log into arcgis online
+# see documentation for logging in with various authentication schemes 
+# https://developers.arcgis.com/python/latest/guide/working-with-different-authentication-schemes/
+user = "" # enter arcgis.com username
+password = "" # enter arcgis.com password
+portal = "https://noaa.maps.arcgis.com/"
+gis = GIS(portal, user, password)
+
+# alternatively, log in using ArcGIS Pro, if Pro is on system computer and is logged into the portal
+gis = GIS("PRO")
+
+# test arcis.com connection
+if gis is not None and gis._portal.is_logged_in:
+  print(f"Successfully logged in as: {gis.properties.user['username']}")
+else:
+  print("Login failed.")
+
+# example map
+# pull data from arcgis online using feature server url, from ArcGIS REST API
+# in this example, taking the World Continents feature layer from Living Atlas 
+item_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Continents/FeatureServer/0"
+
+# retrieve item from arcgis online
+world_layer = FeatureLayer(item_url)
+
+# query feature layer to return all data
+world_features = world_layer.query(where="1=1")
+
+# create a list to hold the geometries
+geometries = []
+
+# loop through features to extract geometries
+for feature in world_features.features:
+  geom = feature.geometry
+  if geom['rings']:
+    for ring in geom['rings']:
+      polygon = Polygon(ring)
+      geometries.append(polygon)
+
+# create geopandas dataframe
+gdf = gpd.GeoDataFrame(geometry=geometries)
+
+# create map using geopandas
+fig,ax = plt.subplots(figsize=(10,6))
+gdf.plot(ax=ax, color='#D1E7DD', edgecolor='black')
+plt.title('World Map')
+ax.set_xticks([]) #remove tick marks
+ax.set_yticks([])
+ax.xaxis.set_ticklabels([]) #remove tick labels
+ax.yaxis.set_ticklabels([])
+plt.show()
+```
