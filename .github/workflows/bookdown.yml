@@ -40,9 +40,9 @@ jobs:
           install.packages(c("cli", "dbplyr", "here", "httr2", "RcppSimdJson", "rlang", "sf"))
         shell: Rscript {0}
 
-      - name: Install arcgisutils
+      - name: Install arcgis
         run: |
-          install.packages("arcgisutils", repos = "https://r-arcgis.r-universe.dev")
+          install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
         shell: Rscript {0}
 
       - name: Install bookdown
