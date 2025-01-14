@@ -35,6 +35,11 @@ jobs:
           sudo apt-get install libcurl4-openssl-dev libnetcdf-dev libudunits2-dev libgdal-dev libharfbuzz-dev libfribidi-dev
         shell: bash
 
+       - name: Install arcgisutils deps
+        run: |
+          install.packages(c("cli", "dbplyr", "httr2", "RcppSimdJson", "rlang", "sf"))
+        shell: Rscript {0}
+
       - name: Install arcgisutils
         run: |
           install.packages("arcgisutils", repos = "https://r-arcgis.r-universe.dev")
@@ -42,7 +47,7 @@ jobs:
 
       - name: Install bookdown
         run: |
-          install.packages(c("bookdown", "downlit", "xml2", "sf", "leaflet", "purrr", "knitr"))
+          install.packages(c("bookdown", "downlit", "xml2", "leaflet", "purrr", "knitr"))
         shell: Rscript {0}
 
       - name: Build book
