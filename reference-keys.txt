@@ -1,4 +1,9 @@
-fig:unnamed-chunk-4
+fig:unnamed-chunk-9
 introduction
+survey-mitigation
+ecosystem-monitoring-survey
+inport-metadata
+description
+extent
 connecting-r-and-arcgis
 connecting-python-and-arcgis
