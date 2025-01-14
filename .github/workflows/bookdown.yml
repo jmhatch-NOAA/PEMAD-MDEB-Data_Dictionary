@@ -35,7 +35,7 @@ jobs:
           sudo apt-get install libcurl4-openssl-dev libnetcdf-dev libudunits2-dev libgdal-dev libharfbuzz-dev libfribidi-dev
         shell: bash
 
-       - name: Install arcgisutils deps
+      - name: Install arcgisutils deps
         run: |
           install.packages(c("cli", "dbplyr", "httr2", "RcppSimdJson", "rlang", "sf"))
         shell: Rscript {0}
