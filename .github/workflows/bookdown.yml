@@ -37,7 +37,7 @@ jobs:
 
       - name: Install arcgis dependencies
         run: |
-          install.packages(c("cli", "dbplyr", "here", "httr2", "RcppSimdJson", "rlang", "rvest", "sf"))
+          install.packages(c("cli", "dbplyr", "DT", "here", "httr2", "RcppSimdJson", "rlang", "rvest", "sf"))
         shell: Rscript {0}
 
       - name: Install arcgis

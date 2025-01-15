@@ -30,7 +30,7 @@ Yes, see [here](`r inport_href`).
 
 `r ecomon_desc`
 
-### Extent
+### Spatial Extent
 
 ```{r, echo = FALSE}
 # get layer bounding box
@@ -46,4 +46,37 @@ ecomon_bb = data.frame(
 leaflet::leaflet() |>
   leaflet::addTiles() |>
   leaflet::addPolygons(data = ecomon_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+ecomon_meta$layers |>
+  dplyr::select(id, name, minScale, maxScale, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+ecomon_layers = ecomon_meta$layers
+
+# loop over layers
+ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
+  
+  # open layer
+  ecomon_layer = arcgislayers::arc_open(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]), token = token)
+  
+  # get fields
+  ecomon_fields = arcgislayers::list_fields(ecomon_layer) |>
+    dplyr::select(name, actualType, length, precision)
+  
+  # output
+  cat('\n####', ecomon_layers$name[.x], '\n')
+  print(knitr::kable(ecomon_fields))
+  cat('\n')
+
+})
+
 ```
