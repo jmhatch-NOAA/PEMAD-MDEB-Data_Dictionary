@@ -1,9 +1,13 @@
-fig:unnamed-chunk-9
+fig:unnamed-chunk-11
 introduction
 survey-mitigation
 ecosystem-monitoring-survey
 inport-metadata
 description
-extent
+spatial-extent
+layers
+fields
+ecosystem_monitoring_strata
+ecosystem_monitoring_fixed_oceanography_stations
 connecting-r-and-arcgis
 connecting-python-and-arcgis
