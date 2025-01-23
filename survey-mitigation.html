@@ -54,6 +54,7 @@
 <li><a class="active" href="survey-mitigation.html"><span class="header-section-number">2</span> Survey Mitigation</a></li>
 <li><a class="" href="connecting-r-and-arcgis.html"><span class="header-section-number">3</span> Connecting R and ArcGIS</a></li>
 <li><a class="" href="connecting-python-and-arcgis.html"><span class="header-section-number">4</span> Connecting python and ArcGIS</a></li>
+<li><a class="" href="standard-operating-procedure.html"><span class="header-section-number">5</span> Standard Operating Procedure</a></li>
 </ul>
 
         <div class="book-extra">
@@ -88,8 +89,8 @@
 <h3>
 <span class="header-section-number">2.1.3</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-85644f83a71c9316b335" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-85644f83a71c9316b335">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-82d70b3def24d4c2f6a5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-82d70b3def24d4c2f6a5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers" class="section level3" number="2.1.4">
 <h3>
@@ -97,12 +98,12 @@
 </h3>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="2%">
-<col width="47%">
-<col width="8%">
-<col width="8%">
-<col width="13%">
+<col width="4%">
+<col width="22%">
+<col width="12%">
+<col width="12%">
 <col width="19%">
+<col width="28%">
 </colgroup>
 <thead><tr class="header">
 <th align="right">id</th>
@@ -115,7 +116,7 @@
 <tbody>
 <tr class="odd">
 <td align="right">0</td>
-<td align="left">Ecosystem_Monitoring_Strata</td>
+<td align="left">ECOMON_Strata</td>
 <td align="right">0</td>
 <td align="right">577790</td>
 <td align="left">Feature Layer</td>
@@ -123,7 +124,7 @@
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="left">Ecosystem_Monitoring_Fixed_Oceanography_Stations</td>
+<td align="left">ECOMON_Stations</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="left">Feature Layer</td>
@@ -136,9 +137,9 @@
 <h3>
 <span class="header-section-number">2.1.5</span> Fields<a class="anchor" aria-label="anchor" href="#fields"><i class="fas fa-link"></i></a>
 </h3>
-<div id="ecosystem_monitoring_strata" class="section level4" number="2.1.5.1">
+<div id="ecomon_strata" class="section level4" number="2.1.5.1">
 <h4>
-<span class="header-section-number">2.1.5.1</span> Ecosystem_Monitoring_Strata<a class="anchor" aria-label="anchor" href="#ecosystem_monitoring_strata"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1.5.1</span> ECOMON_Strata<a class="anchor" aria-label="anchor" href="#ecomon_strata"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
@@ -223,9 +224,9 @@
 </tbody>
 </table></div>
 </div>
-<div id="ecosystem_monitoring_fixed_oceanography_stations" class="section level4" number="2.1.5.2">
+<div id="ecomon_stations" class="section level4" number="2.1.5.2">
 <h4>
-<span class="header-section-number">2.1.5.2</span> Ecosystem_Monitoring_Fixed_Oceanography_Stations<a class="anchor" aria-label="anchor" href="#ecosystem_monitoring_fixed_oceanography_stations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1.5.2</span> ECOMON_Stations<a class="anchor" aria-label="anchor" href="#ecomon_stations"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
@@ -352,7 +353,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-01-15.</p>
+    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-01-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
