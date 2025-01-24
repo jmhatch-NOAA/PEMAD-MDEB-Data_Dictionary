@@ -2,7 +2,7 @@
 
 ## Naming convention for spatial tables in oracle database
 
-NEFSC survey strata are compiled in the oracle database in MDEB_SPATIAL project-level schema. NEFSC survey strata naming convention is as follows:
+NEFSC survey strata are compiled in the oracle database in MDEB_SPATIAL project-level schema. All spatial tables are projected in North American Datum of 1983 (NAD 83). NEFSC survey strata naming convention is as follows:
 
 |       *PROJECT_SCHEMA.SURVEYCODE_STRATA*
 | 
