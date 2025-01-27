@@ -70,7 +70,7 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   
   # get fields
   ecomon_fields = arcgislayers::list_fields(ecomon_layer) |>
-    dplyr::select(name, actualType, length, precision)
+    dplyr::select(name, alias, actualType, description)
   
   # output
   cat('\n####', ecomon_layers$name[.x], '\n')
