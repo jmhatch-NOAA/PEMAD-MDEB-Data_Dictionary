@@ -67,14 +67,14 @@
 <span class="header-section-number">3</span> Connecting R and ArcGIS<a class="anchor" aria-label="anchor" href="#connecting-r-and-arcgis"><i class="fas fa-link"></i></a>
 </h1>
 <p>You will need to install the R-ArcGIS Bridge for the appropriate version of R that you’re using, which can be found <a href="https://r.esri.com/bin/">here</a>. Once downloaded, you will need to unzip and install the package in R from the local file. Alternatively, you can install from ESRI directly in R:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"arcgisbinding"</span>, repos <span class="op">=</span> <span class="st">"&lt;https://r.esri.com&gt;"</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span> </span></code></pre></div>
 <p>For more documentation of R-Bridge for ArcGIS, see <a href="https://developers.arcgis.com/r-bridge/installation/">here</a>. Also, you will need to install the ArcGIS metapackage, which is still in development and currently includes the <code>arcgislayers</code> and <code>arcgisutils</code> packages.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"R-ArcGIS/arcgis"</span><span class="op">)</span></span></code></pre></div>
 <p>For updates, see <a href="https://github.com/R-ArcGIS/arcgis">here</a>.</p>
 <p>An example is presented below on how to pull data from ArcGIS online by using a feature layer or feature server url.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">arcgisbinding</span><span class="op">)</span> </span>
 <span><span class="fu">arc.check_product</span><span class="op">(</span><span class="op">)</span> </span>
@@ -130,7 +130,7 @@ Figure 3.1: Map of the USA.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-01-27.</p>
+    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-01-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
