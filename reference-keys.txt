@@ -11,6 +11,3 @@ ecomon_strata
 ecomon_stations
 connecting-r-and-arcgis
 connecting-python-and-arcgis
-standard-operating-procedure
-naming-convention-for-spatial-tables-in-oracle-database
-table-1.-nefsc-scientific-survey-names-and-survey-codes
