@@ -1,0 +1,41 @@
+## Standard Operating Procedure
+
+### Naming convention for spatial tables in oracle database
+
+NEFSC survey strata are compiled in the oracle database in MDEB_SPATIAL project-level schema. All spatial tables are projected in North American Datum of 1983 (NAD 83). NEFSC survey strata naming convention is as follows:
+
+|       *PROJECT_SCHEMA.SURVEYCODE_STRATA*
+| 
+| For example, the Bottom Trawl Survey strata:
+|       *MDEB_SPATIAL.BTS_STRATA*
+| 
+| Surveys with associated substrata are named as follows:
+|       *PROJECT_SCHEMA.SURVEYCODE_SUBSTRATA*
+| 
+| Surveys with an associated point layer (ex. sample stations) are named as follows:
+|       *PROJECT_SCHEMA.SURVEYCODE_STATIONS*
+| 
+| Surveys with an associated line layer (ex. surveylines) are named as follows:
+|       *PROJECT_SCHEMA.SURVEYCODE_SURVEYLINES*
+| 
+| Metadata tables for associated survey strata are named as follows:
+|       *PROJECT_SCHEMA.SURVEYCODE_META*
+
+### Table 1. NEFSC Scientific Survey names and survey codes
+
+| **Survey code** | **Survey name**                                     |
+|-----------------|-----------------------------------------------------|
+| BTS             | Bottom Trawl Survey                                 |
+| CSBLL           | Coastal Shark Bottom Longline Survey                |
+| ECOMON          | Ecosystem Monitoring Survey                         |
+| EDNA            | eDNA survey                                         |
+| GOMBLL          | Gulf of Maine Bottom Longline Survey                |
+| HL              | Hook & Line Survey                                  |
+| MMST            | Marine Mammal and Sea Turtle Aerial & Vessel Survey |
+| NARW            | North Atlantic Right Whale Aerial Survey            |
+| OQ              | Ocean Quahog Survey                                 |
+| SC              | Atlantic Surfclam Survey                            |
+| SCALLOP         | Scallop Survey                                      |
+| SEAL            | Seal Aerial Survey                                  |
+| SHRIMP          | Northern Shrimp Survey                              |
+| TURTLE          | Turtle Ecology Survey                               |
