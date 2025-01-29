@@ -88,27 +88,17 @@
 <h3>
 <span class="header-section-number">2.1.3</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-d09e69da478423ef2146" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d09e69da478423ef2146">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-2b653bda506df1a5a24b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2b653bda506df1a5a24b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers" class="section level3" number="2.1.4">
 <h3>
 <span class="header-section-number">2.1.4</span> Layers<a class="anchor" aria-label="anchor" href="#layers"><i class="fas fa-link"></i></a>
 </h3>
 <div class="inline-table"><table class="table table-sm">
-<colgroup>
-<col width="4%">
-<col width="22%">
-<col width="12%">
-<col width="12%">
-<col width="19%">
-<col width="28%">
-</colgroup>
 <thead><tr class="header">
 <th align="right">id</th>
 <th align="left">name</th>
-<th align="right">minScale</th>
-<th align="right">maxScale</th>
 <th align="left">type</th>
 <th align="left">geometryType</th>
 </tr></thead>
@@ -116,16 +106,12 @@
 <tr class="odd">
 <td align="right">0</td>
 <td align="left">ECOMON_Strata</td>
-<td align="right">0</td>
-<td align="right">577790</td>
 <td align="left">Feature Layer</td>
 <td align="left">esriGeometryPolygon</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">ECOMON_Stations</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="left">Feature Layer</td>
 <td align="left">esriGeometryPoint</td>
 </tr>
@@ -142,89 +128,65 @@
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="6%">
-<col width="9%">
-<col width="5%">
-<col width="79%">
+<col width="10%">
+<col width="17%">
+<col width="71%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
 <th align="left">alias</th>
-<th align="left">actualType</th>
 <th align="left">description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">FID</td>
 <td align="left">FID</td>
-<td align="left">int</td>
-<td align="left">{“value”:“Unique object ID, automatically populated by ArcGIS”,“fieldValueType”:““}</td>
+<td align="left">Unique object ID</td>
 </tr>
 <tr class="even">
 <td align="left">name</td>
 <td align="left">Name</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Unique strata/station ID”,“fieldValueType”:““}</td>
+<td align="left">Unique strata/station ID</td>
 </tr>
 <tr class="odd">
 <td align="left">survey_nam</td>
 <td align="left">Survey name</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Name of NEFSC scientific survey”,“fieldValueType”:““}</td>
+<td align="left">Name of NEFSC scientific survey</td>
 </tr>
 <tr class="even">
 <td align="left">numofpoly</td>
 <td align="left">Number of polygons</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Number of polygons that make up the strata”,“fieldValueType”:““}</td>
+<td align="left">Number of polygons that make up the strata</td>
 </tr>
 <tr class="odd">
 <td align="left">numofsta</td>
 <td align="left">Number of stations</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Number of plankton stations sampled in the strata for current ECOMON program”,“fieldValueType”:““}</td>
+<td align="left">Number of plankton stations sampled in the strata for current ECOMON program</td>
 </tr>
 <tr class="even">
 <td align="left">region</td>
 <td align="left">Region</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Strata groupings, MAB = Mid-Atlantic Bight, SNE = Southern New England, GB = Georges Bank, GOM = Gulf of Maine”,“fieldValueType”:““}</td>
+<td align="left">Strata groupings</td>
 </tr>
 <tr class="odd">
 <td align="left">area</td>
 <td align="left">Area (sq km)</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Area of strata, km2, Note area reported for 381 and 382 is the same, and equals total for the two polygons combined”,“fieldValueType”:““}</td>
+<td align="left">Area of strata</td>
 </tr>
 <tr class="even">
 <td align="left">type</td>
 <td align="left">Type</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Strata description, C = coastal, IS = inner-shelf, MS = mid-shelf, SB = shelf break, Bank = bank, Off = off-shelf, Basin = deep basin”,“fieldValueType”:““}</td>
+<td align="left">Strata description</td>
 </tr>
 <tr class="odd">
 <td align="left">acres</td>
 <td align="left">Area (acres)</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Area of strata in acres”,“fieldValueType”:““}</td>
+<td align="left">Area of strata in acres</td>
 </tr>
 <tr class="even">
 <td align="left">version_da</td>
 <td align="left">Version date</td>
-<td align="left">datetime2</td>
-<td align="left">{“value”:“Date of last update”,“fieldValueType”:““}</td>
-</tr>
-<tr class="odd">
-<td align="left">Shape__Area</td>
-<td align="left">Shape__Area</td>
-<td align="left">float</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Shape__Length</td>
-<td align="left">Shape__Length</td>
-<td align="left">float</td>
-<td align="left">NA</td>
+<td align="left">Date of last update</td>
 </tr>
 </tbody>
 </table></div>
@@ -234,100 +196,176 @@
 <span class="header-section-number">2.1.5.2</span> ECOMON_Stations<a class="anchor" aria-label="anchor" href="#ecomon_stations"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-sm">
-<colgroup>
-<col width="6%">
-<col width="8%">
-<col width="6%">
-<col width="79%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
 <th align="left">alias</th>
-<th align="left">actualType</th>
 <th align="left">description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">FID</td>
 <td align="left">FID</td>
-<td align="left">int</td>
-<td align="left">{“value”:“Unique object ID, automatically populated by ArcGIS”,“fieldValueType”:““}</td>
+<td align="left">Unique object ID</td>
 </tr>
 <tr class="even">
 <td align="left">em_seq</td>
 <td align="left">Em sequence</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Em sequence number”,“fieldValueType”:““}</td>
+<td align="left">Em sequence number</td>
 </tr>
 <tr class="odd">
 <td align="left">fixed_seq</td>
 <td align="left">Fixed sequence</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Fixed sequence number”,“fieldValueType”:““}</td>
+<td align="left">Fixed sequence number</td>
 </tr>
 <tr class="even">
 <td align="left">name</td>
 <td align="left">Name</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Unique strata/station ID”,“fieldValueType”:““}</td>
+<td align="left">Unique strata/station ID</td>
 </tr>
 <tr class="odd">
 <td align="left">region</td>
 <td align="left">Region</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Strata groupings, MAB = Mid-Atlantic Bight, SNE = Southern New England, GB = Georges Bank, GOM = Gulf of Maine”,“fieldValueType”:““}</td>
+<td align="left">Strata groupings</td>
 </tr>
 <tr class="even">
 <td align="left">strata</td>
 <td align="left">Strata</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Unique strata ID number”,“fieldValueType”:““}</td>
+<td align="left">Unique strata ID number</td>
 </tr>
 <tr class="odd">
 <td align="left">deployment</td>
 <td align="left">Deployment</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Equipment deployment type”,“fieldValueType”:““}</td>
+<td align="left">Equipment deployment type</td>
 </tr>
 <tr class="even">
 <td align="left">bongo_prot</td>
 <td align="left">Bongo protocol</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Bongo protocol”,“fieldValueType”:““}</td>
+<td align="left">Bongo protocol</td>
 </tr>
 <tr class="odd">
 <td align="left">depth</td>
 <td align="left">Depth (m)</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Station depth in meters”,“fieldValueType”:““}</td>
+<td align="left">Station depth in meters</td>
 </tr>
 <tr class="even">
 <td align="left">lat</td>
 <td align="left">Latitude</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Station latitude”,“fieldValueType”:““}</td>
+<td align="left">Station latitude</td>
 </tr>
 <tr class="odd">
 <td align="left">lon</td>
 <td align="left">Longitude</td>
-<td align="left">float</td>
-<td align="left">{“value”:“Station longitude”,“fieldValueType”:““}</td>
+<td align="left">Station longitude</td>
 </tr>
 <tr class="even">
 <td align="left">survey_nam</td>
 <td align="left">Survey name</td>
-<td align="left">nvarchar</td>
-<td align="left">{“value”:“Name of NEFSC scientific survey”,“fieldValueType”:““}</td>
+<td align="left">Name of NEFSC scientific survey</td>
 </tr>
 <tr class="odd">
 <td align="left">version_da</td>
 <td align="left">Version date</td>
-<td align="left">datetime2</td>
-<td align="left">{“value”:“Date of last update”,“fieldValueType”:““}</td>
+<td align="left">Date of last update</td>
 </tr>
 </tbody>
 </table></div>
 </div>
+</div>
+</div>
+<div id="standard-operating-procedure" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Standard Operating Procedure<a class="anchor" aria-label="anchor" href="#standard-operating-procedure"><i class="fas fa-link"></i></a>
+</h2>
+<div id="naming-convention-for-spatial-tables-in-oracle-database" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Naming convention for spatial tables in oracle database<a class="anchor" aria-label="anchor" href="#naming-convention-for-spatial-tables-in-oracle-database"><i class="fas fa-link"></i></a>
+</h3>
+<p>NEFSC survey strata are compiled in the oracle database in MDEB_SPATIAL project-level schema. All spatial tables are projected in North American Datum of 1983 (NAD 83). NEFSC survey strata naming convention is as follows:</p>
+<div class="line-block">      <em>PROJECT_SCHEMA.SURVEYCODE_STRATA</em><br><br>
+For example, the Bottom Trawl Survey strata:<br>
+      <em>MDEB_SPATIAL.BTS_STRATA</em><br><br>
+Surveys with associated substrata are named as follows:<br>
+      <em>PROJECT_SCHEMA.SURVEYCODE_SUBSTRATA</em><br><br>
+Surveys with an associated point layer (ex. sample stations) are named as follows:<br>
+      <em>PROJECT_SCHEMA.SURVEYCODE_STATIONS</em><br><br>
+Surveys with an associated line layer (ex. surveylines) are named as follows:<br>
+      <em>PROJECT_SCHEMA.SURVEYCODE_SURVEYLINES</em><br><br>
+Metadata tables for associated survey strata are named as follows:<br>
+      <em>PROJECT_SCHEMA.SURVEYCODE_META</em>
+</div>
+</div>
+<div id="table-1.-nefsc-scientific-survey-names-and-survey-codes" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> Table 1. NEFSC Scientific Survey names and survey codes<a class="anchor" aria-label="anchor" href="#table-1.-nefsc-scientific-survey-names-and-survey-codes"><i class="fas fa-link"></i></a>
+</h3>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="24%">
+<col width="75%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Survey code</strong></th>
+<th><strong>Survey name</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>BTS</td>
+<td>Bottom Trawl Survey</td>
+</tr>
+<tr class="even">
+<td>CSBLL</td>
+<td>Coastal Shark Bottom Longline Survey</td>
+</tr>
+<tr class="odd">
+<td>ECOMON</td>
+<td>Ecosystem Monitoring Survey</td>
+</tr>
+<tr class="even">
+<td>EDNA</td>
+<td>eDNA survey</td>
+</tr>
+<tr class="odd">
+<td>GOMBLL</td>
+<td>Gulf of Maine Bottom Longline Survey</td>
+</tr>
+<tr class="even">
+<td>HL</td>
+<td>Hook &amp; Line Survey</td>
+</tr>
+<tr class="odd">
+<td>MMST</td>
+<td>Marine Mammal and Sea Turtle Aerial &amp; Vessel Survey</td>
+</tr>
+<tr class="even">
+<td>NARW</td>
+<td>North Atlantic Right Whale Aerial Survey</td>
+</tr>
+<tr class="odd">
+<td>OQ</td>
+<td>Ocean Quahog Survey</td>
+</tr>
+<tr class="even">
+<td>SC</td>
+<td>Atlantic Surfclam Survey</td>
+</tr>
+<tr class="odd">
+<td>SCALLOP</td>
+<td>Scallop Survey</td>
+</tr>
+<tr class="even">
+<td>SEAL</td>
+<td>Seal Aerial Survey</td>
+</tr>
+<tr class="odd">
+<td>SHRIMP</td>
+<td>Northern Shrimp Survey</td>
+</tr>
+<tr class="even">
+<td>TURTLE</td>
+<td>Turtle Ecology Survey</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 </div>
@@ -345,6 +383,12 @@
 <li><a class="nav-link" href="#spatial-extent"><span class="header-section-number">2.1.3</span> Spatial Extent</a></li>
 <li><a class="nav-link" href="#layers"><span class="header-section-number">2.1.4</span> Layers</a></li>
 <li><a class="nav-link" href="#fields"><span class="header-section-number">2.1.5</span> Fields</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#standard-operating-procedure"><span class="header-section-number">2.2</span> Standard Operating Procedure</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#naming-convention-for-spatial-tables-in-oracle-database"><span class="header-section-number">2.2.1</span> Naming convention for spatial tables in oracle database</a></li>
+<li><a class="nav-link" href="#table-1.-nefsc-scientific-survey-names-and-survey-codes"><span class="header-section-number">2.2.2</span> Table 1. NEFSC Scientific Survey names and survey codes</a></li>
 </ul>
 </li>
 </ul>
