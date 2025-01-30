@@ -88,8 +88,8 @@
 <h3>
 <span class="header-section-number">2.1.3</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-8d0c487cc19dbb8590c4" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-8d0c487cc19dbb8590c4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-cead1dd72c93a4b815c0" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-cead1dd72c93a4b815c0">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.9679157134706,-65.16869247962288,-65.16869247962288,-75.9679157134706,-75.9679157134706],"lat":[35.14219346609407,35.14219346609407,44.48559025541953,44.48559025541953,35.14219346609407]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14219346609407,44.48559025541953],"lng":[-75.9679157134706,-65.16869247962288]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers" class="section level3" number="2.1.4">
 <h3>
@@ -280,18 +280,18 @@
 <h3>
 <span class="header-section-number">2.2.1</span> Naming convention for spatial tables in oracle database<a class="anchor" aria-label="anchor" href="#naming-convention-for-spatial-tables-in-oracle-database"><i class="fas fa-link"></i></a>
 </h3>
-<p>NEFSC survey strata are compiled in the oracle database in MDEB_SPATIAL project-level schema. All spatial tables are projected in North American Datum of 1983 (NAD 83). NEFSC survey strata naming convention is as follows:</p>
-<div class="line-block">      <em>PROJECT_SCHEMA.SURVEYCODE_STRATA</em><br><br>
+<p>NEFSC scientific survey strata are compiled in the oracle database under the MDEB_SPATIAL schema. All spatial tables are projected in North American Datum of 1983 (NAD 83). NEFSC scientific survey strata naming conventions are as follows:</p>
+<div class="line-block">      <em>SCHEMA.PROJECTABBR_SURVEYCODE_STRATA</em><br><br>
 For example, the Bottom Trawl Survey strata:<br>
-      <em>MDEB_SPATIAL.BTS_STRATA</em><br><br>
+      <em>MDEB_SPATIAL.SMIT_BTS_STRATA</em><br><br>
 Surveys with associated substrata are named as follows:<br>
-      <em>PROJECT_SCHEMA.SURVEYCODE_SUBSTRATA</em><br><br>
+      <em>SCHEMA.SMIT_SURVEYCODE_SUBSTRATA</em><br><br>
 Surveys with an associated point layer (ex. sample stations) are named as follows:<br>
-      <em>PROJECT_SCHEMA.SURVEYCODE_STATIONS</em><br><br>
+      <em>SCHEMA.SMIT_SURVEYCODE_STATIONS</em><br><br>
 Surveys with an associated line layer (ex. surveylines) are named as follows:<br>
-      <em>PROJECT_SCHEMA.SURVEYCODE_SURVEYLINES</em><br><br>
+      <em>SCHEMA.SMIT_SURVEYCODE_LINES</em><br><br>
 Metadata tables for associated survey strata are named as follows:<br>
-      <em>PROJECT_SCHEMA.SURVEYCODE_META</em>
+      <em>SCHEMA.SMIT_SURVEYCODE_META</em>
 </div>
 </div>
 <div id="table-1.-nefsc-scientific-survey-names-and-survey-codes" class="section level3" number="2.2.2">
@@ -330,11 +330,11 @@ Metadata tables for associated survey strata are named as follows:<br>
 </tr>
 <tr class="even">
 <td>HL</td>
-<td>Hook &amp; Line Survey</td>
+<td>Hook and Line Survey</td>
 </tr>
 <tr class="odd">
 <td>MMST</td>
-<td>Marine Mammal and Sea Turtle Aerial &amp; Vessel Survey</td>
+<td>Marine Mammal and Sea Turtle Aerial and Vessel Survey</td>
 </tr>
 <tr class="even">
 <td>NARW</td>
