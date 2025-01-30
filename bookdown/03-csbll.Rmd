@@ -75,7 +75,7 @@ csbll_fields = purrr::map(.x = 1:nrow(csbll_layers), .f = function(.x) {
   # get fields
   csbll_fields = arcgislayers::list_fields(csbll_layer) |>
     dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(type = actualType)
+    dplyr::rename(dataType = actualType)
   
   # format description
   csbll_fields = csbll_fields |>
