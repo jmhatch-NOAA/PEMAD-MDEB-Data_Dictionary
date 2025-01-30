@@ -11,6 +11,10 @@ ecomon_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/service
 ecomon_meta = arcgisutils::fetch_layer_metadata(url = ecomon_url, token = token)
 ```
 
+### ArcGIS Feature Service
+
+Click [here](`r ecomon_url`).
+
 ```{r, echo = FALSE}
 # InPort
 inport_href = ecomon_meta$serviceDescription |>
@@ -70,7 +74,8 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   
   # get fields
   ecomon_fields = arcgislayers::list_fields(ecomon_layer) |>
-    dplyr::select(name, alias, description)
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(type = actualType)
   
   # format description
   ecomon_fields = ecomon_fields |>
@@ -79,7 +84,7 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   
   # output
   cat('\n####', ecomon_layers$name[.x], '\n')
-  print(knitr::kable(ecomon_fields))
+    print(knitr::kable(ecomon_fields))
   cat('\n')
 
 })

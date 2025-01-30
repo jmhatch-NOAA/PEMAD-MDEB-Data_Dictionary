@@ -1,0 +1,92 @@
+## Coastal Shark Bottom Longline Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+csbll_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Bottom_Longline_Survey_Strata/FeatureServer'
+
+# metadata
+csbll_meta = arcgisutils::fetch_layer_metadata(url = csbll_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r csbll_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = csbll_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+csbll_desc = gsub('(.*?)</a>\\.\\s+', '', csbll_meta$serviceDescription)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r csbll_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+csbll_bb = data.frame(
+  x = c(csbll_meta$fullExtent$xmin, csbll_meta$fullExtent$xmax), 
+  y = c(csbll_meta$fullExtent$ymin, csbll_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = csbll_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = csbll_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+csbll_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+csbll_layers = csbll_meta$layers
+
+# loop over layers
+csbll_fields = purrr::map(.x = 1:nrow(csbll_layers), .f = function(.x) {
+  
+  # open layer
+  csbll_layer = arcgislayers::arc_open(url = paste0(csbll_url, '/', csbll_layers$id[.x]), token = token)
+  
+  # get fields
+  csbll_fields = arcgislayers::list_fields(csbll_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(type = actualType)
+  
+  # format description
+  csbll_fields = csbll_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', csbll_layers$name[.x], '\n')
+    print(knitr::kable(csbll_fields))
+  cat('\n')
+
+})
+
+```

@@ -25,7 +25,7 @@ rmd_files: ["index.Rmd"]
 
 # Introduction
 
-The Marine Development and Ecology Branch database (MDEBdb) contains geospatial data related to better understanding the interactions between marine development (like offshore wind) and NOAA Fisheries trust resources. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC), and embodies the "shared database, shared schema" approach to data management.
+The Marine Development and Ecology Branch database (MDEBdb) contains geospatial data related to better understanding the interactions between marine development (like offshore wind) and NOAA Fisheries surveys and trust resources. The creation of this database was funded by the Federal Permitting Improvement Steering Council (FPISC), and embodies the "shared database, shared schema" approach to data management.
 
 This data dictionary is meant to catalog and communicate the structure and content of the MDEBdb, and provide meaningful descriptions of the data objects for users.
 
@@ -39,7 +39,7 @@ file.remove(old_rmd)
 file.copy(from = here::here('bookdown', 'Rmd') |> list.files(full.names = TRUE), to = here::here('bookdown'), overwrite = TRUE)
 
 # rename files
-rmd = c('survey_mitigation.Rmd', 'ecomon.Rmd', 'smit_sop.Rmd', 'examples.Rmd')
+rmd = c('survey_mitigation.Rmd', 'ecomon.Rmd', 'csbll.Rmd', 'smit_sop.Rmd', 'examples.Rmd')
 rmd_files = paste0(stringr::str_pad(1:length(rmd), width = 2, side = 'left', pad = "0"), '-', rmd)
 file.rename(from = rmd, to = rmd_files)
 ```
