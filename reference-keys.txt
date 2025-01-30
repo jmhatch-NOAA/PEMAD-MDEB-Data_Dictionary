@@ -1,7 +1,8 @@
-fig:unnamed-chunk-11
+fig:unnamed-chunk-16
 introduction
 survey-mitigation
 ecosystem-monitoring-survey
+arcgis-feature-service
 inport-metadata
 description
 spatial-extent
@@ -9,6 +10,15 @@ layers
 fields
 ecomon_strata
 ecomon_stations
+coastal-shark-bottom-longline-survey
+arcgis-feature-service-1
+inport-metadata-1
+description-1
+spatial-extent-1
+layers-1
+fields-1
+csbll_strata
+csbll_stations
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
