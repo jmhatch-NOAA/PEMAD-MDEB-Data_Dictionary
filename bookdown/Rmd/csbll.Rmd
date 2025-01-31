@@ -23,7 +23,8 @@ inport_href = csbll_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-csbll_desc = gsub('(.*?)</a>\\.\\s+', '', csbll_meta$serviceDescription)
+csbll_desc = gsub("<a(.|\n)*?</a>", '', csbll_meta$serviceDescription)
+csbll_desc = gsub("<p>|<br>|</p>", '', csbll_desc)
 ```
 
 ### InPort Metadata
