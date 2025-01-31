@@ -54,6 +54,7 @@ jobs:
         run: |
           setwd("bookdown")
           bookdown::render_book("index.Rmd", "all")
+          bookdown::render_book("index.Rmd", "all")
         shell: Rscript {0}
 
       - name: Deploy to gh-pages
