@@ -16,9 +16,10 @@ arc.check_product()
 library(arcgislayers)
 library(arcgisutils)
 library(ggplot2)
-
+library(sf)
 #connect to arcgis online
-arc.portal_connect(url =  "https://noaa.maps.arcgis.com", user = "", password = "") #enter arcgis online username and password
+arc.portal_connect(url =  "https://noaa.maps.arcgis.com", user = "",
+                   password = "") #enter arcgis online username and password
 arc.check_portal()
 
 #examples on how to pull data from arcgis online
@@ -35,7 +36,5 @@ sf_data <- arc_select(data)
 
 #create map from sf object
 USA_map <- ggplot(data = sf_data)+
-            geom_sf()+
-            theme_classic()
-
-
+            geom_sf(fill = "white")+ #fill color white
+            coord_sf(xlim= c(-13951910,-7000000), ylim = c(1000000, 7000000)) #set map coordinates (in meters)
