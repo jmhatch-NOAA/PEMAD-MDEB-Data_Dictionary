@@ -120,13 +120,20 @@
 <span id="cb4-52"><a href="connecting-python-and-arcgis.html#cb4-52" tabindex="-1"></a></span>
 <span id="cb4-53"><a href="connecting-python-and-arcgis.html#cb4-53" tabindex="-1"></a><span class="co"># create map using geopandas</span></span>
 <span id="cb4-54"><a href="connecting-python-and-arcgis.html#cb4-54" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb4-55"><a href="connecting-python-and-arcgis.html#cb4-55" tabindex="-1"></a>gdf.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'#D1E7DD'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb4-56"><a href="connecting-python-and-arcgis.html#cb4-56" tabindex="-1"></a>plt.title(<span class="st">'World Map'</span>)</span>
+<span id="cb4-55"><a href="connecting-python-and-arcgis.html#cb4-55" tabindex="-1"></a>gdf.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'#9bc04b'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>) <span class="co">#set fill color and border color</span></span>
+<span id="cb4-56"><a href="connecting-python-and-arcgis.html#cb4-56" tabindex="-1"></a>plt.title(<span class="st">'World Map'</span>) <span class="co">#set map title</span></span>
 <span id="cb4-57"><a href="connecting-python-and-arcgis.html#cb4-57" tabindex="-1"></a>ax.set_xticks([]) <span class="co">#remove tick marks</span></span>
 <span id="cb4-58"><a href="connecting-python-and-arcgis.html#cb4-58" tabindex="-1"></a>ax.set_yticks([])</span>
 <span id="cb4-59"><a href="connecting-python-and-arcgis.html#cb4-59" tabindex="-1"></a>ax.xaxis.set_ticklabels([]) <span class="co">#remove tick labels</span></span>
 <span id="cb4-60"><a href="connecting-python-and-arcgis.html#cb4-60" tabindex="-1"></a>ax.yaxis.set_ticklabels([])</span>
-<span id="cb4-61"><a href="connecting-python-and-arcgis.html#cb4-61" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<span id="cb4-61"><a href="connecting-python-and-arcgis.html#cb4-61" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="dv">9000000</span>,<span class="dv">20000000</span>) <span class="co">#set limits of y axis </span></span>
+<span id="cb4-62"><a href="connecting-python-and-arcgis.html#cb4-62" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-18"></span>
+<img src="img/World_map.png" alt="World map" width="100%"><p class="caption">
+Figure 4.1: World map
+</p>
+</div>
 
 </div>
   <div class="chapter-nav">
