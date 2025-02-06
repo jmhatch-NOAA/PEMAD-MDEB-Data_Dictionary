@@ -2,6 +2,7 @@
 hidden.R
 narw_aerial_footprint.R
 /bookdown/_book/
+/bookdown/*.Rmd
 data/
 data-raw/
 inst/
