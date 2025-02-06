@@ -96,9 +96,9 @@
 <span><span class="va">sf_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.esri.com/arcgislayers/reference/arc_select.html">arc_select</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create map from sf object</span></span>
-<span><span class="va">USA_map</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sf_data</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">USA_map</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sf_data</span><span class="op">)</span><span class="op">+</span></span>
+<span>            <span class="fu">geom_sf</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span> <span class="co">#fill color white</span></span>
+<span>            <span class="fu">coord_sf</span><span class="op">(</span>xlim<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">13951910</span>,<span class="op">-</span><span class="fl">7000000</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000000</span>, <span class="fl">7000000</span><span class="op">)</span><span class="op">)</span> <span class="co">#set map coordinates (in meters)</span></span>
 <span><span class="va">USA_map</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-16"></span>
