@@ -39,9 +39,9 @@ data <- arc_open(feature_server_url)
 sf_data <- arc_select(data)
 
 # create map from sf object
-USA_map <- ggplot(data = sf_data) + 
-  geom_sf() +
-  theme_classic()
+USA_map <- ggplot(data = sf_data)+
+            geom_sf(fill = "white")+ #fill color white
+            coord_sf(xlim= c(-13951910,-7000000), ylim = c(1000000, 7000000)) #set map coordinates (in meters)
 USA_map
 ```
 
@@ -108,11 +108,17 @@ gdf = gpd.GeoDataFrame(geometry=geometries)
 
 # create map using geopandas
 fig,ax = plt.subplots(figsize=(10,6))
-gdf.plot(ax=ax, color='#D1E7DD', edgecolor='black')
-plt.title('World Map')
+gdf.plot(ax=ax, color='#9bc04b', edgecolor='black') #set fill color and border color
+plt.title('World Map') #set map title
 ax.set_xticks([]) #remove tick marks
 ax.set_yticks([])
 ax.xaxis.set_ticklabels([]) #remove tick labels
 ax.yaxis.set_ticklabels([])
+plt.ylim(-9000000,20000000) #set limits of y axis 
 plt.show()
 ```
+
+```{r, echo=FALSE, out.width="100%", fig.cap="World map"}
+knitr::include_graphics("img/World_map.png")
+```
+

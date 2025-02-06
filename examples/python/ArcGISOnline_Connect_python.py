@@ -56,10 +56,11 @@ gdf = gpd.GeoDataFrame(geometry=geometries)
 
 #create map using geopandas
 fig,ax = plt.subplots(figsize=(10,6))
-gdf.plot(ax=ax, color='#D1E7DD', edgecolor='black')
-plt.title('World Map')
+gdf.plot(ax=ax, color='#9bc04b', edgecolor='black') #set fill color and border color
+plt.title('World Map') #set map title
 ax.set_xticks([]) #remove tick marks
 ax.set_yticks([])
 ax.xaxis.set_ticklabels([]) #remove tick labels
 ax.yaxis.set_ticklabels([])
+plt.ylim(-9000000,20000000) #set limits of y axis 
 plt.show()
