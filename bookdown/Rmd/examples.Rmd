@@ -39,9 +39,9 @@ data <- arc_open(feature_server_url)
 sf_data <- arc_select(data)
 
 # create map from sf object
-USA_map <- ggplot(data = sf_data) + 
-  geom_sf() +
-  theme_classic()
+USA_map <- ggplot(data = sf_data)+
+            geom_sf(fill = "white")+ #fill color white
+            coord_sf(xlim= c(-13951910,-7000000), ylim = c(1000000, 7000000)) #set map coordinates (in meters)
 USA_map
 ```
 
