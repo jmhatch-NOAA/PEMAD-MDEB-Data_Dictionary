@@ -218,12 +218,14 @@ for survey_short in survey_names:
   "snippet" : item.snippet,
   "summary" : item.snippet,
   "description" : item.description,
+  "serviceDescription":item.description,
   "licenseInfo" : item.licenseInfo,
   "accessInformation" : item.accessInformation,
   "copyrightText": item.licenseInfo
   }
   # 
-  
+  feature_service = FeatureLayer(rest_url)
+  feature_service.manager.update_definition(item_properties)
   layer_id = '0'
   layer_url = f"{rest_url}/{layer_id}"
   layer = FeatureLayer(layer_url)
