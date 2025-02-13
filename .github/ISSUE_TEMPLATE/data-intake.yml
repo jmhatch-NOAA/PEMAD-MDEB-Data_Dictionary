@@ -1,5 +1,5 @@
-name: OWEBdb Data Intake Questionnaire
-description: File a data intake questionnaire for OWEBdb.
+name: MDEBdb Data Intake Questionnaire
+description: File a data intake questionnaire for MDEBdb.
 title: "[Data Intake]: "
 labels: ["documentation"]
 assignees: ["jmhatch", "NMucci1"]
