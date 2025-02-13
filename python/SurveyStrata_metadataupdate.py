@@ -38,7 +38,7 @@ session= Session()
 
 #names of surveys, from oracle table
 
-survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP"]
+survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP","COASTSPAN"]
 
 #first pull item ID from oracle
 #download an xml file from arcgis to edit using the item id
@@ -191,7 +191,8 @@ print("All feature service metadata updated!")
     
 # #update metadata for individual layers within feature services
 # #create json dictionary using item properties from feature service 
-survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP"]
+survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP", "COASTSPAN"]
+
 for survey_short in survey_names:
   
   #extract the layer ID value from oracle metadata table using survey name
@@ -216,7 +217,6 @@ for survey_short in survey_names:
   "title" : item.title,
   "tags" : item.tags,
   "snippet" : item.snippet,
-  "summary" : item.snippet,
   "description" : item.description,
   "serviceDescription":item.description,
   "licenseInfo" : item.licenseInfo,
