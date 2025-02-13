@@ -53,7 +53,7 @@
 # portalName can be left as-is if you are working in ArcGIS Online. Change to your portal URL otherwise.
 
 # DATA PULL FROM ORACLE _______________________________________________________________________________________
-survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP"]
+survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP", "COASTSPAN"]
 
 import tempfile
 import os
@@ -79,7 +79,7 @@ SQL_DRIVER = 'cx_oracle'
 USERNAME = '' #enter your username
 PASSWORD = '' #enter your password
 HOST = '' #enter the oracle db host url
-PORT =   # enter the oracle port number
+PORT =  # enter the oracle port number
 SERVICE = '' # enter the oracle db service name
 ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD +'@' + HOST + ':' + str(PORT) + '/?service_name=' + SERVICE
 engine = create_engine(ENGINE_PATH_WIN_AUTH)
