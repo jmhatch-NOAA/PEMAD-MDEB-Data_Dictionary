@@ -1,5 +1,5 @@
-fig:unnamed-chunk-16
-fig:unnamed-chunk-18
+fig:unnamed-chunk-21
+fig:unnamed-chunk-23
 introduction
 survey-mitigation
 ecosystem-monitoring-survey
@@ -20,6 +20,14 @@ layers-1
 fields-1
 csbll_strata
 csbll_stations
+turtle-ecology-survey
+arcgis-feature-service-2
+inport-metadata-2
+description-2
+spatial-extent-2
+layers-2
+fields-2
+turtle_strata
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
