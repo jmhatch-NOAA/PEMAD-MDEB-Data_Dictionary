@@ -1,0 +1,87 @@
+## Turtle Ecology Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+turtle_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Turtle_AerialStrata/FeatureServer'
+
+# metadata
+turtle_meta = arcgisutils::fetch_layer_metadata(url = turtle_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r turtle_url`).
+
+```{r, echo = FALSE}
+# description
+turtle_desc = gsub("<a(.|\n)*?</a>", '', turtle_meta$serviceDescription)
+turtle_desc = gsub("<p>|<br>|</p>|\\n", '', turtle_desc)
+```
+
+### InPort Metadata
+
+Not yet.
+
+### Description
+
+`r turtle_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+turtle_bb = data.frame(
+  x = c(turtle_meta$fullExtent$xmin, turtle_meta$fullExtent$xmax), 
+  y = c(turtle_meta$fullExtent$ymin, turtle_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = turtle_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = turtle_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+turtle_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+turtle_layers = turtle_meta$layers
+
+# loop over layers
+turtle_fields = purrr::map(.x = 1:nrow(turtle_layers), .f = function(.x) {
+  
+  # open layer
+  turtle_layer = arcgislayers::arc_open(url = paste0(turtle_url, '/', turtle_layers$id[.x]), token = token)
+  
+  # get fields
+  turtle_fields = arcgislayers::list_fields(turtle_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  turtle_fields = turtle_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', turtle_layers$name[.x], '\n')
+    print(knitr::kable(turtle_fields))
+  cat('\n')
+
+})
+
+```

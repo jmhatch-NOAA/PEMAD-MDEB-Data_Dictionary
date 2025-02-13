@@ -23,7 +23,8 @@ inport_href = ecomon_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-ecomon_desc = gsub('(.*?)</a>\\.\\s+', '', ecomon_meta$serviceDescription)
+ecomon_desc = gsub("<a(.|\n)*?</a>", '', ecomon_meta$serviceDescription)
+ecomon_desc = gsub("<p>|<br>|</p>|\\n", '', ecomon_desc)
 ```
 
 ### InPort Metadata
