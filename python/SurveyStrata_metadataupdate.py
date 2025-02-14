@@ -191,7 +191,7 @@ print("All feature service metadata updated!")
     
 # #update metadata for individual layers within feature services
 # #create json dictionary using item properties from feature service 
-survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP", "COASTSPAN"]
+survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP", "COASTSPAN"]
 
 for survey_short in survey_names:
   
@@ -228,17 +228,54 @@ for survey_short in survey_names:
   feature_service.manager.update_definition(item_properties)
   layer_id = '0'
   layer_url = f"{rest_url}/{layer_id}"
-  layer = FeatureLayer(layer_url)
-  print(f"{survey_short} layer {layer_id} exists, proceeding with update...")
-  layer.manager.update_definition(item_properties)
-  print(f"{survey_short} layer {layer_id} updated successfully!")
+
+  try: 
+    #pull out description from oracle metadata table to fill in layer level description
+    table_name = f"SMIT_{survey_short}_META"
+    column_name = "abstract"
+    with engine.connect() as connection:
+      metadata= MetaData(bind=engine)
+      table = Table(table_name, metadata, autoload_with=engine)
+      query = select([table.c[column_name]]).where(table.c.rest_url == f'{layer_url}')
+      
+      result = connection.execute(query).fetchone()
+    description = result[0] if result and result[0] is not None else ''
     
+    layer_properties = {
+      "description" : description,
+      "licenseInfo" : item.licenseInfo,
+      "copyrightText": item.licenseInfo
+      }
+    
+    layer = FeatureLayer(layer_url)
+    print(f"{survey_short} layer {layer_id} exists, proceeding with update...")
+    layer.manager.update_definition(layer_properties)
+    print(f"{survey_short} layer {layer_id} updated successfully!")
+  except Exception as e:
+    print(f"layer {layer_id} does not exist or could not be retrieved.") 
+  
   layer_id = '1'
   layer_url = f"{rest_url}/{layer_id}"
   try:
+    #pull out description from oracle metadata table to fill in layer level description
+    table_name = f"SMIT_{survey_short}_META"
+    column_name = "abstract"
+    with engine.connect() as connection:
+      metadata= MetaData(bind=engine)
+      table = Table(table_name, metadata, autoload_with=engine)
+      query = select([table.c[column_name]]).where(table.c.rest_url == f'{layer_url}')
+    
+      result = connection.execute(query).fetchone()
+    description = result[0] if result and result[0] is not None else ''
+  
+    layer_properties = {
+    "description" : description,
+    "licenseInfo" : item.licenseInfo,
+    "copyrightText": item.licenseInfo
+    }
     layer = FeatureLayer(layer_url)
     print(f"{survey_short} layer {layer_id} exists, proceeding with update...")
-    layer.manager.update_definition(item_properties)
+    layer.manager.update_definition(layer_properties)
     print(f"{survey_short} layer {layer_id} updated successfully!")
   except Exception as e:
     print(f"layer {layer_id} does not exist or could not be retrieved.")
