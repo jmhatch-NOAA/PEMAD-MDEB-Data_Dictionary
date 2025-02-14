@@ -5,7 +5,7 @@
 token = arcgisutils::auth_client()
 
 # feature server url
-ecomon_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Strata/FeatureServer/'
+ecomon_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Strata/FeatureServer'
 
 # metadata
 ecomon_meta = arcgisutils::fetch_layer_metadata(url = ecomon_url, token = token)
@@ -73,6 +73,13 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   # open layer
   ecomon_layer = arcgislayers::arc_open(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]), token = token)
   
+  # get metadata for layer
+  ecomon_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]), token = token)
+  
+  # layer description
+  layer_desc =  ecomon_layer_meta$description
+  layer_desc = gsub("\\n", '', layer_desc)
+
   # get fields
   ecomon_fields = arcgislayers::list_fields(ecomon_layer) |>
     dplyr::select(name, alias, description, actualType) |>
@@ -85,7 +92,9 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   
   # output
   cat('\n####', ecomon_layers$name[.x], '\n')
-    print(knitr::kable(ecomon_fields))
+  cat('<em>Description</em><br>')
+  cat(layer_desc, '\n')
+  print(knitr::kable(ecomon_fields))
   cat('\n')
 
 })
