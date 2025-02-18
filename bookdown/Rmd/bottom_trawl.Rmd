@@ -1,0 +1,93 @@
+## Bottom Trawl Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+bts_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Bottom_Trawl_Survey_Strata/FeatureServer'
+
+# metadata
+bts_meta = arcgisutils::fetch_layer_metadata(url = bts_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r bts_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = bts_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+bts_desc = gsub("<a(.|\n)*?</a>", '', bts_meta$serviceDescription)
+bts_desc = gsub("<p>|<br>|</p>|\\n", '', bts_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r bts_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+bts_bb = data.frame(
+  x = c(bts_meta$fullExtent$xmin, bts_meta$fullExtent$xmax), 
+  y = c(bts_meta$fullExtent$ymin, bts_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = bts_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = bts_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+bts_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+bts_layers = bts_meta$layers
+
+# loop over layers
+bts_fields = purrr::map(.x = 1:nrow(bts_layers ), .f = function(.x) {
+  
+  # open layer
+  bts_layer = arcgislayers::arc_open(url = paste0(bts_url, '/', bts_layers$id[.x]), token = token)
+  
+  # get fields
+  bts_fields = arcgislayers::list_fields(bts_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  bts_fields = bts_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', bts_layers$name[.x], '\n')
+    print(knitr::kable(bts_fields))
+  cat('\n')
+
+})
+
+```

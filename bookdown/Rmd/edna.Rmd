@@ -1,0 +1,93 @@
+## eDNA Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+edna_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/eDNA_Strata/FeatureServer'
+
+# metadata
+edna_meta = arcgisutils::fetch_layer_metadata(url = edna_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r edna_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = edna_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+edna_desc = gsub("<a(.|\n)*?</a>", '', edna_meta$serviceDescription)
+edna_desc = gsub("<p>|<br>|</p>|\\n", '', edna_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r edna_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+edna_bb = data.frame(
+  x = c(edna_meta$fullExtent$xmin, edna_meta$fullExtent$xmax), 
+  y = c(edna_meta$fullExtent$ymin, edna_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = edna_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = edna_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+edna_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+edna_layers = edna_meta$layers
+
+# loop over layers
+edna_fields = purrr::map(.x = 1:nrow(edna_layers ), .f = function(.x) {
+  
+  # open layer
+  edna_layer = arcgislayers::arc_open(url = paste0(edna_url, '/', edna_layers$id[.x]), token = token)
+  
+  # get fields
+  edna_fields = arcgislayers::list_fields(edna_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  edna_fields = edna_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', edna_layers$name[.x], '\n')
+    print(knitr::kable(edna_fields))
+  cat('\n')
+
+})
+
+```

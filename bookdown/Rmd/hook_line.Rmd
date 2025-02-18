@@ -1,0 +1,93 @@
+## Hook and Line Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+hl_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Hook_Line_Geographic_Extent/FeatureServer'
+
+# metadata
+hl_meta = arcgisutils::fetch_layer_metadata(url = hl_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r hl_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = hl_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+hl_desc = gsub("<a(.|\n)*?</a>", '', hl_meta$serviceDescription)
+hl_desc = gsub("<p>|<br>|</p>|\\n", '', hl_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r hl_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+hl_bb = data.frame(
+  x = c(hl_meta$fullExtent$xmin, hl_meta$fullExtent$xmax), 
+  y = c(hl_meta$fullExtent$ymin, hl_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = hl_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = hl_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+hl_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+hl_layers = hl_meta$layers
+
+# loop over layers
+hl_fields = purrr::map(.x = 1:nrow(hl_layers ), .f = function(.x) {
+  
+  # open layer
+  hl_layer = arcgislayers::arc_open(url = paste0(hl_url, '/', hl_layers$id[.x]), token = token)
+  
+  # get fields
+  hl_fields = arcgislayers::list_fields(hl_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  hl_fields = hl_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', hl_layers$name[.x], '\n')
+    print(knitr::kable(hl_fields))
+  cat('\n')
+
+})
+
+```

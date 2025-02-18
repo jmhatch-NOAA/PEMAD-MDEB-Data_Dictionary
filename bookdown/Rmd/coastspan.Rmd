@@ -1,0 +1,93 @@
+## Coastal Shark Pupping and Nursing Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+coastspan_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Pupping_and_Nursing_Survey_Strata/FeatureServer'
+
+# metadata
+coastspan_meta = arcgisutils::fetch_layer_metadata(url = coastspan_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r coastspan_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = coastspan_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+coastspan_desc = gsub("<a(.|\n)*?</a>", '', coastspan_meta$serviceDescription)
+coastspan_desc = gsub("<p>|<br>|</p>|\\n", '', coastspan_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r coastspan_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+coastspan_bb = data.frame(
+  x = c(coastspan_meta$fullExtent$xmin, coastspan_meta$fullExtent$xmax), 
+  y = c(coastspan_meta$fullExtent$ymin, coastspan_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = coastspan_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = coastspan_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+coastspan_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+coastspan_layers = coastspan_meta$layers
+
+# loop over layers
+coastspan_fields = purrr::map(.x = 1:nrow(coastspan_layers ), .f = function(.x) {
+  
+  # open layer
+  coastspan_layer = arcgislayers::arc_open(url = paste0(coastspan_url, '/', coastspan_layers$id[.x]), token = token)
+  
+  # get fields
+  coastspan_fields = arcgislayers::list_fields(coastspan_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  coastspan_fields = coastspan_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', coastspan_layers$name[.x], '\n')
+    print(knitr::kable(coastspan_fields))
+  cat('\n')
+
+})
+
+```

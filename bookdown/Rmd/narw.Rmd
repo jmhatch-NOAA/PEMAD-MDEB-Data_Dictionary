@@ -1,0 +1,93 @@
+## North Atlantic Right Whale Aerial Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+narw_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NARW_Survey_Strata/FeatureServer'
+
+# metadata
+narw_meta = arcgisutils::fetch_layer_metadata(url = narw_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r narw_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = narw_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+narw_desc = gsub("<a(.|\n)*?</a>", '', narw_meta$serviceDescription)
+narw_desc = gsub("<p>|<br>|</p>|\\n", '', narw_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r narw_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+narw_bb = data.frame(
+  x = c(narw_meta$fullExtent$xmin, narw_meta$fullExtent$xmax), 
+  y = c(narw_meta$fullExtent$ymin, narw_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = narw_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = narw_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+narw_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+narw_layers = narw_meta$layers
+
+# loop over layers
+narw_fields = purrr::map(.x = 1:nrow(narw_layers ), .f = function(.x) {
+  
+  # open layer
+  narw_layer = arcgislayers::arc_open(url = paste0(narw_url, '/', narw_layers$id[.x]), token = token)
+  
+  # get fields
+  narw_fields = arcgislayers::list_fields(narw_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  narw_fields = narw_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', narw_layers$name[.x], '\n')
+    print(knitr::kable(narw_fields))
+  cat('\n')
+
+})
+
+```

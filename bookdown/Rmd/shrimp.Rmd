@@ -1,0 +1,93 @@
+## Northern Shrimp Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+shrimp_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Northern_Shrimp_Survey_Strata/FeatureServer'
+
+# metadata
+shrimp_meta = arcgisutils::fetch_layer_metadata(url = shrimp_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r shrimp_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = shrimp_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+shrimp_desc = gsub("<a(.|\n)*?</a>", '', shrimp_meta$serviceDescription)
+shrimp_desc = gsub("<p>|<br>|</p>|\\n", '', shrimp_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r shrimp_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+shrimp_bb = data.frame(
+  x = c(shrimp_meta$fullExtent$xmin, shrimp_meta$fullExtent$xmax), 
+  y = c(shrimp_meta$fullExtent$ymin, shrimp_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = shrimp_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = shrimp_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+shrimp_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+shrimp_layers = shrimp_meta$layers
+
+# loop over layers
+shrimp_fields = purrr::map(.x = 1:nrow(shrimp_layers ), .f = function(.x) {
+  
+  # open layer
+  shrimp_layer = arcgislayers::arc_open(url = paste0(shrimp_url, '/', shrimp_layers$id[.x]), token = token)
+  
+  # get fields
+  shrimp_fields = arcgislayers::list_fields(shrimp_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  shrimp_fields = shrimp_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', shrimp_layers$name[.x], '\n')
+    print(knitr::kable(shrimp_fields))
+  cat('\n')
+
+})
+
+```

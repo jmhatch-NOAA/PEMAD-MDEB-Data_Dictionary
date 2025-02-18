@@ -1,0 +1,93 @@
+## Seal Aerial Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+seal_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Seal_survey_strata/FeatureServer'
+
+# metadata
+seal_meta = arcgisutils::fetch_layer_metadata(url = seal_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r seal_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = seal_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+seal_desc = gsub("<a(.|\n)*?</a>", '', seal_meta$serviceDescription)
+seal_desc = gsub("<p>|<br>|</p>|\\n", '', seal_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r seal_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+seal_bb = data.frame(
+  x = c(seal_meta$fullExtent$xmin, seal_meta$fullExtent$xmax), 
+  y = c(seal_meta$fullExtent$ymin, seal_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = seal_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = seal_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+seal_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+seal_layers = seal_meta$layers
+
+# loop over layers
+seal_fields = purrr::map(.x = 1:nrow(seal_layers ), .f = function(.x) {
+  
+  # open layer
+  seal_layer = arcgislayers::arc_open(url = paste0(seal_url, '/', seal_layers$id[.x]), token = token)
+  
+  # get fields
+  seal_fields = arcgislayers::list_fields(seal_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  seal_fields = seal_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', seal_layers$name[.x], '\n')
+    print(knitr::kable(seal_fields))
+  cat('\n')
+
+})
+
+```

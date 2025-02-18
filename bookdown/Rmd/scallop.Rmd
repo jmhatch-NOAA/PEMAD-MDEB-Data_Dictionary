@@ -1,0 +1,93 @@
+## Sea Scallop Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+scallop_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Scallop_Survey_Strata/FeatureServer'
+
+# metadata
+scallop_meta = arcgisutils::fetch_layer_metadata(url = scallop_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r scallop_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = scallop_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+scallop_desc = gsub("<a(.|\n)*?</a>", '', scallop_meta$serviceDescription)
+scallop_desc = gsub("<p>|<br>|</p>|\\n", '', scallop_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r scallop_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+scallop_bb = data.frame(
+  x = c(scallop_meta$fullExtent$xmin, scallop_meta$fullExtent$xmax), 
+  y = c(scallop_meta$fullExtent$ymin, scallop_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = scallop_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = scallop_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+scallop_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+scallop_layers = scallop_meta$layers
+
+# loop over layers
+scallop_fields = purrr::map(.x = 1:nrow(scallop_layers ), .f = function(.x) {
+  
+  # open layer
+  scallop_layer = arcgislayers::arc_open(url = paste0(scallop_url, '/', scallop_layers$id[.x]), token = token)
+  
+  # get fields
+  scallop_fields = arcgislayers::list_fields(scallop_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  scallop_fields = scallop_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', scallop_layers$name[.x], '\n')
+    print(knitr::kable(scallop_fields))
+  cat('\n')
+
+})
+
+```
