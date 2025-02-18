@@ -1,5 +1,5 @@
-fig:unnamed-chunk-21
-fig:unnamed-chunk-23
+fig:unnamed-chunk-26
+fig:unnamed-chunk-28
 introduction
 survey-mitigation
 ecosystem-monitoring-survey
@@ -28,6 +28,15 @@ spatial-extent-2
 layers-2
 fields-2
 turtle_strata
+atlantic-surfclam-and-ocean-quahog-survey
+arcgis-feature-service-3
+inport-metadata-3
+description-3
+spatial-extent-3
+layers-3
+fields-3
+oq_strata
+sc_strata
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
