@@ -3,7 +3,7 @@
 Watch this screen capture video for assistance in navigating the ArcGIS Marine Development Data Hub.
 
 <video width="640" height="410" controls>
-  <source src="https://github.com/jmhatch-NOAA/PEMAD-MDEB-Data_Dictionary/raw/main/bookdown/video/datahub_screencapture.w   ebm" type= "video/webm">
+  <source src="https://github.com/jmhatch-NOAA/PEMAD-MDEB-Data_Dictionary/raw/main/bookdown/video/datahub_screencapture.webm type= "video/webm">
   Your browser does not support the video tag. 
   
 </video>
