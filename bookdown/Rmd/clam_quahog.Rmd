@@ -1,0 +1,93 @@
+## Atlantic Surfclam and Ocean Quahog Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+clam_quahog_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ocean_Quahog_Survey_Strata/FeatureServer'
+
+# metadata
+clam_quahog_meta = arcgisutils::fetch_layer_metadata(url = clam_quahog_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r clam_quahog_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = clam_quahog_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+clam_quahog_desc = gsub("<a(.|\n)*?</a>", '', clam_quahog_meta$serviceDescription)
+clam_quahog_desc = gsub("<p>|<br>|</p>|\\n", '', clam_quahog_desc)
+```
+
+### InPort Metadata
+
+Yes, see [here](`r inport_href`).
+
+### Description
+
+`r clam_quahog_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+clam_quahog_bb = data.frame(
+  x = c(clam_quahog_meta$fullExtent$xmin, clam_quahog_meta$fullExtent$xmax), 
+  y = c(clam_quahog_meta$fullExtent$ymin, clam_quahog_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = clam_quahog_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = clam_quahog_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+clam_quahog_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+clam_quahog_layers = clam_quahog_meta$layers
+
+# loop over layers
+clam_quahog_fields = purrr::map(.x = 1:nrow(clam_quahog_layers ), .f = function(.x) {
+  
+  # open layer
+  clam_quahog_layer = arcgislayers::arc_open(url = paste0(clam_quahog_url, '/', clam_quahog_layers$id[.x]), token = token)
+  
+  # get fields
+  clam_quahog_fields = arcgislayers::list_fields(clam_quahog_layer) |>
+    dplyr::select(name, alias, description, actualType) |>
+    dplyr::rename(dataType = actualType)
+  
+  # format description
+  clam_quahog_fields = clam_quahog_fields |>
+    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', clam_quahog_layers$name[.x], '\n')
+    print(knitr::kable(clam_quahog_fields))
+  cat('\n')
+
+})
+
+```
