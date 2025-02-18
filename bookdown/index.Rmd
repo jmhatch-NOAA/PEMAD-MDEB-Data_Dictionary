@@ -40,7 +40,7 @@ file.copy(from = here::here('bookdown', 'Rmd') |> list.files(full.names = TRUE),
 
 # rename files
 rmd = c('survey_mitigation.Rmd', 'ecomon.Rmd', 'csbll.Rmd','coastspan.Rmd','seal.Rmd', 'turtle.Rmd', 'clam_quahog.Rmd','scallop.Rmd', 'shrimp.Rmd', 'hook_line.Rmd','bottom_trawl.Rmd','mmst.Rmd',
-'narw.Rmd','gombll.Rmd','edna.Rmd','pam.Rmd', 'smit_sop.Rmd', 'examples.Rmd')
+'narw.Rmd','gombll.Rmd','edna.Rmd', 'smit_sop.Rmd', 'examples.Rmd')
 rmd_files = paste0(stringr::str_pad(1:length(rmd), width = 2, side = 'left', pad = "0"), '-', rmd)
 file.rename(from = rmd, to = rmd_files)
 ```
