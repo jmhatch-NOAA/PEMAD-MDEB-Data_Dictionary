@@ -131,5 +131,6 @@ pam_deployments
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
+data-hub
 connecting-r-and-arcgis
 connecting-python-and-arcgis
