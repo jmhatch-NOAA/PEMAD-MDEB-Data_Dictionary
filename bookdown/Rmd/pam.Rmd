@@ -1,0 +1,85 @@
+## Passive Acoustic Monitoring Survey
+
+```{r, echo = FALSE}
+# generate token
+token = arcgisutils::auth_client()
+
+# feature server url
+pam_url='https://services1.arcgis.com/XBhYkoXKJCRHbe7M/arcgis/rest/services/PAM_Deployments/FeatureServer'
+
+# metadata
+pam_meta = arcgisutils::fetch_layer_metadata(url = pam_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r pam_url`).
+
+```{r, echo = FALSE}
+
+# description
+pam_desc = pam_meta$serviceDescription
+```
+
+### InPort Metadata
+
+Not yet.
+
+### Description
+
+`r pam_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+pam_bb = data.frame(
+  x = c(pam_meta$fullExtent$xmin, pam_meta$fullExtent$xmax), 
+  y = c(pam_meta$fullExtent$ymin, pam_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = pam_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = pam_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+pam_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# layers 
+pam_layers = pam_meta$layers
+
+# loop over layers
+pam_fields = purrr::map(.x = 1:nrow(pam_layers ), .f = function(.x) {
+  
+  # open layer
+  pam_layer = arcgislayers::arc_open(url = paste0(pam_url, '/', pam_layers$id[.x]), token = token)
+  
+  # get fields
+  pam_fields = arcgislayers::list_fields(pam_layer) |>
+    dplyr::select(name, alias)
+  
+  # format description
+  pam_fields = pam_fields |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  
+  # output
+  cat('\n####', pam_layers$name[.x], '\n')
+    print(knitr::kable(pam_fields))
+  cat('\n')
+
+})
+
+```
