@@ -1,5 +1,5 @@
-fig:unnamed-chunk-76
-fig:unnamed-chunk-78
+fig:unnamed-chunk-81
+fig:unnamed-chunk-83
 introduction
 survey-mitigation
 ecosystem-monitoring-survey
@@ -120,6 +120,14 @@ layers-13
 fields-13
 edna_strata
 edna_stations
+passive-acoustic-monitoring-survey
+arcgis-feature-service-14
+inport-metadata-14
+description-14
+spatial-extent-14
+layers-14
+fields-14
+pam_deployments
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
