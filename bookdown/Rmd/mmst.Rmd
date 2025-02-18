@@ -16,12 +16,6 @@ mmst_meta = arcgisutils::fetch_layer_metadata(url = mmst_url, token = token)
 Click [here](`r mmst_url`).
 
 ```{r, echo = FALSE}
-# InPort
-inport_href = mmst_meta$serviceDescription |>
-  rvest::read_html() |>
-  rvest::html_node('a') |>
-  rvest::html_attr('href')
-
 # description
 mmst_desc = gsub("<a(.|\n)*?</a>", '', mmst_meta$serviceDescription)
 mmst_desc = gsub("<p>|<br>|</p>|\\n", '', mmst_desc)
@@ -29,7 +23,7 @@ mmst_desc = gsub("<p>|<br>|</p>|\\n", '', mmst_desc)
 
 ### InPort Metadata
 
-Yes, see [here](`r inport_href`).
+Not yet.
 
 ### Description
 

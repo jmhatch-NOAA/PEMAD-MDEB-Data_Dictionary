@@ -16,11 +16,6 @@ gombll_meta = arcgisutils::fetch_layer_metadata(url = gombll_url, token = token)
 Click [here](`r gombll_url`).
 
 ```{r, echo = FALSE}
-# InPort
-inport_href = gombll_meta$serviceDescription |>
-  rvest::read_html() |>
-  rvest::html_node('a') |>
-  rvest::html_attr('href')
 
 # description
 gombll_desc = gsub("<a(.|\n)*?</a>", '', gombll_meta$serviceDescription)
@@ -29,7 +24,7 @@ gombll_desc = gsub("<p>|<br>|</p>|\\n", '', gombll_desc)
 
 ### InPort Metadata
 
-Yes, see [here](`r inport_href`).
+Not yet.
 
 ### Description
 
