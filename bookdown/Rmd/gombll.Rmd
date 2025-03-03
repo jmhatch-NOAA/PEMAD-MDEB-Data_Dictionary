@@ -68,6 +68,13 @@ gombll_fields = purrr::map(.x = 1:nrow(gombll_layers ), .f = function(.x) {
   # open layer
   gombll_layer = arcgislayers::arc_open(url = paste0(gombll_url, '/', gombll_layers$id[.x]), token = token)
   
+  # get metadata for layer
+  gombll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(gombll_url, '/', gombll_layers$id[.x]), token = token)
+  
+  # layer description
+  layer_desc =  gombll_layer_meta$description
+  layer_desc = gsub("\\n", '', layer_desc)
+  
   # get fields
   gombll_fields = arcgislayers::list_fields(gombll_layer) |>
     dplyr::select(name, alias, description, actualType) |>
@@ -80,6 +87,8 @@ gombll_fields = purrr::map(.x = 1:nrow(gombll_layers ), .f = function(.x) {
   
   # output
   cat('\n####', gombll_layers$name[.x], '\n')
+  cat('<em>Description</em><br>')
+  cat(layer_desc, '\n')
     print(knitr::kable(gombll_fields))
   cat('\n')
 

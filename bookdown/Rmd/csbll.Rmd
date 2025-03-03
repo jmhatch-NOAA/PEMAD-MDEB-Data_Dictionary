@@ -73,6 +73,13 @@ csbll_fields = purrr::map(.x = 1:nrow(csbll_layers), .f = function(.x) {
   # open layer
   csbll_layer = arcgislayers::arc_open(url = paste0(csbll_url, '/', csbll_layers$id[.x]), token = token)
   
+    # get metadata for layer
+  csbll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(csbll_url, '/', csbll_layers$id[.x]), token = token)
+  
+  # layer description
+  layer_desc =  csbll_layer_meta$description
+  layer_desc = gsub("\\n", '', layer_desc)
+  
   # get fields
   csbll_fields = arcgislayers::list_fields(csbll_layer) |>
     dplyr::select(name, alias, description, actualType) |>
@@ -85,6 +92,8 @@ csbll_fields = purrr::map(.x = 1:nrow(csbll_layers), .f = function(.x) {
   
   # output
   cat('\n####', csbll_layers$name[.x], '\n')
+  cat('<em>Description</em><br>')
+  cat(layer_desc, '\n')
     print(knitr::kable(csbll_fields))
   cat('\n')
 
