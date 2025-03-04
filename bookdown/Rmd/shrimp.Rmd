@@ -1,9 +1,6 @@
 ## Northern Shrimp Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 shrimp_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Northern_Shrimp_Survey_Strata/FeatureServer'
 
@@ -80,9 +77,9 @@ shrimp_fields = purrr::map(.x = 1:nrow(shrimp_layers ), .f = function(.x) {
   
   # format description
   shrimp_fields = shrimp_fields |>
-    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::mutate(description =   gsub("value:(.+),fieldValueType.*", "\\1", gsub('\"|\\{', '', description))) |>
     dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
-  
+
   # output
   cat('\n####', shrimp_layers$name[.x], '\n')
     print(knitr::kable(shrimp_fields))

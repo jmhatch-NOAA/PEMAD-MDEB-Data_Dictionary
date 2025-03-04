@@ -1,9 +1,6 @@
 ## Gulf of Maine Bottom Longline Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 gombll_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/GOM_Bottom_Longline_Survey_Strata/FeatureServer'
 
@@ -82,7 +79,7 @@ gombll_fields = purrr::map(.x = 1:nrow(gombll_layers ), .f = function(.x) {
   
   # format description
   gombll_fields = gombll_fields |>
-    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
+    dplyr::mutate(description =   gsub("value:(.+),fieldValueType.*", "\\1", gsub('\"|\\{', '', description))) |>
     dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
   
   # output

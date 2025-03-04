@@ -30,6 +30,9 @@ The Marine Development and Ecology Branch database (MDEBdb) contains geospatial 
 This data dictionary is meant to catalog and communicate the structure and content of the MDEBdb, and provide meaningful descriptions of the data objects for users.
 
 ```{r, echo = FALSE, results = 'hide'}
+# generate token
+token = arcgisutils::auth_client()
+
 # delete files
 old_rmd = list.files(pattern = '\\.Rmd')
 old_rmd = old_rmd[old_rmd != 'index.Rmd']
