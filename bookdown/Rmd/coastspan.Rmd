@@ -1,9 +1,6 @@
 ## Coastal Shark Pupping and Nursing Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 coastspan_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Pupping_and_Nursing_Survey_Strata/FeatureServer'
 

@@ -1,9 +1,6 @@
 ## Coastal Shark Bottom Longline Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 csbll_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Bottom_Longline_Survey_Strata/FeatureServer'
 

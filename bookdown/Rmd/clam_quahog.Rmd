@@ -1,9 +1,6 @@
 ## Atlantic Surfclam and Ocean Quahog Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 clam_quahog_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ocean_Quahog_Survey_Strata/FeatureServer'
 

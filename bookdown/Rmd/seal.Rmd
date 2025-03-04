@@ -1,9 +1,6 @@
 ## Seal Aerial Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 seal_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Seal_survey_strata/FeatureServer'
 

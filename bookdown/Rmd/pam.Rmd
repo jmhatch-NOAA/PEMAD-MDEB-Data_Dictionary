@@ -1,9 +1,6 @@
 ## Passive Acoustic Monitoring Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 pam_url='https://services1.arcgis.com/XBhYkoXKJCRHbe7M/arcgis/rest/services/PAM_Deployments/FeatureServer'
 

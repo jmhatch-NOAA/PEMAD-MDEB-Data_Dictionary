@@ -1,9 +1,6 @@
 ## Ecosystem Monitoring Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 ecomon_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Strata/FeatureServer'
 

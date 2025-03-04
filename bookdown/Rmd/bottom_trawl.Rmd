@@ -1,9 +1,6 @@
 ## Bottom Trawl Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 bts_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Bottom_Trawl_Survey_Strata/FeatureServer'
 

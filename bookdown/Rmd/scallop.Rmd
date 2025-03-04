@@ -1,9 +1,6 @@
 ## Sea Scallop Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 scallop_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Scallop_Survey_Strata/FeatureServer'
 

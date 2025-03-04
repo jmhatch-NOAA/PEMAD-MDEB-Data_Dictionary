@@ -1,9 +1,6 @@
 ## Hook and Line Survey
 
 ```{r, echo = FALSE}
-# generate token
-token = arcgisutils::auth_client()
-
 # feature server url
 hl_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Hook_Line_Geographic_Extent/FeatureServer'
 
