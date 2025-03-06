@@ -20,7 +20,7 @@ inport_href = scallop_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-scallop_desc = gsub("<a(.|\n)*?</a>", '', scallop_meta$serviceDescription)
+scallop_desc = sub("<a(.|\n)*?</a>",'',scallop_meta$serviceDescription)
 scallop_desc = gsub("<p>|<br>|</p>|\\n", '', scallop_desc)
 ```
 
