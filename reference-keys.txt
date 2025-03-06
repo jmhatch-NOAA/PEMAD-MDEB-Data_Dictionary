@@ -61,6 +61,7 @@ spatial-extent-6
 layers-6
 fields-6
 scallop_strata
+scallop_strata_historic
 northern-shrimp-survey
 arcgis-feature-service-7
 inport-metadata-7
