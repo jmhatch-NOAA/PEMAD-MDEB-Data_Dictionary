@@ -12,6 +12,9 @@ NEFSC scientific survey strata are compiled in the oracle database under the MDE
 | Surveys with associated substrata are named as follows:
 |       *SCHEMA.SMIT_SURVEYCODE_SUBSTRATA*
 | 
+| Surveys with associated historical strata are named as follows:
+|       *SCHEMA.SMIT_SURVEYCODE_STRATA_HISTORIC*
+| 
 | Surveys with an associated point layer (ex. sample stations) are named as follows:
 |       *SCHEMA.SMIT_SURVEYCODE_STATIONS*
 | 

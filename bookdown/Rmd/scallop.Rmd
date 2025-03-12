@@ -20,7 +20,7 @@ inport_href = scallop_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-scallop_desc = gsub("<a(.|\n)*?</a>", '', scallop_meta$serviceDescription)
+scallop_desc = sub("<a(.|\n)*?</a>",'',scallop_meta$serviceDescription)
 scallop_desc = gsub("<p>|<br>|</p>|\\n", '', scallop_desc)
 ```
 
@@ -70,6 +70,13 @@ scallop_fields = purrr::map(.x = 1:nrow(scallop_layers ), .f = function(.x) {
   # open layer
   scallop_layer = arcgislayers::arc_open(url = paste0(scallop_url, '/', scallop_layers$id[.x]), token = token)
   
+  # get metadata for layer
+  scallop_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(scallop_url, '/', scallop_layers$id[.x]), token = token)
+  
+  # layer description
+  layer_desc =  scallop_layer_meta$description
+  layer_desc = gsub("\\n", '', layer_desc)
+  
   # get fields
   scallop_fields = arcgislayers::list_fields(scallop_layer) |>
     dplyr::select(name, alias, description, actualType) |>
@@ -82,6 +89,8 @@ scallop_fields = purrr::map(.x = 1:nrow(scallop_layers ), .f = function(.x) {
   
   # output
   cat('\n####', scallop_layers$name[.x], '\n')
+  cat('<em>Description</em><br>')
+  cat(layer_desc, '\n')
     print(knitr::kable(scallop_fields))
   cat('\n')
 
