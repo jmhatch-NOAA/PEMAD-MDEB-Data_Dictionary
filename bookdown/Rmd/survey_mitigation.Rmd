@@ -1,3 +1,4 @@
 # Survey Mitigation
 
-[GET SOME TEXT FROM MADISON]
+Supporting scientific survey planning and requirements to mitigate impacts to NOAA Fisheries scientific surveys.
+

@@ -35,6 +35,7 @@ NEFSC scientific survey strata are compiled in the oracle database under the MDE
 | MMST            | Marine Mammal and Sea Turtle Aerial and Vessel Survey |
 | NARW            | North Atlantic Right Whale Aerial Survey              |
 | OQ              | Ocean Quahog Survey                                   |
+| PAM             | Passive Acoustic Monitoring Survey                    |
 | SC              | Atlantic Surfclam Survey                              |
 | SCALLOP         | Sea Scallop Survey                                    |
 | SEAL            | Seal Aerial Survey                                    |
