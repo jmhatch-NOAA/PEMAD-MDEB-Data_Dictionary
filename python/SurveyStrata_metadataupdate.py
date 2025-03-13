@@ -38,7 +38,7 @@ session= Session()
 
 #names of surveys, from oracle table
 
-survey_names = ["SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","ECOMON","OQ","SC", "SHRIMP","COASTSPAN"]
+survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP", "COASTSPAN"]
 
 #first pull item ID from oracle
 #download an xml file from arcgis to edit using the item id
@@ -117,7 +117,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     #update publish date
     date_element = root.find(".//dataIdInfo/idCitation/date/pubDate")
     #change timetime to string
-    datetime_string = pub_date.strftime('%Y-%m-%d')
+    datetime_string = pub_date.strftime('%Y-%m-%d %H:%M:%S')
     date_element.text = datetime_string
     #update geographic extent
     geowest_element = root.find(".//dataIdInfo/dataExt/geoEle/GeoBndBox/westBL")
