@@ -13,6 +13,11 @@ narw_meta = arcgisutils::fetch_layer_metadata(url = narw_url, token = token)
 Click [here](`r narw_url`).
 
 ```{r, echo = FALSE}
+# InPort
+inport_href = narw_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
 
 # description
 narw_desc = gsub("<a(.|\n)*?</a>", '', narw_meta$serviceDescription)
@@ -21,7 +26,7 @@ narw_desc = gsub("<p>|<br>|</p>|\\n", '', narw_desc)
 
 ### InPort Metadata
 
-Not yet.
+Yes, see [here](`r inport_href`).
 
 ### Description
 

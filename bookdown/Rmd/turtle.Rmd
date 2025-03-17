@@ -13,6 +13,12 @@ turtle_meta = arcgisutils::fetch_layer_metadata(url = turtle_url, token = token)
 Click [here](`r turtle_url`).
 
 ```{r, echo = FALSE}
+# InPort
+inport_href = turtle_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
 # description
 turtle_desc = gsub("<a(.|\n)*?</a>", '', turtle_meta$serviceDescription)
 turtle_desc = gsub("<p>|<br>|</p>|\\n", '', turtle_desc)
@@ -20,7 +26,7 @@ turtle_desc = gsub("<p>|<br>|</p>|\\n", '', turtle_desc)
 
 ### InPort Metadata
 
-Not yet.
+Yes, see [here](`r inport_href`).
 
 ### Description
 

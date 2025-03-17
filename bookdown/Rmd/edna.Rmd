@@ -13,6 +13,11 @@ edna_meta = arcgisutils::fetch_layer_metadata(url = edna_url, token = token)
 Click [here](`r edna_url`).
 
 ```{r, echo = FALSE}
+# InPort
+inport_href = edna_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
 
 # description
 edna_desc = gsub("<a(.|\n)*?</a>", '', edna_meta$serviceDescription)
@@ -21,7 +26,7 @@ edna_desc = gsub("<p>|<br>|</p>|\\n", '', edna_desc)
 
 ### InPort Metadata
 
-Not yet.
+Yes, see [here](`r inport_href`).
 
 ### Description
 

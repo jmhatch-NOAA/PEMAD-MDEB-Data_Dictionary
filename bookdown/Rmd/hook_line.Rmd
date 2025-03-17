@@ -13,6 +13,11 @@ hl_meta = arcgisutils::fetch_layer_metadata(url = hl_url, token = token)
 Click [here](`r hl_url`).
 
 ```{r, echo = FALSE}
+# InPort
+inport_href = hl_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
 
 # description
 hl_desc = gsub("<a(.|\n)*?</a>", '', hl_meta$serviceDescription)
@@ -21,7 +26,7 @@ hl_desc = gsub("<p>|<br>|</p>|\\n", '', hl_desc)
 
 ### InPort Metadata
 
-Not yet.
+Yes, see [here](`r inport_href`).
 
 ### Description
 
