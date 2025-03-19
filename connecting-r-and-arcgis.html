@@ -78,7 +78,7 @@
 <code class="sourceCode R"><span><span class="co"># load libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">arcgisbinding</span><span class="op">)</span> </span>
 <span><span class="fu">arc.check_product</span><span class="op">(</span><span class="op">)</span> </span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r.esri.com/arcgislayers/">arcgislayers</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://developers.arcgis.com/r-bridge">arcgislayers</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgisutils">arcgisutils</a></span><span class="op">)</span> </span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -91,10 +91,10 @@
 <span><span class="va">feature_server_url</span> <span class="op">&lt;-</span> <span class="st">"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/TIGERweb_Counties_v1/FeatureServer/0"</span></span>
 <span></span>
 <span><span class="co"># create a feature layer object</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.esri.com/arcgislayers/reference/arc_open.html">arc_open</a></span><span class="op">(</span><span class="va">feature_server_url</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arcgislayers/man/arc_open.html">arc_open</a></span><span class="op">(</span><span class="va">feature_server_url</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># query the feature layer and return the layer as an sf (simple feature) object</span></span>
-<span><span class="va">sf_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.esri.com/arcgislayers/reference/arc_select.html">arc_select</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">sf_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arcgislayers/man/arc_select.html">arc_select</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create map from sf object</span></span>
 <span><span class="va">USA_map</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sf_data</span><span class="op">)</span><span class="op">+</span></span>
@@ -130,7 +130,7 @@ Figure 4.1: Map of the USA.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-03-17.</p>
+    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-03-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
