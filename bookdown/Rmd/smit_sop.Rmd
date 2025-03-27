@@ -27,15 +27,15 @@ NEFSC scientific survey strata are compiled in the oracle database under the MDE
 ### Table 1. NEFSC Scientific Survey names and survey codes
 
 | **Survey code** | **Survey name**                                              |
-|------------------|------------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | BTS             | Bottom Trawl Survey                                          |
 | COASTSPAN       | Cooperative Atlantic States Shark Pupping and Nursery Survey |
 | CSBLL           | Coastal Shark Bottom Longline Survey                         |
 | ECOMON          | Ecosystem Monitoring Survey                                  |
-| EDNA            | eDNA survey                                                  |
+| EDNA            | eDNA Survey                                                  |
 | GOMBLL          | Gulf of Maine Bottom Longline Survey                         |
 | HL              | Hook and Line Survey                                         |
-| MMST            | Marine Mammal and Sea Turtle Aerial and Vessel Survey        |
+| MMST            | Marine Mammal and Sea Turtle Survey                          |
 | NARW            | North Atlantic Right Whale Aerial Survey                     |
 | OQ              | Ocean Quahog Survey                                          |
 | PAM             | Passive Acoustic Monitoring Survey                           |
