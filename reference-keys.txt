@@ -21,7 +21,7 @@ layers-1
 fields-1
 csbll_strata
 csbll_stations
-coastal-shark-pupping-and-nursing-survey
+cooperative-atlantic-states-shark-pupping-and-nursery-survey
 arcgis-feature-service-2
 inport-metadata-2
 description-2
