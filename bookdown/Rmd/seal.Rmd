@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-seal_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Seal_survey_strata/FeatureServer'
+seal_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Seal_Aerial_Survey/FeatureServer'
 
 # metadata
 seal_meta = arcgisutils::fetch_layer_metadata(url = seal_url, token = token)

@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-csbll_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Bottom_Longline_Survey_Strata/FeatureServer'
+csbll_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Bottom_Longline_Survey/FeatureServer'
 
 # metadata
 csbll_meta = arcgisutils::fetch_layer_metadata(url = csbll_url, token = token)

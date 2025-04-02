@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-scallop_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Scallop_Survey_Strata/FeatureServer'
+scallop_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Sea_Scallop_Survey/FeatureServer'
 
 # metadata
 scallop_meta = arcgisutils::fetch_layer_metadata(url = scallop_url, token = token)

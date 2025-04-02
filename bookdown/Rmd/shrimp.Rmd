@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-shrimp_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Northern_Shrimp_Survey_Strata/FeatureServer'
+shrimp_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Northern_Shrimp_Survey/FeatureServer'
 
 # metadata
 shrimp_meta = arcgisutils::fetch_layer_metadata(url = shrimp_url, token = token)

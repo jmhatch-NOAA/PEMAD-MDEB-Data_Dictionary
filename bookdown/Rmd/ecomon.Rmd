@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-ecomon_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Strata/FeatureServer'
+ecomon_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer'
 
 # metadata
 ecomon_meta = arcgisutils::fetch_layer_metadata(url = ecomon_url, token = token)

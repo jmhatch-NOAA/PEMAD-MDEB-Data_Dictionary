@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-mmst_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/MMST_SE_Aerial_Survey_Strata/FeatureServer'
+mmst_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Marine_Mammal_and_Sea_Turtle_Survey/FeatureServer'
 
 # metadata
 mmst_meta = arcgisutils::fetch_layer_metadata(url = mmst_url, token = token)

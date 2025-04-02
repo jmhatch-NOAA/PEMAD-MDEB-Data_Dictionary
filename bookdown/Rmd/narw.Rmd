@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-narw_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NARW_Survey_Strata/FeatureServer'
+narw_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/North_Atlantic_Right_Whale_Aerial_Survey/FeatureServer'
 
 # metadata
 narw_meta = arcgisutils::fetch_layer_metadata(url = narw_url, token = token)

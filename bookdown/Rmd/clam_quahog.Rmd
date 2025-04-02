@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-clam_quahog_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ocean_Quahog_Survey_Strata/FeatureServer'
+clam_quahog_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Atlantic_Surfclam_and_Ocean_Quahog_Survey/FeatureServer'
 
 # metadata
 clam_quahog_meta = arcgisutils::fetch_layer_metadata(url = clam_quahog_url, token = token)

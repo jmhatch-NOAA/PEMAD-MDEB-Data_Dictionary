@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-coastspan_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Pupping_and_Nursing_Survey_Strata/FeatureServer'
+coastspan_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Cooperative_Atlantic_States_Shark_Pupping_and_Nursery_Survey/FeatureServer'
 
 # metadata
 coastspan_meta = arcgisutils::fetch_layer_metadata(url = coastspan_url, token = token)

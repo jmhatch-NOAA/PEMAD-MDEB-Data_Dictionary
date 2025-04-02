@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-hl_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Hook_Line_Geographic_Extent/FeatureServer'
+hl_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Hook_and_Line_Survey/FeatureServer'
 
 # metadata
 hl_meta = arcgisutils::fetch_layer_metadata(url = hl_url, token = token)

@@ -21,13 +21,15 @@ NEFSC scientific survey strata are compiled in the oracle database under the MDE
 | Surveys with an associated line layer (ex. surveylines) are named as follows:
 |       *SCHEMA.SMIT_SURVEYCODE_LINES*
 | 
-| Metadata tables for associated survey strata are named as follows:
-|       *SCHEMA.SMIT_SURVEYCODE_META*
+| There are three tables containing metadata for the associated survey strata. They are named as follows:
+|       *SCHEMA.SMIT_FEATURES* contains information about survey strata feature services.
+|       *SCHEMA.SMIT_FIELDS* contains information about fields, including aliases and fields descriptions. 
+|       *SCHEMA.SMIT_LAYERS* contains information about layers within feature services. 
 
 ### Table 1. NEFSC Scientific Survey names and survey codes
 
 | **Survey code** | **Survey name**                                              |
-|-------------------|-----------------------------------------------------|
+|--------------------|----------------------------------------------------|
 | BTS             | Bottom Trawl Survey                                          |
 | COASTSPAN       | Cooperative Atlantic States Shark Pupping and Nursery Survey |
 | CSBLL           | Coastal Shark Bottom Longline Survey                         |

@@ -2,7 +2,7 @@
 
 ```{r, echo = FALSE}
 # feature server url
-turtle_url =  'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Turtle_AerialStrata/FeatureServer'
+turtle_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Turtle_Ecology_Survey/FeatureServer'
 
 # metadata
 turtle_meta = arcgisutils::fetch_layer_metadata(url = turtle_url, token = token)
