@@ -72,8 +72,8 @@ turtle_fields = purrr::map(.x = 1:nrow(turtle_layers), .f = function(.x) {
   
   # get fields
   turtle_fields = arcgislayers::list_fields(turtle_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   turtle_fields = turtle_fields |>

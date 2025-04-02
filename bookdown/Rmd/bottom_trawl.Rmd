@@ -72,8 +72,8 @@ bts_fields = purrr::map(.x = 1:nrow(bts_layers ), .f = function(.x) {
   
   # get fields
   bts_fields = arcgislayers::list_fields(bts_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   bts_fields = bts_fields |>

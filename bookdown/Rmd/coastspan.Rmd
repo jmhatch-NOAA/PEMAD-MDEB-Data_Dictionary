@@ -72,8 +72,8 @@ coastspan_fields = purrr::map(.x = 1:nrow(coastspan_layers ), .f = function(.x) 
   
   # get fields
   coastspan_fields = arcgislayers::list_fields(coastspan_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   coastspan_fields = coastspan_fields |>

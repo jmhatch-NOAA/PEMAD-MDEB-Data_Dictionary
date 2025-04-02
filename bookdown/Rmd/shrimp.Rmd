@@ -72,8 +72,8 @@ shrimp_fields = purrr::map(.x = 1:nrow(shrimp_layers ), .f = function(.x) {
   
   # get fields
   shrimp_fields = arcgislayers::list_fields(shrimp_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   shrimp_fields = shrimp_fields |>

@@ -79,8 +79,8 @@ narw_fields = purrr::map(.x = 1:nrow(narw_layers ), .f = function(.x) {
   
   # get fields
   narw_fields = arcgislayers::list_fields(narw_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   narw_fields = narw_fields |>

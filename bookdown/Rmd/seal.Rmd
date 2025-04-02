@@ -72,8 +72,8 @@ seal_fields = purrr::map(.x = 1:nrow(seal_layers ), .f = function(.x) {
   
   # get fields
   seal_fields = arcgislayers::list_fields(seal_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   seal_fields = seal_fields |>

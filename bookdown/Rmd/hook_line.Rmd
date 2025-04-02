@@ -72,8 +72,8 @@ hl_fields = purrr::map(.x = 1:nrow(hl_layers ), .f = function(.x) {
   
   # get fields
   hl_fields = arcgislayers::list_fields(hl_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   hl_fields = hl_fields |>

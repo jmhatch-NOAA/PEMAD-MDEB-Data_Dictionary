@@ -79,8 +79,8 @@ scallop_fields = purrr::map(.x = 1:nrow(scallop_layers ), .f = function(.x) {
   
   # get fields
   scallop_fields = arcgislayers::list_fields(scallop_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   scallop_fields = scallop_fields |>

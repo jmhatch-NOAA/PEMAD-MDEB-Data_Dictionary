@@ -72,8 +72,8 @@ mmst_fields = purrr::map(.x = 1:nrow(mmst_layers ), .f = function(.x) {
   
   # get fields
   mmst_fields = arcgislayers::list_fields(mmst_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   mmst_fields = mmst_fields |>

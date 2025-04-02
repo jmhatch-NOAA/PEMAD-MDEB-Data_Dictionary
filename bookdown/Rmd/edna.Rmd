@@ -79,8 +79,8 @@ edna_fields = purrr::map(.x = 1:nrow(edna_layers ), .f = function(.x) {
   
   # get fields
   edna_fields = arcgislayers::list_fields(edna_layer) |>
-    dplyr::select(name, alias, description, actualType) |>
-    dplyr::rename(dataType = actualType)
+    dplyr::select(name, alias, description, type) |>
+    dplyr::rename(dataType = type)
   
   # format description
   edna_fields = edna_fields |>
