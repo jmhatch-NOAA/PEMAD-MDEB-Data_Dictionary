@@ -10,8 +10,8 @@ description
 spatial-extent
 layers
 fields
-ecomon_strata
-ecomon_stations
+smit_ecomon_stations
+smit_ecomon_strata
 coastal-shark-bottom-longline-survey
 arcgis-feature-service-1
 inport-metadata-1
@@ -19,8 +19,8 @@ description-1
 spatial-extent-1
 layers-1
 fields-1
-csbll_strata
-csbll_stations
+smit_csbll_stations
+smit_csbll_strata
 cooperative-atlantic-states-shark-pupping-and-nursery-survey
 arcgis-feature-service-2
 inport-metadata-2
@@ -28,7 +28,7 @@ description-2
 spatial-extent-2
 layers-2
 fields-2
-coastspan_strata
+smit_coastspan_strata
 seal-aerial-survey
 arcgis-feature-service-3
 inport-metadata-3
@@ -36,7 +36,7 @@ description-3
 spatial-extent-3
 layers-3
 fields-3
-seal_stations
+smit_seal_stations
 turtle-ecology-survey
 arcgis-feature-service-4
 inport-metadata-4
@@ -44,7 +44,7 @@ description-4
 spatial-extent-4
 layers-4
 fields-4
-turtle_strata
+smit_turtle_strata
 atlantic-surfclam-and-ocean-quahog-survey
 arcgis-feature-service-5
 inport-metadata-5
@@ -52,8 +52,8 @@ description-5
 spatial-extent-5
 layers-5
 fields-5
-oq_strata
-sc_strata
+smit_sc_strata
+smit_oq_strata
 sea-scallop-survey
 arcgis-feature-service-6
 inport-metadata-6
@@ -61,8 +61,8 @@ description-6
 spatial-extent-6
 layers-6
 fields-6
-scallop_strata
-scallop_strata_historic
+smit_scallop_strata
+smit_scallop_strata_historic
 northern-shrimp-survey
 arcgis-feature-service-7
 inport-metadata-7
@@ -70,7 +70,7 @@ description-7
 spatial-extent-7
 layers-7
 fields-7
-shrimp_strata
+smit_shrimp_strata
 hook-and-line-survey
 arcgis-feature-service-8
 inport-metadata-8
@@ -78,7 +78,7 @@ description-8
 spatial-extent-8
 layers-8
 fields-8
-hl_strata
+smit_hl_strata
 bottom-trawl-survey
 arcgis-feature-service-9
 inport-metadata-9
@@ -86,7 +86,7 @@ description-9
 spatial-extent-9
 layers-9
 fields-9
-bts_strata
+smit_bts_strata
 marine-mammal-and-sea-turtle-survey
 arcgis-feature-service-10
 inport-metadata-10
@@ -94,7 +94,7 @@ description-10
 spatial-extent-10
 layers-10
 fields-10
-mmst_strata
+smit_mmst_strata
 north-atlantic-right-whale-aerial-survey
 arcgis-feature-service-11
 inport-metadata-11
@@ -102,8 +102,8 @@ description-11
 spatial-extent-11
 layers-11
 fields-11
-narw_surveylines
-narw_strata
+smit_narw_lines
+smit_narw_strata
 gulf-of-maine-bottom-longline-survey
 arcgis-feature-service-12
 inport-metadata-12
@@ -111,8 +111,8 @@ description-12
 spatial-extent-12
 layers-12
 fields-12
-gombll_strata
-gombll_substrata
+smit_gombll_substrata
+smit_gombll_strata
 edna-survey
 arcgis-feature-service-13
 inport-metadata-13
@@ -120,8 +120,8 @@ description-13
 spatial-extent-13
 layers-13
 fields-13
-edna_strata
-edna_stations
+smit_edna_stations
+smit_edna_strata
 passive-acoustic-monitoring-survey
 arcgis-feature-service-14
 inport-metadata-14
