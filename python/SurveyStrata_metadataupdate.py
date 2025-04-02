@@ -1,9 +1,6 @@
-#set python environment in r console
-#library(reticulate)
-#use_condaenv("path/to/conda/environ")
+#This script is to edit metadata template xml file and update using metadata stored in oracle database to update ArcGIS Online feature services
 
-#edit metadata xml file from arcgis online and update using metadata stored in oracle database
-#import libraries
+#IMPORT LIBRARIES
 import tempfile
 import json
 import os, sys
@@ -18,7 +15,7 @@ from arcgis.gis import GIS
 from arcgis import gis
 from arcgis.features import FeatureLayerCollection, FeatureLayer
 
-#authenticate arcgis credentials
+#AUTHENTICATE ARCGIS CREDENTIALS
 gis = GIS("PRO")
 
 #CONNECT TO ORACLE
@@ -36,54 +33,42 @@ connection= engine.connect()
 Session = sessionmaker(bind=engine)
 session= Session()
 
+#UPDATE FEATURE LEVEL METADATA
+#make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml)by pulling data from oracle metadata table
+#for each survey, then push to arcgis online to update survey metadata
 #names of surveys, from oracle table
-
-survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP", "COASTSPAN"]
-
-#first pull item ID from oracle
-#download an xml file from arcgis to edit using the item id
+survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA", "SHRIMP", "COASTSPAN","OQ","SC"]
 
 with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp_file:
-
-
+  
   for survey_short in survey_names:
   
-    #extract the layer ID value from oracle metadata table using survey name
-    layer_sql_query = f"SELECT FILE_ID from SMIT_{survey_short}_META"
-    layerID = session.execute(layer_sql_query).fetchone()
-    layerID = str(layerID[0])
-    
-    item = gis.content.get(layerID)
-    #get metadata 
-    metadata_xml = item.metadata
+    #use metadata template (already has correct parent and child elements to fulfill metadata requirements)
+    metadata_xml = "python/ARCGIS_METADATA_TEMPLATE.xml"
     #import xml and get xml roots
     tree = ET.parse(metadata_xml)
     root = tree.getroot()
   
-    metadata_table = f'SMIT_{survey_short}_META' #metdata table name in oracle
-    column_name = 'table_name'
+    metadata_table = 'SMIT_FEATURES' #metdata table name in oracle
     metadata = MetaData(bind=engine)
     table = Table(metadata_table, metadata, autoload_with=engine)
-    #query the table for metadata based on the name of the metadata table
+    #query the table for metadata based on the short survey names (strata_short)
     
     with engine.connect() as connection:
-        query = select([table]).where(table.c[column_name].is_(None))
-        result = connection.execute(query).fetchone() #fetch first row from metadata table
+      query = select([table]).where(table.c.strata_short==survey_short)
+      result = connection.execute(query).fetchone() #fetch a row from metadata table for survey
         
     if result:
-      print(result.keys())
-     
-    print('Done')  
-
+        print(result.keys())
+  
     #extract metadata values
     if result:
-      title = result.title
+      title = result.survey_name
       abstract = result.abstract
       purpose = result.purpose
       tags = result.tags.split(', ')
       credits = result.useterms
       pub_date = result.publish_date
-      topic_cats = result.topic_cats.split(', ')
       meta_contact = result.meta_contact_name
       meta_title = result.meta_contact_title
       meta_role = result.meta_contact_role
@@ -91,7 +76,6 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       source = result.source
       useterms = result.useterms
       link= result.link
-      lang = result.meta_language
       extent_n = result.geoextent_n
       extent_s = result.geoextent_s
       extent_e = result.geoextent_e
@@ -146,12 +130,6 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     #update use terms
     constraint_element = root.find(".//dataIdInfo/resConst/Consts/useLimit")
     constraint_element.text = useterms
-    #update File ID
-    fileid_element = root.find(".//mdFileID")
-    fileid_element.text = file_ID
-    #update metadata language
-    lang_element = root.find(".//mdLang/languageCode")
-    lang_element.text = lang
     #update metadata contact info
     email_element = root.find(".//mdContact/rpCntInfo/cntAddress/eMailAdd")
     email_element.text = meta_email
@@ -159,29 +137,16 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     contact_element.text = meta_contact
     meta_title_element = root.find(".//mdContact/rpPosName")
     meta_title_element.text = meta_title 
-    
-    #update REST URL
-    url_element = root.find(".//distInfo/distTranOps/onLineSrc/linkage")
-    url_element.text = rest_url
-    #update topic categories by iterating through topic cat list
-    topiccats_element = root.find(".//dataIdInfo/tpCat")
-    
-    #delete old topic cats
-    for topic_cat in list(topiccats_element):
-      topiccats_element.remove(topic_cat)
-    
-    #add new cats
-    for topic_cat in topic_cats:
-      topiccat_element = ET.SubElement(topiccats_element, "TopicCatCd")
-      topiccat_element.text = topic_cat
-    
-    
+  
     
     # #write xml to temp file
     ET.ElementTree(root).write(temp_file.name)
     # #get name of temp file
     temp_file_name = temp_file.name
-    # 
+    
+    #get arcgis online item using file id
+    item = gis.content.get(file_ID)
+    
     # #update metadata for feature service
     item.update(metadata = temp_file_name)
     
@@ -189,28 +154,26 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
 
 print("All feature service metadata updated!")    
     
-# #update metadata for individual layers within feature services
+#UPDATE LAYER LEVEL METADATA 
 # #create json dictionary using item properties from feature service 
-survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA","OQ","SC", "SHRIMP", "COASTSPAN"]
 
 for survey_short in survey_names:
   
   #extract the layer ID value from oracle metadata table using survey name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_{survey_short}_META"
+  layer_sql_query = f"SELECT FILE_ID from SMIT_FEATURES WHERE STRATA_SHORT = '{survey_short}'"
   layerID = session.execute(layer_sql_query).fetchone()
   layerID = str(layerID[0])
   
   item = gis.content.get(layerID)
   #extract REST url from metadata table
-  metadata_table = f'SMIT_{survey_short}_META' #metdata table name in oracle
-  column_name = 'table_name'
+  metadata_table = 'SMIT_FEATURES' #metdata table name in oracle
   metadata = MetaData(bind=engine)
   table = Table(metadata_table, metadata, autoload_with=engine)
-  #query the table for metadata based on the name of the metadata table
+    #query the table for metadata based on the short survey names (strata_short)
     
   with engine.connect() as connection:
-      query = select([table]).where(table.c[column_name].is_(None))
-      result = connection.execute(query).fetchone() #fetch first row from metadata table
+    query = select([table]).where(table.c.strata_short==survey_short)
+    result = connection.execute(query).fetchone()
   rest_url = result.rest_url     
 
   item_properties = {
@@ -231,7 +194,7 @@ for survey_short in survey_names:
 
   try: 
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = f"SMIT_{survey_short}_META"
+    table_name = "SMIT_LAYERS"
     column_name = "abstract"
     with engine.connect() as connection:
       metadata= MetaData(bind=engine)
@@ -258,7 +221,7 @@ for survey_short in survey_names:
   layer_url = f"{rest_url}/{layer_id}"
   try:
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = f"SMIT_{survey_short}_META"
+    table_name = "SMIT_LAYERS"
     column_name = "abstract"
     with engine.connect() as connection:
       metadata= MetaData(bind=engine)
