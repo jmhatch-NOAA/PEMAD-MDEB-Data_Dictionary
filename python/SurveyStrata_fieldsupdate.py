@@ -52,9 +52,6 @@
 
 # portalName can be left as-is if you are working in ArcGIS Online. Change to your portal URL otherwise.
 
-# DATA PULL FROM ORACLE _______________________________________________________________________________________
-survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA", "SHRIMP", "COASTSPAN","OQ","SC"]
-
 import tempfile
 import os
 import pandas as pd
@@ -79,7 +76,7 @@ SQL_DRIVER = 'cx_oracle'
 USERNAME = '' #enter your username
 PASSWORD = '' #enter your password
 HOST = '' #enter the oracle db host url
-PORT = # enter the oracle port number
+PORT =  # enter the oracle port number
 SERVICE = '' # enter the oracle db service name
 ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD +'@' + HOST + ':' + str(PORT) + '/?service_name=' + SERVICE
 engine = create_engine(ENGINE_PATH_WIN_AUTH)
@@ -87,10 +84,12 @@ connection= engine.connect()
 Session = sessionmaker(bind=engine)
 session= Session()
 
-for survey_short in survey_names:
+tables = ['SMIT_ECOMON_STATIONS','SMIT_SCALLOP_STRATA_HISTORIC','SMIT_OQ_STRATA','SMIT_SEAL_STATIONS','SMIT_TURTLE_STRATA','SMIT_COASTSPAN_STRATA','SMIT_GOMBLL_STRATA','SMIT_CSBLL_STRATA','SMIT_SCALLOP_STRATA','SMIT_MMST_STRATA', 'SMIT_ECOMON_STRATA', 'SMIT_EDNA_STRATA', 'SMIT_NARW_LINES', 'SMIT_NARW_STRATA', 'SMIT_SC_STRATA','SMIT_GOMBLL_SUBSTRATA', 'SMIT_EDNA_STATIONS','SMIT_HL_STRATA','SMIT_SHRIMP_STRATA','SMIT_BTS_STRATA','SMIT_CSBLL_STATIONS']
+
+for table in tables:
   
   #sql query to pull field names, aliases, and descriptions from oracle
-  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_FIELDS WHERE STRATA_SHORT = '{survey_short}'"
+  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_FIELDS WHERE TABLE_NAME = '{table}'"
   df = pd.read_sql(sql_query, con=connection)
   #add two columns to dataframe, keep them null- field type and decimals
   #the code doesn't work without having these columns, see above description
@@ -109,8 +108,8 @@ for survey_short in survey_names:
     temp_file.write(excel_buffer.read())
     temp_file_path = temp_file.name
   
-  #extract the layer ID value from oracle metadata table using survey name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_FEATURES WHERE STRATA_SHORT = '{survey_short}'"
+  #extract the layer ID value from oracle metadata table using survey layer name
+  layer_sql_query = f"SELECT FILE_ID from SMIT_LAYERS WHERE TABLE_NAME = '{table}'"
   layerID = session.execute(layer_sql_query).fetchone()
   layerID = str(layerID[0])
 
@@ -289,7 +288,7 @@ for survey_short in survey_names:
           looper += 1
           restLayerCount -= 1
 
+  print(f"Completed table {table}")
 
-
-print("Completed")        
+print("Completed update of all fields!")        
 os.remove(temp_file_path)
