@@ -90,7 +90,7 @@ session= Session()
 for survey_short in survey_names:
   
   #sql query to pull field names, aliases, and descriptions from oracle
-  sql_query = f"SELECT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_FIELDS WHERE STRATA_SHORT = '{survey_short}'"
+  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_FIELDS WHERE STRATA_SHORT = '{survey_short}'"
   df = pd.read_sql(sql_query, con=connection)
   #add two columns to dataframe, keep them null- field type and decimals
   #the code doesn't work without having these columns, see above description
