@@ -94,8 +94,8 @@
 <h3>
 <span class="header-section-number">2.1.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-40caad6b294eab113a7b" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-40caad6b294eab113a7b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.96791336399997,-65.16869409599994,-65.16869409599994,-75.96791336399997,-75.96791336399997],"lat":[35.14218643600003,35.14218643600003,44.48558102400008,44.48558102400008,35.14218643600003]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14218643600003,44.48558102400008],"lng":[-75.96791336399997,-65.16869409599994]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-e74fd6e25c110a8e6300" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-e74fd6e25c110a8e6300">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.96791336399997,-65.16869409599994,-65.16869409599994,-75.96791336399997,-75.96791336399997],"lat":[35.14218643600003,35.14218643600003,44.48558102400008,44.48558102400008,35.14218643600003]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14218643600003,44.48558102400008],"lng":[-75.96791336399997,-65.16869409599994]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers" class="section level3" number="2.1.5">
 <h3>
@@ -135,10 +135,10 @@
 <p><em>Description</em><br>There are thirty-five Ecosystem Monitoring fixed hydrographic sampling stations across the Northeast Shelf ecosystem. Four transects run from inshore to off the continental shelf from north of Cape Hatteras to Cape Cod. One transect bisects the Gulf of Maine from the coast of Maine and across Georges Bank. The remaining twelve stations in the Gulf of Maine sample deep basins, banks, coastal areas, and the inflow (Northeast Channel) and out flow (Great South Channel) of the gulf.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="18%">
-<col width="18%">
-<col width="39%">
-<col width="24%">
+<col width="15%">
+<col width="15%">
+<col width="48%">
+<col width="20%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -198,19 +198,19 @@
 <tr class="odd">
 <td align="left">DEPTH</td>
 <td align="left">Depth (m)</td>
-<td align="left">Station depth</td>
+<td align="left">Station depth in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">LAT</td>
 <td align="left">Latitude</td>
-<td align="left">Latitude of survey station</td>
+<td align="left">Latitude of survey station in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">LON</td>
 <td align="left">Longitude</td>
-<td align="left">Longitude of survey station</td>
+<td align="left">Longitude of survey station in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -248,51 +248,51 @@
 <td align="left">esriFieldTypeOID</td>
 </tr>
 <tr class="even">
-<td align="left">NAME</td>
-<td align="left">Name</td>
-<td align="left">Unique strata/station ID</td>
-<td align="left">esriFieldTypeDouble</td>
-</tr>
-<tr class="odd">
 <td align="left">SURVEY_NAME</td>
 <td align="left">Survey name</td>
 <td align="left">Name of NEFSC scientific survey</td>
 <td align="left">esriFieldTypeString</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NUMOFPOLY</td>
 <td align="left">Number of polygons</td>
-<td align="left">Number of polygons that make up the strata</td>
+<td align="left">Number of polygons that make up the strata (1 or 2)</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">NUMOFSTA</td>
 <td align="left">Number of stations</td>
 <td align="left">Number of plankton stations sampled in the strata for current ECOMON program</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">REGION</td>
 <td align="left">Strata region</td>
 <td align="left">Strata groupings</td>
 <td align="left">esriFieldTypeString</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AREA</td>
 <td align="left">Area (sq km)</td>
 <td align="left">Area of strata</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TYPE</td>
 <td align="left">Type</td>
 <td align="left">Strata description</td>
 <td align="left">esriFieldTypeString</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ACRES</td>
 <td align="left">Area (acres)</td>
 <td align="left">Area of strata in acres</td>
+<td align="left">esriFieldTypeDouble</td>
+</tr>
+<tr class="odd">
+<td align="left">STR_NAME</td>
+<td align="left">Strata name</td>
+<td align="left">Name of the strata</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 </tbody>
@@ -326,8 +326,8 @@
 <h3>
 <span class="header-section-number">2.2.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-05cb0df28c5c470efe9a" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-05cb0df28c5c470efe9a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.72441150399999,-74.41089738799998,-74.41089738799998,-81.72441150399999,-81.72441150399999],"lat":[24.39934297300005,24.39934297300005,38.50047574800005,38.50047574800005,24.39934297300005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.39934297300005,38.50047574800005],"lng":[-81.72441150399999,-74.41089738799998]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-700d349b35354792f0f5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-700d349b35354792f0f5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.72441150399999,-74.41089738799998,-74.41089738799998,-81.72441150399999,-81.72441150399999],"lat":[24.39934297300005,24.39934297300005,38.50047574800005,38.50047574800005,24.39934297300005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.39934297300005,38.50047574800005],"lng":[-81.72441150399999,-74.41089738799998]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-1" class="section level3" number="2.2.5">
 <h3>
@@ -367,10 +367,10 @@
 <p><em>Description</em><br>Sampling stations for the Coastal Shark Bottom Longline Survey.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="15%">
-<col width="15%">
-<col width="42%">
-<col width="26%">
+<col width="13%">
+<col width="13%">
+<col width="51%">
+<col width="21%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -394,13 +394,13 @@
 <tr class="odd">
 <td align="left">LAT</td>
 <td align="left">Latitude</td>
-<td align="left">Latitude of survey station</td>
+<td align="left">Latitude of survey station in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">LON</td>
 <td align="left">Longitude</td>
-<td align="left">Longitude of survey station</td>
+<td align="left">Longitude of survey station in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -474,8 +474,8 @@
 <h3>
 <span class="header-section-number">2.3.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-76654b404b49a7b9104a" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-76654b404b49a7b9104a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.62443475199996,-74.88868736299996,-74.88868736299996,-81.62443475199996,-81.62443475199996],"lat":[27.13156897300007,27.13156897300007,39.24440907800006,39.24440907800006,27.13156897300007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[27.13156897300007,39.24440907800006],"lng":[-81.62443475199996,-74.88868736299996]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-6042191b096e5091ddb5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-6042191b096e5091ddb5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.62443475199996,-74.88868736299996,-74.88868736299996,-81.62443475199996,-81.62443475199996],"lat":[27.13156897300007,27.13156897300007,39.24440907800006,39.24440907800006,27.13156897300007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[27.13156897300007,39.24440907800006],"lng":[-81.62443475199996,-74.88868736299996]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-2" class="section level3" number="2.3.5">
 <h3>
@@ -561,8 +561,8 @@
 <h3>
 <span class="header-section-number">2.4.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-3"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-d5451378349084a3fa59" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d5451378349084a3fa59">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.91666617799996,-66.97502063799993,-66.97502063799993,-70.91666617799996,-70.91666617799996],"lat":[41.26332486000007,41.26332486000007,44.93096406700005,44.93096406700005,41.26332486000007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.26332486000007,44.93096406700005],"lng":[-70.91666617799996,-66.97502063799993]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-7f60eb5534a2e1809dbe" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-7f60eb5534a2e1809dbe">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.91666617799996,-66.97502063799993,-66.97502063799993,-70.91666617799996,-70.91666617799996],"lat":[41.26332486000007,41.26332486000007,44.93096406700005,44.93096406700005,41.26332486000007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.26332486000007,44.93096406700005],"lng":[-70.91666617799996,-66.97502063799993]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-3" class="section level3" number="2.4.5">
 <h3>
@@ -632,13 +632,13 @@
 <tr class="odd">
 <td align="left">LAT</td>
 <td align="left">Latitude</td>
-<td align="left">Station latitude</td>
+<td align="left">Station latitude in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">LON</td>
 <td align="left">Longitude</td>
-<td align="left">Station longitude</td>
+<td align="left">Station longitude in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -714,8 +714,8 @@
 <h3>
 <span class="header-section-number">2.5.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-4"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-a80374a1a825142d5de5" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-a80374a1a825142d5de5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-82.05367586899996,-61.77471560099995,-61.77471560099995,-82.05367586899996,-82.05367586899996],"lat":[24.23657904200007,24.23657904200007,45.16283799900008,45.16283799900008,24.23657904200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.23657904200007,45.16283799900008],"lng":[-82.05367586899996,-61.77471560099995]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-0aa2c812c77528def04f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0aa2c812c77528def04f">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-82.05367586899996,-61.77471560099995,-61.77471560099995,-82.05367586899996,-82.05367586899996],"lat":[24.23657904200007,24.23657904200007,45.16283799900008,45.16283799900008,24.23657904200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.23657904200007,45.16283799900008],"lng":[-82.05367586899996,-61.77471560099995]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-4" class="section level3" number="2.5.5">
 <h3>
@@ -801,8 +801,8 @@
 <h3>
 <span class="header-section-number">2.6.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-5"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-bca86aeab8172ce7cb8e" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-bca86aeab8172ce7cb8e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.95949999999993,-66.48249999999999,-66.48249999999999,-75.95949999999993,-75.95949999999993],"lat":[36.49950000000007,36.49950000000007,42.14450000000006,42.14450000000006,36.49950000000007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[36.49950000000007,42.14450000000006],"lng":[-75.95949999999993,-66.48249999999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-9f5d94c9d5a7dd8362f5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-9f5d94c9d5a7dd8362f5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.95949999999993,-66.48249999999999,-66.48249999999999,-75.95949999999993,-75.95949999999993],"lat":[36.49950000000007,36.49950000000007,42.14450000000006,42.14450000000006,36.49950000000007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[36.49950000000007,42.14450000000006],"lng":[-75.95949999999993,-66.48249999999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-5" class="section level3" number="2.6.5">
 <h3>
@@ -869,7 +869,7 @@
 <tr class="odd">
 <td align="left">ACRES</td>
 <td align="left">Area (acres)</td>
-<td align="left">Area of strata</td>
+<td align="left">Area of strata in acres</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -888,10 +888,10 @@
 <p><em>Description</em><br>Scientific survey strata for Ocean Quahog Survey.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="14%">
-<col width="21%">
-<col width="39%">
-<col width="24%">
+<col width="13%">
+<col width="20%">
+<col width="42%">
+<col width="22%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -915,85 +915,85 @@
 <tr class="odd">
 <td align="left">ARSQNM2</td>
 <td align="left">Area (sq nm)</td>
-<td align="left">Strata area</td>
+<td align="left">Strata area in square nautical miles</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">ARSQKM2</td>
 <td align="left">Area (sq km)</td>
-<td align="left">Strata area</td>
+<td align="left">Strata area in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">MN_DPTH</td>
-<td align="left">MN_DPTH</td>
-<td align="left">NA</td>
+<td align="left">Minimum depth</td>
+<td align="left">Minimum depth in stratum in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">MIN_LAT</td>
 <td align="left">Minimum latitude</td>
-<td align="left">Minimum latitude in stratum.</td>
+<td align="left">Minimum latitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">MIN_LON</td>
 <td align="left">Minimum longitude</td>
-<td align="left">Minimum longitude in stratum.</td>
+<td align="left">Minimum longitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">MAXDPTH</td>
 <td align="left">Maximum depth</td>
-<td align="left">Maximum depth in stratum</td>
+<td align="left">Maximum depth in stratum in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">MAX_LAT</td>
 <td align="left">Maximum latitude</td>
-<td align="left">Maximum latitude in stratum.</td>
+<td align="left">Maximum latitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">MAX_LON</td>
 <td align="left">Maximum longitude</td>
-<td align="left">Maximum longitude in stratum.</td>
+<td align="left">Maximum longitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">AVGDPTH</td>
 <td align="left">Average depth</td>
-<td align="left">Average depth in stratum</td>
+<td align="left">Average depth in stratum in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">AVGLAT</td>
 <td align="left">Average latitude</td>
-<td align="left">Average latitude in stratum.</td>
+<td align="left">Average latitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">AVGLON</td>
 <td align="left">Average longitude</td>
-<td align="left">Average longitude in stratum.</td>
+<td align="left">Average longitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">MDN_DPT</td>
 <td align="left">Median depth</td>
-<td align="left">Median depth in stratum</td>
+<td align="left">Median depth in stratum in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">MEDN_LT</td>
 <td align="left">Median latitude</td>
-<td align="left">Median latitude in stratum.</td>
+<td align="left">Median latitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
 <td align="left">MEDN_LN</td>
 <td align="left">Median longitude</td>
-<td align="left">Median longitude in stratum.</td>
+<td align="left">Median longitude in stratum</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -1033,8 +1033,8 @@
 <h3>
 <span class="header-section-number">2.7.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-6"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-01eea40aa16ba04ee682" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-01eea40aa16ba04ee682">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.95981600099998,-65.89944460199995,-65.89944460199995,-75.95981600099998,-75.95981600099998],"lat":[35.50142289700005,35.50142289700005,42.16817089900006,42.16817089900006,35.50142289700005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.50142289700005,42.16817089900006],"lng":[-75.95981600099998,-65.89944460199995]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-5fa3ffd063894c50a8e1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5fa3ffd063894c50a8e1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.95981600099998,-65.89944460199995,-65.89944460199995,-75.95981600099998,-75.95981600099998],"lat":[35.50142289700005,35.50142289700005,42.16817089900006,42.16817089900006,35.50142289700005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.50142289700005,42.16817089900006],"lng":[-75.95981600099998,-65.89944460199995]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-6" class="section level3" number="2.7.5">
 <h3>
@@ -1075,10 +1075,10 @@
 
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="15%">
+<col width="14%">
 <col width="16%">
-<col width="41%">
-<col width="25%">
+<col width="44%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -1108,7 +1108,7 @@
 <tr class="even">
 <td align="left">AREAKM2</td>
 <td align="left">Area (sq km)</td>
-<td align="left">Area of strata</td>
+<td align="left">Area of strata in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -1148,13 +1148,13 @@
 <tr class="even">
 <td align="left">AREA</td>
 <td align="left">Area</td>
-<td align="left">Area of strata</td>
+<td align="left">Area of strata in degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">PERIMETER</td>
 <td align="left">Perimeter</td>
-<td align="left">Perimeter of strata</td>
+<td align="left">Perimeter of strata in degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -1190,7 +1190,7 @@
 <tr class="odd">
 <td align="left">ACRES</td>
 <td align="left">Area (acres)</td>
-<td align="left">Area of strata</td>
+<td align="left">Area of strata in acres</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -1230,8 +1230,8 @@
 <h3>
 <span class="header-section-number">2.8.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-7"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-7d64a2ce1325191b35f6" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-7d64a2ce1325191b35f6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.68151875199999,-67.99941152799998,-67.99941152799998,-70.68151875199999,-70.68151875199999],"lat":[41.08476406000005,41.08476406000005,44.08761748400003,44.08761748400003,41.08476406000005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.08476406000005,44.08761748400003],"lng":[-70.68151875199999,-67.99941152799998]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-0ab6eb4ae443a489447a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0ab6eb4ae443a489447a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.68151875199999,-67.99941152799998,-67.99941152799998,-70.68151875199999,-70.68151875199999],"lat":[41.08476406000005,41.08476406000005,44.08761748400003,44.08761748400003,41.08476406000005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.08476406000005,44.08761748400003],"lng":[-70.68151875199999,-67.99941152799998]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-7" class="section level3" number="2.8.5">
 <h3>
@@ -1295,7 +1295,7 @@
 <tr class="even">
 <td align="left">STRA_ACRES</td>
 <td align="left">Area (acres)</td>
-<td align="left">Area of strata, in acres</td>
+<td align="left">Area of strata in acres</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -1335,8 +1335,8 @@
 <h3>
 <span class="header-section-number">2.9.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-8"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-a5007a0f8b25f05d16a6" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-a5007a0f8b25f05d16a6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.93167076999998,-68.59478605799998,-68.59478605799998,-75.93167076999998,-75.93167076999998],"lat":[35.26340377700006,35.26340377700006,41.80242232100007,41.80242232100007,35.26340377700006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.26340377700006,41.80242232100007],"lng":[-75.93167076999998,-68.59478605799998]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-54ad37f0ba08afe7e76a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-54ad37f0ba08afe7e76a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.93167076999998,-68.59478605799998,-68.59478605799998,-75.93167076999998,-75.93167076999998],"lat":[35.26340377700006,35.26340377700006,41.80242232100007,41.80242232100007,35.26340377700006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.26340377700006,41.80242232100007],"lng":[-75.93167076999998,-68.59478605799998]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-8" class="section level3" number="2.9.5">
 <h3>
@@ -1367,10 +1367,10 @@
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="15%">
+<col width="14%">
 <col width="16%">
-<col width="41%">
-<col width="25%">
+<col width="44%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -1388,7 +1388,7 @@
 <tr class="even">
 <td align="left">AREA</td>
 <td align="left">Area (sq km)</td>
-<td align="left">Area of strata</td>
+<td align="left">Area of strata in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -1428,8 +1428,8 @@
 <h3>
 <span class="header-section-number">2.10.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-9"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-66379fb8291735283e15" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-66379fb8291735283e15">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-76.23117102399993,-65.56924851399994,-65.56924851399994,-76.23117102399993,-76.23117102399993],"lat":[34.35521864200007,34.35521864200007,44.48557965100005,44.48557965100005,34.35521864200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[34.35521864200007,44.48557965100005],"lng":[-76.23117102399993,-65.56924851399994]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-af6a4a46ce4bfcc7e85b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-af6a4a46ce4bfcc7e85b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-76.23117102399993,-65.56924851399994,-65.56924851399994,-76.23117102399993,-76.23117102399993],"lat":[34.35521864200007,34.35521864200007,44.48557965100005,44.48557965100005,34.35521864200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[34.35521864200007,44.48557965100005],"lng":[-76.23117102399993,-65.56924851399994]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-9" class="section level3" number="2.10.5">
 <h3>
@@ -1575,8 +1575,8 @@
 <h3>
 <span class="header-section-number">2.11.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-10"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-f4618f7c1c9f0b8955db" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-f4618f7c1c9f0b8955db">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-82.05367586899996,-61.77471560099993,-61.77471560099993,-82.05367586899996,-82.05367586899996],"lat":[24.23657904200007,24.23657904200007,45.16283799900003,45.16283799900003,24.23657904200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.23657904200007,45.16283799900003],"lng":[-82.05367586899996,-61.77471560099993]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-b3d2ad2143c3be766e26" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b3d2ad2143c3be766e26">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-82.05367586899996,-61.77471560099993,-61.77471560099993,-82.05367586899996,-82.05367586899996],"lat":[24.23657904200007,24.23657904200007,45.16283799900003,45.16283799900003,24.23657904200007]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[24.23657904200007,45.16283799900003],"lng":[-82.05367586899996,-61.77471560099993]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-10" class="section level3" number="2.11.5">
 <h3>
@@ -1668,8 +1668,8 @@
 <h3>
 <span class="header-section-number">2.12.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-11"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-8e031211aaa5c21e2fb1" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-8e031211aaa5c21e2fb1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.99999999999994,-67.04186926399997,-67.04186926399997,-75.99999999999994,-75.99999999999994],"lat":[36.66669259800005,36.66669259800005,44.58591898100006,44.58591898100006,36.66669259800005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[36.66669259800005,44.58591898100006],"lng":[-75.99999999999994,-67.04186926399997]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-2b2ccdcd63043310006c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2b2ccdcd63043310006c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.99999999999994,-67.04186926399997,-67.04186926399997,-75.99999999999994,-75.99999999999994],"lat":[36.66669259800005,36.66669259800005,44.58591898100006,44.58591898100006,36.66669259800005]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[36.66669259800005,44.58591898100006],"lng":[-75.99999999999994,-67.04186926399997]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-11" class="section level3" number="2.12.5">
 <h3>
@@ -1822,8 +1822,8 @@
 <h3>
 <span class="header-section-number">2.13.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-12"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-992fb8d6072b15de39f4" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-992fb8d6072b15de39f4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.66746251799998,-67.44377660099994,-67.44377660099994,-70.66746251799998,-70.66746251799998],"lat":[42.00811264800006,42.00811264800006,43.42836589900007,43.42836589900007,42.00811264800006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[42.00811264800006,43.42836589900007],"lng":[-70.66746251799998,-67.44377660099994]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-f04ea337006d78f28846" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f04ea337006d78f28846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-70.66746251799998,-67.44377660099994,-67.44377660099994,-70.66746251799998,-70.66746251799998],"lat":[42.00811264800006,42.00811264800006,43.42836589900007,43.42836589900007,42.00811264800006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[42.00811264800006,43.42836589900007],"lng":[-70.66746251799998,-67.44377660099994]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-12" class="section level3" number="2.13.5">
 <h3>
@@ -1861,10 +1861,10 @@
 <span class="header-section-number">2.13.6.1</span> SMIT_GOMBLL_SUBSTRATA<a class="anchor" aria-label="anchor" href="#smit_gombll_substrata"><i class="fas fa-link"></i></a>
 </h4>
 <p><em>Description</em><br>Scientific survey substrata for the Gulf of Maine Bottom Longline Survey. The survey substrata give further details on bottom-type (smooth or rough bottom) encountered in the survey area.</p>
-<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="4%">
-<col width="5%">
+<col width="6%">
 <col width="82%">
 <col width="7%">
 </colgroup>
@@ -1908,7 +1908,7 @@
 <tr class="even">
 <td align="left">CALCULATED</td>
 <td align="left">Area (sq km)</td>
-<td align="left">Area of strata, in square kilometers</td>
+<td align="left">Area of strata in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
@@ -1919,13 +1919,13 @@
 </tr>
 <tr class="even">
 <td align="left">INDIVIDARE</td>
-<td align="left">Individual Area</td>
-<td align="left">Area of substrata, in square kilometers</td>
+<td align="left">Individual area</td>
+<td align="left">Area of substrata in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
 <td align="left">PERCENTOFT</td>
-<td align="left">Percent of t</td>
+<td align="left">Percent of total</td>
 <td align="left">Substrata area percent of total strata</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
@@ -1990,7 +1990,7 @@
 <tr class="odd">
 <td align="left">CALCULATED</td>
 <td align="left">Area (sq km)</td>
-<td align="left">Area of strata, in square kilometers</td>
+<td align="left">Area of strata in square kilometers</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -2030,8 +2030,8 @@
 <h3>
 <span class="header-section-number">2.14.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-13"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-47ffa2008e5d5b8f42cd" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-47ffa2008e5d5b8f42cd">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.96791336399997,-65.16869409599994,-65.16869409599994,-75.96791336399997,-75.96791336399997],"lat":[35.14218643600003,35.14218643600003,44.48558102400008,44.48558102400008,35.14218643600003]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14218643600003,44.48558102400008],"lng":[-75.96791336399997,-65.16869409599994]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-c1992972d6ccd26c9114" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c1992972d6ccd26c9114">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-75.96791336399997,-65.16869409599994,-65.16869409599994,-75.96791336399997,-75.96791336399997],"lat":[35.14218643600003,35.14218643600003,44.48558102400008,44.48558102400008,35.14218643600003]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[35.14218643600003,44.48558102400008],"lng":[-75.96791336399997,-65.16869409599994]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-13" class="section level3" number="2.14.5">
 <h3>
@@ -2071,10 +2071,10 @@
 <p><em>Description</em><br>Sampling stations for the eDNA Survey.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
-<col width="18%">
-<col width="18%">
-<col width="39%">
-<col width="24%">
+<col width="15%">
+<col width="15%">
+<col width="48%">
+<col width="20%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -2134,7 +2134,7 @@
 <tr class="odd">
 <td align="left">DEPTH</td>
 <td align="left">Depth (m)</td>
-<td align="left">Station depth</td>
+<td align="left">Station depth in meters</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -2146,7 +2146,7 @@
 <tr class="odd">
 <td align="left">LON</td>
 <td align="left">Longitude</td>
-<td align="left">Longitude of survey station</td>
+<td align="left">Longitude of survey station in decimal degrees</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="even">
@@ -2184,46 +2184,46 @@
 <td align="left">esriFieldTypeOID</td>
 </tr>
 <tr class="even">
-<td align="left">NAME</td>
-<td align="left">Name</td>
-<td align="left">Unique strata/station ID</td>
+<td align="left">NUMOFPOLY</td>
+<td align="left">Number of polygons</td>
+<td align="left">Number of polygons that make up the strata (1 or 2)</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
 <tr class="odd">
-<td align="left">NUMOFPOLY</td>
-<td align="left">Number of polygons</td>
-<td align="left">Number of polygons that make up the strata</td>
-<td align="left">esriFieldTypeDouble</td>
-</tr>
-<tr class="even">
 <td align="left">NUMOFSTA</td>
 <td align="left">Number of stations</td>
 <td align="left">Number of plankton stations sampled in the strata for current ECOMON/ eDNA program</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">REGION</td>
 <td align="left">Strata region</td>
 <td align="left">Strata groupings</td>
 <td align="left">esriFieldTypeString</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TYPE</td>
 <td align="left">Type</td>
 <td align="left">Strata description</td>
 <td align="left">esriFieldTypeString</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ACRES</td>
 <td align="left">Area (acres)</td>
 <td align="left">Area of strata in acres</td>
 <td align="left">esriFieldTypeDouble</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SURVEY_NAME</td>
 <td align="left">Survey name</td>
 <td align="left">Name of NEFSC scientific survey</td>
 <td align="left">esriFieldTypeString</td>
+</tr>
+<tr class="even">
+<td align="left">STR_NAME</td>
+<td align="left">Strata name</td>
+<td align="left">Name of the strata</td>
+<td align="left">esriFieldTypeDouble</td>
 </tr>
 </tbody>
 </table></div>
@@ -2256,8 +2256,8 @@
 <h3>
 <span class="header-section-number">2.15.4</span> Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent-14"><i class="fas fa-link"></i></a>
 </h3>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-5085aae71d6e1c1ec1f7" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-5085aae71d6e1c1ec1f7">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.16623147999996,-65.98759999999999,-65.98759999999999,-81.16623147999996,-81.16623147999996],"lat":[28.47962286000006,28.47962286000006,44.78238000000005,44.78238000000005,28.47962286000006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[28.47962286000006,44.78238000000005],"lng":[-81.16623147999996,-65.98759999999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-abf37d5ecd28ca91735f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-abf37d5ecd28ca91735f">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolygons","args":[[[[{"lng":[-81.16623147999996,-65.98759999999999,-65.98759999999999,-81.16623147999996,-81.16623147999996],"lat":[28.47962286000006,28.47962286000006,44.78238000000005,44.78238000000005,28.47962286000006]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[28.47962286000006,44.78238000000005],"lng":[-81.16623147999996,-65.98759999999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="layers-14" class="section level3" number="2.15.5">
 <h3>
