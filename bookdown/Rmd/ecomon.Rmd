@@ -83,10 +83,11 @@ ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
     dplyr::rename(dataType = type)
 
   # format description
-  ecomon_fields = ecomon_fields |>
-    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
-    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
-  
+  ecomon_fields = ecomon_fields |> 
+    dplyr::mutate(description = {stringr::str_sub(description, 1, 10) <- ''; description}) |>
+    dplyr::mutate(description = {stringr::str_sub(description, nchar(description) - 21, nchar(description)) <- ''; description}) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))  
+
   # output
   cat('\n####', ecomon_layers$name[.x], '\n')
   cat('<em>Description</em><br>')

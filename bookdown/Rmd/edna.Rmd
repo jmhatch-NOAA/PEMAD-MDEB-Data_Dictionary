@@ -83,9 +83,10 @@ edna_fields = purrr::map(.x = 1:nrow(edna_layers ), .f = function(.x) {
     dplyr::rename(dataType = type)
   
   # format description
-  edna_fields = edna_fields |>
-    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
-    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+  edna_fields = edna_fields |> 
+    dplyr::mutate(description = {stringr::str_sub(description, 1, 10) <- ''; description}) |>
+    dplyr::mutate(description = {stringr::str_sub(description, nchar(description) - 21, nchar(description)) <- ''; description}) |>
+    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))  
   
   # output
   cat('\n####', edna_layers$name[.x], '\n')
