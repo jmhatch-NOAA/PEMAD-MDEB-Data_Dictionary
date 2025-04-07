@@ -132,5 +132,6 @@ use-the-interactive-mapper
 download-data
 filter-data
 view-metadata
+view-data-source
 connecting-r-and-arcgis
 connecting-python-and-arcgis
