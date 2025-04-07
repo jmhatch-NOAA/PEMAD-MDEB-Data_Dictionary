@@ -1,11 +1,30 @@
 # Data Hub
 
-Watch this screen capture video for assistance in navigating the ArcGIS Marine Development Data Hub.
+Watch these screen capture videos for assistance in navigating the Northeast Fisheries Science Center Marine Development GIS Data Hub.
 
-<video width="640" height="400" autoplay muted>
-  <source src="" type= "video/webm">
+## Exlore by Category
+Exlore datasets and maps by category.
+
+<video width="640" height="400" controls>
+  <source src="video/category_screencapture.webm" type= "video/webm">
   Your browser does not support the video tag. 
   
 </video>
 
-[ADD MORE VIDEO CONTENT, CHANGE DATA HUB VIDEO]
+## View all Datasets
+Use the gallery application to view all datasets, search datasets by name, open the dataset landing page, and view the dataset in ArcGIS Map Viewer. 
+
+<video width="640" height="400" controls>
+  <source src="video/searchapp_screencapture.webm" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
+
+## Use the Interactive Mapper
+Use the interactive mapping application to view NOAA NEFSC data alongside BOEM marine development data. Toggle data layers on and off, view the map legend, and click on the map for more information on map features.
+
+<video width="640" height="400" controls>
+  <source src="" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
