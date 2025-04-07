@@ -2,8 +2,8 @@
 
 Watch these screen capture videos for assistance in navigating the Northeast Fisheries Science Center Marine Development GIS Data Hub.
 
-## Exlore by Category
-Exlore datasets and maps by category.
+## Explore by Category
+Explore datasets and maps by category.
 
 <video width="640" height="400" controls>
   <source src="video/category_screencapture.webm" type= "video/webm">
@@ -24,7 +24,34 @@ Use the gallery application to view all datasets, search datasets by name, open 
 Use the interactive mapping application to view NOAA NEFSC data alongside BOEM marine development data. Toggle data layers on and off, view the map legend, and click on the map for more information on map features.
 
 <video width="640" height="400" controls>
-  <source src="" type= "video/webm">
+  <source src="video/mapper_screencapture.webm" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
+
+## Download Data
+Download datasets from the Data Hub.
+
+<video width="640" height="400" controls>
+  <source src="video/downloaddata_screencapture.webm" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
+
+## Filter Data
+Filter data before downloading. 
+
+<video width="640" height="400" controls>
+  <source src="video/filterdata_screencapture.webm" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
+
+## View Metadata
+View metadata for datasets on the Data Hub. 
+
+<video width="640" height="400" controls>
+  <source src="video/metadata_screencapture.webm" type= "video/webm">
   Your browser does not support the video tag. 
   
 </video>
