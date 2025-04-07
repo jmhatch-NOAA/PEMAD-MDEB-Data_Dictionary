@@ -33,7 +33,7 @@ Use the interactive mapping application to view NOAA NEFSC data alongside BOEM m
 Download datasets from the Data Hub.
 
 <video width="640" height="400" controls>
-  <source src="video/downloaddata_screencapture.webm" type= "video/webm">
+  <source src="video/download_screencapture.webm" type= "video/webm">
   Your browser does not support the video tag. 
   
 </video>
@@ -51,7 +51,7 @@ Filter data before downloading.
 View metadata for datasets on the Data Hub. 
 
 <video width="640" height="400" controls>
-  <source src="video/metadata_screencapture.webm" type= "video/webm">
+  <source src="video/meta_screencapture.webm" type= "video/webm">
   Your browser does not support the video tag. 
   
 </video>
