@@ -126,5 +126,8 @@ standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
 data-hub
+exlore-by-category
+view-all-datasets
+use-the-interactive-mapper
 connecting-r-and-arcgis
 connecting-python-and-arcgis
