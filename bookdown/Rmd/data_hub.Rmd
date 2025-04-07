@@ -12,7 +12,7 @@ Explore datasets and maps by category.
 </video>
 
 ## View all Datasets
-Use the gallery application to view all datasets, search datasets by name, open the dataset landing page, and view the dataset in ArcGIS Map Viewer. 
+Use the gallery application to view all datasets, search datasets by name, open the dataset landing page, and view the dataset in ArcGIS Online Map Viewer. 
 
 <video width="640" height="400" controls>
   <source src="video/searchapp_screencapture.webm" type= "video/webm">
@@ -55,3 +55,13 @@ View metadata for datasets on the Data Hub.
   Your browser does not support the video tag. 
   
 </video>
+
+## View Data Source
+View ArcGIS REST Services Directory for datasets. 
+
+<video width="640" height="400" controls>
+  <source src="video/datasource_screencapture.webm" type= "video/webm">
+  Your browser does not support the video tag. 
+  
+</video>
+
