@@ -49,7 +49,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     tree = ET.parse(metadata_xml)
     root = tree.getroot()
   
-    metadata_table = 'SMIT_FEATURES' #metdata table name in oracle
+    metadata_table = 'SMIT_META_FEATURES' #metdata table name in oracle
     metadata = MetaData(bind=engine)
     table = Table(metadata_table, metadata, autoload_with=engine)
     #query the table for metadata based on the short survey names (strata_short)
@@ -160,13 +160,13 @@ print("All feature service metadata updated!")
 for survey_short in survey_names:
   
   #extract the layer ID value from oracle metadata table using survey name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_FEATURES WHERE STRATA_SHORT = '{survey_short}'"
+  layer_sql_query = f"SELECT FILE_ID from SMIT_META_FEATURES WHERE STRATA_SHORT = '{survey_short}'"
   layerID = session.execute(layer_sql_query).fetchone()
   layerID = str(layerID[0])
   
   item = gis.content.get(layerID)
   #extract REST url from metadata table
-  metadata_table = 'SMIT_FEATURES' #metdata table name in oracle
+  metadata_table = 'SMIT_META_FEATURES' #metdata table name in oracle
   metadata = MetaData(bind=engine)
   table = Table(metadata_table, metadata, autoload_with=engine)
     #query the table for metadata based on the short survey names (strata_short)
@@ -194,7 +194,7 @@ for survey_short in survey_names:
 
   try: 
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = "SMIT_LAYERS"
+    table_name = "SMIT_META_LAYERS"
     column_name = "abstract"
     with engine.connect() as connection:
       metadata= MetaData(bind=engine)
@@ -221,7 +221,7 @@ for survey_short in survey_names:
   layer_url = f"{rest_url}/{layer_id}"
   try:
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = "SMIT_LAYERS"
+    table_name = "SMIT_META_LAYERS"
     column_name = "abstract"
     with engine.connect() as connection:
       metadata= MetaData(bind=engine)

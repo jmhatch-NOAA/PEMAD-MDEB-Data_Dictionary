@@ -89,7 +89,7 @@ tables = ['SMIT_ECOMON_STATIONS','SMIT_SCALLOP_STRATA_HISTORIC','SMIT_OQ_STRATA'
 for table in tables:
   
   #sql query to pull field names, aliases, and descriptions from oracle
-  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_FIELDS WHERE TABLE_NAME = '{table}'"
+  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_META_FIELDS WHERE TABLE_NAME = '{table}'"
   df = pd.read_sql(sql_query, con=connection)
   #add two columns to dataframe, keep them null- field type and decimals
   #the code doesn't work without having these columns, see above description
@@ -109,7 +109,7 @@ for table in tables:
     temp_file_path = temp_file.name
   
   #extract the layer ID value from oracle metadata table using survey layer name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_LAYERS WHERE TABLE_NAME = '{table}'"
+  layer_sql_query = f"SELECT FILE_ID from SMIT_META_LAYERS WHERE TABLE_NAME = '{table}'"
   layerID = session.execute(layer_sql_query).fetchone()
   layerID = str(layerID[0])
 
