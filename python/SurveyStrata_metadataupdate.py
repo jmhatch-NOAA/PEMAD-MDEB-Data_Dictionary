@@ -94,7 +94,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       root.remove(to_remove)
     #update abstract
     abs_element = root.find(".//dataIdInfo/idAbs")
-    abs_element.text = f'<p>{link if link else ""}<br><br>{abstract}</p>'
+    abs_element.text = f'<p>{link if link else ""}<br>{abstract}</p>'
     #update title
     title_element = root.find(".//dataIdInfo/idCitation/resTitle")
     title_element.text = title
