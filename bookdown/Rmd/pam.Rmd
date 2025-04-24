@@ -1,0 +1,82 @@
+## Passive Acoustic Monitoring Survey
+
+```{r, echo = FALSE}
+# feature server url
+pam_url = 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Passive_Acoustic_Monitoring_Survey/FeatureServer'
+
+# metadata
+pam_meta = arcgisutils::fetch_layer_metadata(url = pam_url, token = token)
+```
+
+### ArcGIS Feature Service
+
+Click [here](`r pam_url`).
+
+```{r, echo = FALSE}
+# InPort
+inport_href = pam_meta$serviceDescription |>
+  rvest::read_html() |>
+  rvest::html_node('a') |>
+  rvest::html_attr('href')
+
+# description
+pam_desc = gsub("<a(.|\n)*?</a>", '', pam_meta$serviceDescription)
+pam_desc = gsub("<p>|<br>|</p>|\\n", '', pam_desc)
+```
+
+### InPort Metadata
+
+Not yet.
+
+### Description
+
+`r pam_desc`
+
+### Spatial Extent
+
+```{r, echo = FALSE}
+# get layer bounding box
+pam_bb = data.frame(
+  x = c(pam_meta$fullExtent$xmin, pam_meta$fullExtent$xmax), 
+  y = c(pam_meta$fullExtent$ymin, pam_meta$fullExtent$ymax)) |>
+  sf::st_as_sf(coords = c('x', 'y'), crs = pam_meta$fullExtent$spatialReference$latestWkid) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
+  sf::st_transform(4326)
+  
+# leaflet map
+leaflet::leaflet() |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = pam_bb)
+```
+
+### Layers
+
+```{r, echo = FALSE}
+pam_meta$layers |>
+  dplyr::select(id, name, type, geometryType) |>
+  knitr::kable()
+```
+
+### Fields
+
+```{r, echo = FALSE, results = 'asis'}
+# feature server url
+rwsc_pam_url = 'https://rwsc.env.duke.edu/arcgis/rest/services/Passive_Acoustic_Monitoring/MapServer/1'
+
+# open layer
+rwsc_pam_layer = arcgislayers::arc_open(url = rwsc_pam_url)
+
+# get fields
+rwsc_pam_fields = arcgislayers::list_fields(rwsc_pam_layer) |>
+  dplyr::select(name, alias, type) |>
+  dplyr::rename(dataType = type)
+
+# layer metadata
+pam_layer = arcgisutils::fetch_layer_metadata(url = paste0(pam_url, '/0'), token = token)
+
+# output
+cat('\n####', pam_layer$name, '\n')
+  print(knitr::kable(rwsc_pam_fields))
+cat('\n')
+```
