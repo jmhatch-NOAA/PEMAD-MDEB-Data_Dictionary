@@ -22,6 +22,11 @@ inport_href = pam_meta$serviceDescription |>
 # description
 pam_desc = gsub("<a(.|\n)*?</a>", '', pam_meta$serviceDescription)
 pam_desc = gsub("<p>|<br>|</p>|\\n", '', pam_desc)
+
+# only grab the 1st two sentences
+pam_sentences = stringr::str_split(pam_desc, pattern = '\\.') |>
+  unlist()
+pam_desc = paste0(paste(pam_sentences[c(1:2, 4)], collapse = '.'), '.')
 ```
 
 ### InPort Metadata
