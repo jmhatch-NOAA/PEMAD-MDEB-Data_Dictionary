@@ -1,13 +1,13 @@
 # Connecting R and AGOL
 
-To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/), a collection of R packages that integrates R with ArcGIS. The easiest way to install the [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/) is to install the `{arcgis}` metapackage,
+To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/), a collection of R packages that integrates R with ArcGIS. The easiest way to install the [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/) is to install the {arcgis} metapackage,
 ```{r, eval = FALSE}
 install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 It is recommended that you have the newest version of R installed, with a minimum R version of 4.3 or higher.
 
-Once you have installed `{arcgis}` you can load all the packages using,
+Once you have installed {arcgis} you can load all the packages using,
 ```{r, eval = FALSE}
 library(arcgis)
 ```
