@@ -5,7 +5,7 @@ To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bri
 install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
-It is recommended that you have the newet version of R installed, with a minimum version number of 4.3 or higher.
+It is recommended that you have the newest version of R installed, with a minimum version number of 4.3 or higher.
 
 Once you have installed {arcgis} you can load all the packages using,
 ```{r, eval = FALSE}
@@ -23,30 +23,95 @@ The rest of this tutorial will show you how to 1) find a feature layer url from 
 ## Find a feature layer url
 
 Navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/).
-
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "MDEB GIS Data Hub"}
 knitr::include_graphics("img/mdeb_gis_data_hub.png")
 ```
 
 Find the survey you are interested in and scroll down to the `I want to...` section.
-
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon.png")
 ```
 
 Click on the `View Data Source` link.
-
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_data.png")
 ```
 
 This will bring you to the feature service page.
-
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_feature.png")
 ```
 
-Now copy the url in the address bar.
+Now copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next subsection.
+```{r, echo = TRUE, eval = FALSE}
+## URL for EcoMon Strata feature layer
+ecomon_url <- 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer/1'
+```
+
+## Read in data from a feature layer
+
+Now we will use the `arc_read()` function to extract the data from the EcoMon Strata feature layer and store the results in an R object called `ecomon_strata`.
+```{r, echo = TRUE}
+## Download EcoMon Survey strata from the MDEB GIS Data Hub
+ecomon_strata <- arc_read(url = ecomon_url)
+ecomon_strata
+
+#> Simple feature collection with 48 features and 11 fields
+#> Geometry type: POLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -75.96791 ymin: 35.14219 xmax: -65.16869 ymax: 44.48558
+#> Geodetic CRS:  NAD83
+#> First 10 features:
+#>    OBJECTID                 SURVEY_NAME NUMOFPOLY NUMOFSTA REGION     AREA TYPE     ACRES Shape__Area Shape__Length
+#> 1         1 Ecosystem Monitoring Survey         1        1    MAB 1540.432   SB  380709.0   0.1540434      2.314193
+#> 2         2 Ecosystem Monitoring Survey         1        2    MAB 4496.485   MS 1110526.3   0.4498022      3.273956
+#> 3         3 Ecosystem Monitoring Survey         1        2    MAB 3190.414   IS  788464.8   0.3184615      3.374652
+#> 4         4 Ecosystem Monitoring Survey         1        1    MAB 2510.323   SB  620508.7   0.2548203      3.274308
+#> 5         5 Ecosystem Monitoring Survey         1        5    MAB 9620.144   MS 2378814.2   0.9760387      4.144637
+#> 6         6 Ecosystem Monitoring Survey         1        2    MAB 2726.496   IS  673994.9   0.2762439      3.118843
+#> 7         7 Ecosystem Monitoring Survey         1        2    MAB 4804.352   SB 1187883.9   0.4939513      4.031104
+#> 8         8 Ecosystem Monitoring Survey         1        4    MAB 8095.956   MS 2001253.5   0.8353470      3.985027
+#> 9         9 Ecosystem Monitoring Survey         1        1    MAB 2391.726   IS  591364.0   0.2455178      2.838412
+#> 10       10 Ecosystem Monitoring Survey         1        3    MAB 4720.303   SB 1167316.5   0.4908978      3.187865
+#>    STR_NAME                       geometry
+#> 1         1 POLYGON ((-74.76881 36.5052...
+#> 2         2 POLYGON ((-74.81583 36.5052...
+#> 3         3 POLYGON ((-75.72364 36.5060...
+#> 4         4 POLYGON ((-74.3466 37.56465...
+#> 5         5 POLYGON ((-74.63893 37.7118...
+#> 6         6 POLYGON ((-75.54484 37.5418...
+#> 7         7 POLYGON ((-73.38887 38.4968...
+#> 8         8 POLYGON ((-74.44489 39.0486...
+#> 9         9 POLYGON ((-74.93782 38.5007...
+#> 10       10 POLYGON ((-72.7857 39.20539..
+```
+
+```{r, echo = TRUE, eval = FALSE}
+## Take a look, it's an sf data frame
+ecomon_strata
+
+## Plot
+plot(ecomon_strata['REGION'])
+```
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("img/ecomon_strata.png")
+```
+
+#######################
+## Implement a query ##
+#######################
+
+arc_open() will create a FeatureLayer object. Under the hood, this is really just a list containing the feature layer’s metadata.
+
+
+## Open connection to EcoMon feature service, strata layer
+ecomon_open = arc_open(url = ecomon_url)
+ecomon_open
+
+## Query for only SNE strata
+ecomon_sne = arc_select(x = ecomon_open, where = "REGION = 'SNE'")
+plot(ecomon_sne['REGION'])
 
 # Connecting python and ArcGIS
 
