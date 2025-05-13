@@ -29,13 +29,19 @@ Navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/).
 knitr::include_graphics("img/mdeb_gis_data_hub.png")
 ```
 
-Find the survey you are interested in by either using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. For this tutorial, we will focus on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) page found by using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search). Once on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) page, scroll down to the `I want to...` section and click on the `View Data Source` link.
+Find the survey that you're interested in by either using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. For this tutorial, we will use the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search?tags=ecosystem%2CCategory) to focus on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) (EcoMon). Once on EcoMon's [About page](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about), scroll down to the `I want to...` section and click on the `View Data Source` link.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_data.png")
 ```
 
-This will bring you to the feature service page.
+If you find yourself on the `Explore` page instead, don't worry. You can navigate to the `About` page by clicking on the `View Full Details` button.
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_map.png")
+```
+
+After you click the `View Data Source` link, you will be brought to the feature service page.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_feature.png")
@@ -104,7 +110,7 @@ plot(ecomon_sne['REGION'])
 knitr::include_graphics("img/ecomon_sne_strata.png")
 ```
 
-You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in `arc_read()`. Just note that `arc_read()` is a wrapper around the functions `arc_open()` and `arc_select()`, and sometimes using `arc_open()` and `arc_select()` can be faster than `arc_read()`.
+You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in `arc_read()`.
 
 # Portals in ArcGIS Pro
 
