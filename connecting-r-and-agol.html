@@ -66,11 +66,11 @@
 <h1>
 <span class="header-section-number">4</span> Connecting R and AGOL<a class="anchor" aria-label="anchor" href="#connecting-r-and-agol"><i class="fas fa-link"></i></a>
 </h1>
-<p>To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a>, a collection of R packages that integrates R with ArcGIS. The easiest way to install the <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a> is to install the <a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a> metapackage,</p>
+<p>To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a>, a collection of R packages that integrates R with ArcGIS. The easiest way to install the <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a> is to install the {arcgis} metapackage,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"arcgis"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://r-arcgis.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>It is recommended that you have the newest version of R installed, with a minimum R version of 4.3 or higher.</p>
-<p>Once you have installed <a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a> you can load all the packages using,</p>
+<p>Once you have installed {arcgis} you can load all the packages using,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a></span><span class="op">)</span></span></code></pre></div>
 <p>This will load:</p>
