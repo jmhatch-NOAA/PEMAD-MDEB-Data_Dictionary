@@ -87,9 +87,11 @@
 </h2>
 <p>Navigate to the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/">MDEB GIS Data Hub</a>.</p>
 <div class="inline-figure"><img src="img/mdeb_gis_data_hub.png" width="100%"></div>
-<p>Find the survey you are interested in by either using the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a> or the Content gallery. For this tutorial, we will focus on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">Ecosystem Monitoring Survey</a> page found by using the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a>. Once on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">Ecosystem Monitoring Survey</a> page, scroll down to the <code>I want to...</code> section and click on the <code>View Data Source</code> link.</p>
+<p>Find the survey that you’re interested in by either using the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a> or the Content gallery. For this tutorial, we will use the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search?tags=ecosystem%2CCategory">Content library</a> to focus on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">Ecosystem Monitoring Survey</a> (EcoMon). Once on EcoMon’s <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">About page</a>, scroll down to the <code>I want to...</code> section and click on the <code>View Data Source</code> link.</p>
 <div class="inline-figure"><img src="img/mdeb_gis_data_hub_ecomon_data.png" width="100%"></div>
-<p>This will bring you to the feature service page.</p>
+<p>If you find yourself on the <code>Explore</code> page instead, don’t worry. You can navigate to the <code>About</code> page by clicking on the <code>View Full Details</code> button.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_ecomon_map.png" width="100%"></div>
+<p>After you click the <code>View Data Source</code> link, you will be brought to the feature service page.</p>
 <div class="inline-figure"><img src="img/mdeb_gis_data_hub_ecomon_feature.png" width="100%"></div>
 <p>Copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next section of this tutorial.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -144,7 +146,7 @@
 <span><span class="va">ecomon_sne</span> <span class="op">&lt;-</span> <span class="fu">arc_read</span><span class="op">(</span>url <span class="op">=</span> <span class="va">ecomon_url</span>, where <span class="op">=</span> <span class="st">"REGION = 'SNE'"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ecomon_sne</span><span class="op">[</span><span class="st">'REGION'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="img/ecomon_sne_strata.png" width="100%"></div>
-<p>You can also select a subset of columns or fields to return from the feature layer, just populate the <code>fields</code> argument in <code>arc_read()</code>. Just note that <code>arc_read()</code> is a wrapper around the functions <code>arc_open()</code> and <code>arc_select()</code>, and sometimes using <code>arc_open()</code> and <code>arc_select()</code> can be faster than <code>arc_read()</code>.</p>
+<p>You can also select a subset of columns or fields to return from the feature layer, just populate the <code>fields</code> argument in <code>arc_read()</code>.</p>
 </div>
 </div>
   <div class="chapter-nav">
