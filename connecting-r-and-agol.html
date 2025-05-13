@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="180x180" href="img/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon_io/favicon-16x16.png">
+<link rel="manifest" href="img/favicon_io/site.webmanifest">
+<title>4 Connecting R and AGOL | MDEBdb Data Dictionary</title>
+<meta name="author" content="Joshua Hatch">
+<meta name="author" content="Nicole Mucci">
+<meta name="description" content="To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s R-ArcGIS Bridge, a collection of R packages that integrates R with ArcGIS. The easiest way to install the R-ArcGIS Bridge is to...">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
+<meta property="og:title" content="4 Connecting R and AGOL | MDEBdb Data Dictionary">
+<meta property="og:type" content="book">
+<meta property="og:description" content="To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s R-ArcGIS Bridge, a collection of R packages that integrates R with ArcGIS. The easiest way to install the R-ArcGIS Bridge is to...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Connecting R and AGOL | MDEBdb Data Dictionary">
+<meta name="twitter:description" content="To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s R-ArcGIS Bridge, a collection of R packages that integrates R with ArcGIS. The easiest way to install the R-ArcGIS Bridge is to...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">MDEBdb Data Dictionary</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+    <img class="d-none d-lg-block" style="display: block; margin-left: auto; margin-right: auto;" src="img/logo.png" width="210px" height="210px/"><p class="d-none d-lg-block" style="line-height: 10px;"></p>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="survey-mitigation.html"><span class="header-section-number">2</span> Survey Mitigation</a></li>
+<li><a class="" href="data-hub.html"><span class="header-section-number">3</span> Data Hub</a></li>
+<li><a class="active" href="connecting-r-and-agol.html"><span class="header-section-number">4</span> Connecting R and AGOL</a></li>
+<li><a class="" href="portals-in-arcgis-pro.html"><span class="header-section-number">5</span> Portals in ArcGIS Pro</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/jmhatch-NOAA/PEMAD-MDEB-Data_Dictionary">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="connecting-r-and-agol" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Connecting R and AGOL<a class="anchor" aria-label="anchor" href="#connecting-r-and-agol"><i class="fas fa-link"></i></a>
+</h1>
+<p>To connect R with ArcGIS Online (AGOL) you will need to use ESRI’s <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a>, a collection of R packages that integrates R with ArcGIS. The easiest way to install the <a href="https://developers.arcgis.com/r-bridge/">R-ArcGIS Bridge</a> is to install the <a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a> metapackage,</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"arcgis"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://r-arcgis.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>It is recommended that you have the newest version of R installed, with a minimum R version of 4.3 or higher.</p>
+<p>Once you have installed <a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a> you can load all the packages using,</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgis/">arcgis</a></span><span class="op">)</span></span></code></pre></div>
+<p>This will load:</p>
+<ul>
+<li>arcgisutils</li>
+<li>arcgislayers</li>
+<li>arcgisgeocode</li>
+<li>arcgisplaces</li>
+</ul>
+<p><br>The rest of this tutorial will show you how to 1) find a feature layer url on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/">MDEB GIS Data Hub</a> and 2) read in data from that feature layer.</p>
+<div id="find-a-feature-layer-url" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Find a feature layer url<a class="anchor" aria-label="anchor" href="#find-a-feature-layer-url"><i class="fas fa-link"></i></a>
+</h2>
+<p>Navigate to the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/">MDEB GIS Data Hub</a>.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub.png" width="100%"></div>
+<p>Find the survey you are interested in by either using the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a> or the Content gallery. For this tutorial, we will focus on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">Ecosystem Monitoring Survey</a> page found by using the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a>. Once on the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about">Ecosystem Monitoring Survey</a> page, scroll down to the <code>I want to...</code> section and click on the <code>View Data Source</code> link.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_ecomon_data.png" width="100%"></div>
+<p>This will bring you to the feature service page.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_ecomon_feature.png" width="100%"></div>
+<p>Copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next section of this tutorial.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## url for EcoMon Strata feature layer</span></span>
+<span><span class="va">ecomon_url</span> <span class="op">&lt;-</span> <span class="st">'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer/1'</span></span></code></pre></div>
+</div>
+<div id="read-in-data-from-a-feature-layer" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Read in data from a feature layer<a class="anchor" aria-label="anchor" href="#read-in-data-from-a-feature-layer"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now we will use the <code>arc_read()</code> function to extract the data from the EcoMon Strata feature layer and store the results in an R object called <code>ecomon_strata</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Download EcoMon Survey strata from the MDEB GIS Data Hub</span></span>
+<span><span class="va">ecomon_strata</span> <span class="op">&lt;-</span> <span class="fu">arc_read</span><span class="op">(</span>url <span class="op">=</span> <span class="va">ecomon_url</span><span class="op">)</span></span>
+<span><span class="va">ecomon_strata</span></span>
+<span></span>
+<span><span class="co">#&gt; Simple feature collection with 48 features and 11 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -75.96791 ymin: 35.14219 xmax: -65.16869 ymax: 44.48558</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  NAD83</span></span>
+<span><span class="co">#&gt; First 10 features:</span></span>
+<span><span class="co">#&gt;    OBJECTID                 SURVEY_NAME NUMOFPOLY NUMOFSTA REGION     AREA TYPE     ACRES Shape__Area Shape__Length</span></span>
+<span><span class="co">#&gt; 1         1 Ecosystem Monitoring Survey         1        1    MAB 1540.432   SB  380709.0   0.1540434      2.314193</span></span>
+<span><span class="co">#&gt; 2         2 Ecosystem Monitoring Survey         1        2    MAB 4496.485   MS 1110526.3   0.4498022      3.273956</span></span>
+<span><span class="co">#&gt; 3         3 Ecosystem Monitoring Survey         1        2    MAB 3190.414   IS  788464.8   0.3184615      3.374652</span></span>
+<span><span class="co">#&gt; 4         4 Ecosystem Monitoring Survey         1        1    MAB 2510.323   SB  620508.7   0.2548203      3.274308</span></span>
+<span><span class="co">#&gt; 5         5 Ecosystem Monitoring Survey         1        5    MAB 9620.144   MS 2378814.2   0.9760387      4.144637</span></span>
+<span><span class="co">#&gt; 6         6 Ecosystem Monitoring Survey         1        2    MAB 2726.496   IS  673994.9   0.2762439      3.118843</span></span>
+<span><span class="co">#&gt; 7         7 Ecosystem Monitoring Survey         1        2    MAB 4804.352   SB 1187883.9   0.4939513      4.031104</span></span>
+<span><span class="co">#&gt; 8         8 Ecosystem Monitoring Survey         1        4    MAB 8095.956   MS 2001253.5   0.8353470      3.985027</span></span>
+<span><span class="co">#&gt; 9         9 Ecosystem Monitoring Survey         1        1    MAB 2391.726   IS  591364.0   0.2455178      2.838412</span></span>
+<span><span class="co">#&gt; 10       10 Ecosystem Monitoring Survey         1        3    MAB 4720.303   SB 1167316.5   0.4908978      3.187865</span></span>
+<span><span class="co">#&gt;    STR_NAME                       geometry</span></span>
+<span><span class="co">#&gt; 1         1 POLYGON ((-74.76881 36.5052...</span></span>
+<span><span class="co">#&gt; 2         2 POLYGON ((-74.81583 36.5052...</span></span>
+<span><span class="co">#&gt; 3         3 POLYGON ((-75.72364 36.5060...</span></span>
+<span><span class="co">#&gt; 4         4 POLYGON ((-74.3466 37.56465...</span></span>
+<span><span class="co">#&gt; 5         5 POLYGON ((-74.63893 37.7118...</span></span>
+<span><span class="co">#&gt; 6         6 POLYGON ((-75.54484 37.5418...</span></span>
+<span><span class="co">#&gt; 7         7 POLYGON ((-73.38887 38.4968...</span></span>
+<span><span class="co">#&gt; 8         8 POLYGON ((-74.44489 39.0486...</span></span>
+<span><span class="co">#&gt; 9         9 POLYGON ((-74.93782 38.5007...</span></span>
+<span><span class="co">#&gt; 10       10 POLYGON ((-72.7857 39.20539..</span></span>
+<span></span>
+<span><span class="co">## Plot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ecomon_strata</span><span class="op">[</span><span class="st">'REGION'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="img/ecomon_strata.png" width="100%"></div>
+<p>You can also use SQL <code>where</code> clauses to limit the number of rows returned from the hosted feature layer, especially if you only need a subset of the data. This can be very efficient, as reading a subset of the data into memory will be faster and less costly, relative to reading in the entire dataset (if you don’t need the entire dataset).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Query for only SNE strata</span></span>
+<span><span class="va">ecomon_sne</span> <span class="op">&lt;-</span> <span class="fu">arc_read</span><span class="op">(</span>url <span class="op">=</span> <span class="va">ecomon_url</span>, where <span class="op">=</span> <span class="st">"REGION = 'SNE'"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ecomon_sne</span><span class="op">[</span><span class="st">'REGION'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="img/ecomon_sne_strata.png" width="100%"></div>
+<p>You can also select a subset of columns or fields to return, just populate the <code>fields</code> argument in <code>arc_read()</code>. It is useful to note that <code>arc_read()</code> is just a wrapper around the functions <code>arc_open()</code> and <code>arc_select()</code>. Sometimes using <code>arc_open()</code> and <code>arc_select()</code> can be faster than <code>arc_read()</code> for some reason.</p>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="data-hub.html"><span class="header-section-number">3</span> Data Hub</a></div>
+<div class="next"><a href="portals-in-arcgis-pro.html"><span class="header-section-number">5</span> Portals in ArcGIS Pro</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#connecting-r-and-agol"><span class="header-section-number">4</span> Connecting R and AGOL</a></li>
+<li><a class="nav-link" href="#find-a-feature-layer-url"><span class="header-section-number">4.1</span> Find a feature layer url</a></li>
+<li><a class="nav-link" href="#read-in-data-from-a-feature-layer"><span class="header-section-number">4.2</span> Read in data from a feature layer</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/jmhatch-NOAA/PEMAD-MDEB-Data_Dictionary/blob/main/bookdown/18-examples.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/jmhatch-NOAA/PEMAD-MDEB-Data_Dictionary/edit/main/bookdown/18-examples.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-05-13.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
