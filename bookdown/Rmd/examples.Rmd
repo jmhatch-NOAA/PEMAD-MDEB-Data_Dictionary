@@ -1,48 +1,47 @@
-# Connecting R and ArcGIS Online
+# Connecting R and AGOL
 
-To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/), which is a collection of R packages that integrates R with ArcGIS. The easiest way to install the R-ArcGIS Bridge is to install the {argis} metapackage,
+To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/), a collection of R packages that integrates R with ArcGIS. The easiest way to install the [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/) is to install the `{arcgis}` metapackage,
 ```{r, eval = FALSE}
 install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
-It is recommended that you have the newest version of R installed, with a minimum version number of 4.3 or higher.
+It is recommended that you have the newest version of R installed, with a minimum R version of 4.3 or higher.
 
-Once you have installed {arcgis} you can load all the packages using,
+Once you have installed `{arcgis}` you can load all the packages using,
 ```{r, eval = FALSE}
 library(arcgis)
 ```
 
-This will include:
-- arcgisutils 
-- arcgislayers 
-- arcgisgeocode
-- arcgisplaces
+This will load:
 
-The rest of this tutorial will show you how to 1) find a feature layer url from the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and 2) read in data from that feature layer.
+* arcgisutils 
+* arcgislayers 
+* arcgisgeocode
+* arcgisplaces
+
+<br>The rest of this tutorial will show you how to 1) find a feature layer url on the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and 2) read in data from that feature layer.
 
 ## Find a feature layer url
 
 Navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/).
-```{r, echo = FALSE, out.width = "100%", fig.cap = "MDEB GIS Data Hub"}
+
+```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub.png")
 ```
 
-Find the survey you are interested in and scroll down to the `I want to...` section.
-```{r, echo = FALSE, out.width = "100%"}
-knitr::include_graphics("img/mdeb_gis_data_hub_ecomon.png")
-```
+Find the survey you are interested in by either using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. For this tutorial, we will focus on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) page found by using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search). Once on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) page, scroll down to the `I want to...` section and click on the `View Data Source` link.
 
-Click on the `View Data Source` link.
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_data.png")
 ```
 
 This will bring you to the feature service page.
+
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_feature.png")
 ```
 
-Now copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next subsection.
+Copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next section of this tutorial.
 ```{r, echo = TRUE, eval = FALSE}
 ## url for EcoMon Strata feature layer
 ecomon_url <- 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer/1'
@@ -84,9 +83,7 @@ ecomon_strata
 #> 8         8 POLYGON ((-74.44489 39.0486...
 #> 9         9 POLYGON ((-74.93782 38.5007...
 #> 10       10 POLYGON ((-72.7857 39.20539..
-```
 
-```{r, echo = TRUE, eval = FALSE}
 ## Plot
 plot(ecomon_strata['REGION'])
 ```
@@ -95,15 +92,11 @@ plot(ecomon_strata['REGION'])
 knitr::include_graphics("img/ecomon_strata.png")
 ```
 
-You can also use SQL where clauses to limit the number of rows returned from the hosted feature layer, especially if you only need a subset. This can be very efficient, as reading a subset of data into memory will be faster and less costly, relative to th entire dataset. 
+You can also use SQL `where` clauses to limit the number of rows returned from the hosted feature layer, especially if you only need a subset of the data. This can be very efficient, as reading a subset of the data into memory will be faster and less costly, relative to reading in the entire dataset (if you don't need the entire dataset). 
 
 ```{r, echo = TRUE, eval = FALSE}
-## Open connection to the EcoMon Strata feature layer
-ecomon_open = arc_open(url = ecomon_url)
-ecomon_open
-
 ## Query for only SNE strata
-ecomon_sne = arc_select(x = ecomon_open, where = "REGION = 'SNE'")
+ecomon_sne <- arc_read(url = ecomon_url, where = "REGION = 'SNE'")
 plot(ecomon_sne['REGION'])
 ```
 
@@ -111,75 +104,8 @@ plot(ecomon_sne['REGION'])
 knitr::include_graphics("img/ecomon_sne_strata.png")
 ```
 
-# Connecting python and ArcGIS
+You can also select a subset of columns or fields to return, just populate the `fields` argument in `arc_read()`. It is useful to note that `arc_read()` is just a wrapper around the functions `arc_open()` and `arc_select()`. Sometimes using `arc_open()` and `arc_select()` can be faster than `arc_read()` for some reason.
 
-This code is for connecting to arcgis.com via the ArcGIS API for python, refer to <https://github.com/Esri/arcgis-python-api> for source code. Further documentation at <https://developers.arcgis.com/python/latest/>.
+# Portals in ArcGIS Pro
 
-```{python, eval = FALSE, python.reticulate = FALSE}
-# load libraries
-import arcpy
-import arcgis
-from arcgis.gis import GIS
-from arcgis.features import FeatureLayer
-import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
-from shapely.geometry import Polygon
-
-# log into arcgis online
-# see documentation for logging in with various authentication schemes 
-# https://developers.arcgis.com/python/latest/guide/working-with-different-authentication-schemes/
-user = "" # enter arcgis.com username
-password = "" # enter arcgis.com password
-portal = "https://noaa.maps.arcgis.com/"
-gis = GIS(portal, user, password)
-
-# alternatively, log in using ArcGIS Pro, if Pro is on system computer and is logged into the portal
-gis = GIS("PRO")
-
-# test arcis.com connection
-if gis is not None and gis._portal.is_logged_in:
-  print(f"Successfully logged in as: {gis.properties.user['username']}")
-else:
-  print("Login failed.")
-
-# example map
-# pull data from arcgis online using feature server url, from ArcGIS REST API
-# in this example, taking the World Continents feature layer from Living Atlas 
-item_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Continents/FeatureServer/0"
-
-# retrieve item from arcgis online
-world_layer = FeatureLayer(item_url)
-
-# query feature layer to return all data
-world_features = world_layer.query(where="1=1")
-
-# create a list to hold the geometries
-geometries = []
-
-# loop through features to extract geometries
-for feature in world_features.features:
-  geom = feature.geometry
-  if geom['rings']:
-    for ring in geom['rings']:
-      polygon = Polygon(ring)
-      geometries.append(polygon)
-
-# create geopandas dataframe
-gdf = gpd.GeoDataFrame(geometry=geometries)
-
-# create map using geopandas
-fig,ax = plt.subplots(figsize=(10,6))
-gdf.plot(ax=ax, color='#9bc04b', edgecolor='black') #set fill color and border color
-plt.title('World Map') #set map title
-ax.set_xticks([]) #remove tick marks
-ax.set_yticks([])
-ax.xaxis.set_ticklabels([]) #remove tick labels
-ax.yaxis.set_ticklabels([])
-plt.ylim(-9000000,20000000) #set limits of y axis 
-plt.show()
-```
-
-```{r, echo=FALSE, out.width="100%", fig.cap="World map"}
-knitr::include_graphics("img/World_map.png")
-```
+[TBD by Nicole]
