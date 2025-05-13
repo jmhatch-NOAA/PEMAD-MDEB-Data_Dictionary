@@ -144,7 +144,7 @@
 <span><span class="va">ecomon_sne</span> <span class="op">&lt;-</span> <span class="fu">arc_read</span><span class="op">(</span>url <span class="op">=</span> <span class="va">ecomon_url</span>, where <span class="op">=</span> <span class="st">"REGION = 'SNE'"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ecomon_sne</span><span class="op">[</span><span class="st">'REGION'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="img/ecomon_sne_strata.png" width="100%"></div>
-<p>You can also select a subset of columns or fields to return, just populate the <code>fields</code> argument in <code>arc_read()</code>. It is useful to note that <code>arc_read()</code> is just a wrapper around the functions <code>arc_open()</code> and <code>arc_select()</code>. Sometimes using <code>arc_open()</code> and <code>arc_select()</code> can be faster than <code>arc_read()</code> for some reason.</p>
+<p>You can also select a subset of columns or fields to return, just populate the <code>fields</code> argument in <code>arc_read()</code>. Just note that <code>arc_read()</code> is a wrapper around the functions <code>arc_open()</code> and <code>arc_select()</code>, and sometimes using <code>arc_open()</code> and <code>arc_select()</code> can be faster than <code>arc_read()</code>.</p>
 </div>
 </div>
   <div class="chapter-nav">
