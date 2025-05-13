@@ -29,7 +29,7 @@ Navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/).
 knitr::include_graphics("img/mdeb_gis_data_hub.png")
 ```
 
-Find the survey that you're interested in by either using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. For this tutorial, we will use the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search?tags=ecosystem%2CCategory) to focus on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) (EcoMon). Once on EcoMon's [About page](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about), scroll down to the `I want to...` section and click on the `View Data Source` link.
+Find the survey that you're interested in by using the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. For this tutorial, we will use the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search?tags=ecosystem%2CCategory) to focus on the [Ecosystem Monitoring Survey](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about) (EcoMon). Once on EcoMon's [About page](https://mdeb-nefsc-noaa.hub.arcgis.com/maps/0965a8f0ce0747169e7862385c17bd1d/about), scroll down to the `I want to...` section and click on the `View Data Source` link.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_data.png")
