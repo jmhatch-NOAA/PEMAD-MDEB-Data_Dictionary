@@ -19,7 +19,7 @@ This will load:
 * arcgisgeocode
 * arcgisplaces
 
-<br>The rest of this tutorial will show you how to 1) find a feature layer url on the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and 2) read in data from that feature layer.
+<br>The rest of this tutorial will show you how to 1) find a feature layer url on the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and 2) read in the data from that feature layer.
 
 ## Find a feature layer url
 
@@ -110,7 +110,7 @@ plot(ecomon_sne['REGION'])
 knitr::include_graphics("img/ecomon_sne_strata.png")
 ```
 
-You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in `arc_read()`.
+You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in the `arc_read()` function.
 
 # Portals in ArcGIS Pro
 
