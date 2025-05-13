@@ -51,7 +51,7 @@ ecomon_url <- 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/service
 ## Read in data from a feature layer
 
 Now we will use the `arc_read()` function to extract the data from the EcoMon Strata feature layer and store the results in an R object called `ecomon_strata`.
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 ## Download EcoMon Survey strata from the MDEB GIS Data Hub
 ecomon_strata <- arc_read(url = ecomon_url)
 ecomon_strata
