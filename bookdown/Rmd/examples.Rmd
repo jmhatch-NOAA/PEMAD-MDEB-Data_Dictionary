@@ -104,7 +104,7 @@ plot(ecomon_sne['REGION'])
 knitr::include_graphics("img/ecomon_sne_strata.png")
 ```
 
-You can also select a subset of columns or fields to return, just populate the `fields` argument in `arc_read()`. Just note that `arc_read()` is a wrapper around the functions `arc_open()` and `arc_select()`, and sometimes using `arc_open()` and `arc_select()` can be faster than `arc_read()`.
+You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in `arc_read()`. Just note that `arc_read()` is a wrapper around the functions `arc_open()` and `arc_select()`, and sometimes using `arc_open()` and `arc_select()` can be faster than `arc_read()`.
 
 # Portals in ArcGIS Pro
 
