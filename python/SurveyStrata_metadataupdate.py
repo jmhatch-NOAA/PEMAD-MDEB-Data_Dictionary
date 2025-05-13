@@ -71,7 +71,6 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       pub_date = result.publish_date
       meta_contact = result.meta_contact_name
       meta_title = result.meta_contact_title
-      meta_role = result.meta_contact_role
       meta_email = result.meta_contact_email
       source = result.source
       useterms = result.useterms
