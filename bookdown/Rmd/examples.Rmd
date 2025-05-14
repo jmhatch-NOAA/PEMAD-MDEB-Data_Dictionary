@@ -1,6 +1,7 @@
 # Connecting R and AGOL
 
 To connect R with ArcGIS Online (AGOL) you will need to use ESRI's [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/), a collection of R packages that integrates R with ArcGIS. The easiest way to install the [R-ArcGIS Bridge](https://developers.arcgis.com/r-bridge/) is to install the {arcgis} metapackage,
+
 ```{r, eval = FALSE}
 install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
 ```
@@ -8,16 +9,17 @@ install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https:/
 It is recommended that you have the newest version of R installed, with a minimum R version of 4.3 or higher.
 
 Once you have installed {arcgis} you can load all the packages using,
+
 ```{r, eval = FALSE}
 library(arcgis)
 ```
 
 This will load:
 
-* arcgisutils 
-* arcgislayers 
-* arcgisgeocode
-* arcgisplaces
+-   arcgisutils
+-   arcgislayers
+-   arcgisgeocode
+-   arcgisplaces
 
 <br>The rest of this tutorial will show you how to 1) find a feature layer url on the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and 2) read in the data from that feature layer.
 
@@ -48,6 +50,7 @@ knitr::include_graphics("img/mdeb_gis_data_hub_ecomon_feature.png")
 ```
 
 Copy the url in the address bar and store it in an R object, this is the url of the remote resource (feature service) that you will need for the next section of this tutorial.
+
 ```{r, echo = TRUE, eval = FALSE}
 ## url for EcoMon Strata feature layer
 ecomon_url <- 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer/1'
@@ -56,6 +59,7 @@ ecomon_url <- 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/service
 ## Read in data from a feature layer
 
 Now we will use the `arc_read()` function to extract the data from the EcoMon Strata feature layer and store the results in an R object called `ecomon_strata`.
+
 ```{r, echo = TRUE, eval = FALSE}
 ## Download EcoMon Survey strata from the MDEB GIS Data Hub
 ecomon_strata <- arc_read(url = ecomon_url)
@@ -98,7 +102,7 @@ plot(ecomon_strata['REGION'])
 knitr::include_graphics("img/ecomon_strata.png")
 ```
 
-You can also use SQL `where` clauses to limit the number of rows returned from the hosted feature layer, especially if you only need a subset of the data. This can be very efficient, as reading a subset of the data into memory will be faster and less costly, relative to reading in the entire dataset (if you don't need the entire dataset). 
+You can also use SQL `where` clauses to limit the number of rows returned from the hosted feature layer, especially if you only need a subset of the data. This can be very efficient, as reading a subset of the data into memory will be faster and less costly, relative to reading in the entire dataset (if you don't need the entire dataset).
 
 ```{r, echo = TRUE, eval = FALSE}
 ## Query for only SNE strata
@@ -118,25 +122,25 @@ To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add d
 
 ## Add data to favorites
 
-To add data to your favorites, navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and find your desired feature service using either the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. We will use the Content gallery in this example. You must be signed in to ArcGIS Online to add content to your favorites. Click 'Sign In' in the top-right corner of the MDEB GIS Data Hub to log in to your AGOL account. Follow prompts to log in.
+To add data to your favorites, navigate to the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) and find your desired feature service using either the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. We will use the Content gallery in this example. You must be signed in to ArcGIS Online to add content to your favorites. Click `Sign In` in the top-right corner of the MDEB GIS Data Hub to log in to your AGOL account. Follow prompts to log in.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_signin.png")
 ```
 
-After signing in, scroll through the gallery and find the feature service that you would like to add to your favorites. Click on the 'Add to Favorites' button.
+After signing in, scroll through the gallery and find the feature service that you would like to add to your favorites. Click on the `Add to Favorites` button.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_addtofavs.png")
 ```
 
-Alternatively, navigate to the feature service landing page by clicking on 'View item details' in the Content gallery. On the feature service landing page, click 'Add to Favorites' below the feature service thumbnail.
+Alternatively, navigate to the feature service landing page by clicking on `View item details` in the Content gallery. On the feature service landing page, click `Add to Favorites` below the feature service thumbnail.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_landingpagefavs.png")
 ```
 
-In ArcGIS Pro, ensure that you are logged in to your portal. If you are logged in, your name and portal name will appear in the top-right corner of the ArcGIS Pro window. If you are not signed in, click 'Sign in' using the 'Sign-in Status' button in the top-right corner of the ArcGIS Pro window and follow prompts to log in to your portal. Next, navigate to the Catalog Pane, click on 'Portal', then 'My Favorites'. Any feature services that you have added to your favorites will appear here. Right click on the feature service and click 'Add to Current Map' to add the feature service to your project.
+In ArcGIS Pro, ensure that you are logged in to your portal. If you are logged in, your name and portal name will appear in the top-right corner of the ArcGIS Pro window. If you are not signed in, click `Sign in` using the `Sign-in Status` button in the top-right corner of the ArcGIS Pro window and follow prompts to log in to your portal. Next, navigate to the Catalog Pane, click on `Portal`, then `My Favorites`. Any feature services that you have added to your favorites will appear here. Right click on the feature service and click `Add to Current Map` to add the feature service to your project.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/arcgispro_portal_favorites.png")
@@ -144,25 +148,25 @@ knitr::include_graphics("img/arcgispro_portal_favorites.png")
 
 ## Connect to an ArcGIS Server using a REST URL
 
-First, obtain the REST URL for the desired feature service from ArcGIS Online. You can obtain this REST URL from the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) using either the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. We will use the Content gallery in this example. First, scroll through the gallery and find the feature service that you are interested in. Click on 'View item details' to be taken to the feature service landing page.
+To add data to ArcGIS Pro via REST URL, first obtain the REST URL for the desired feature service from ArcGIS Online. You can obtain the REST URL from the [MDEB GIS Data Hub](https://mdeb-nefsc-noaa.hub.arcgis.com/) using either the [Content library](https://mdeb-nefsc-noaa.hub.arcgis.com/search) or the Content gallery. We will use the Content gallery in this example. First, scroll through the gallery and find the feature service that you are interested in. Click on `View item details` to be taken to the feature service landing page.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/mdeb_gis_data_hub_viewitemdetails.png")
 ```
 
-On the landing page, scroll to the bottom until you see 'URL' in the right-side pane. Click the 'Copy' button to copy the REST URL to your clipboard.
+On the landing page, scroll to the bottom until you see `URL` in the right-side pane. Click the `Copy` button to copy the REST URL to your clipboard.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/agol_landingpage_url.png")
 ```
 
-Then, open a new or existing project in ArcGIS Pro. On ArcGIS Pro, in the Header Ribbon click on 'Insert'. In 'Insert', click on 'Connections', then 'Server', then 'New ArcGIS Server'.
+Then, open a new or existing project in ArcGIS Pro. On ArcGIS Pro, in the Header Ribbon click on `Insert`. In `Insert`, click on `Connections`, then `Server`, then `New ArcGIS Server`.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/arcgispro_server.png")
 ```
 
-Paste the URL into the 'Add ArcGIS Server Connection' pop-up window in the 'Server URL' box. Click OK. The ArcGIS Server connection will now appear in the Catalog Pane in the 'Project' menu under 'Servers'. Click on the right arrow to expand all server connections, and then click on the right arrow next to your desired server connection to see all feature services within the server. Right click on the desired feature service and click 'Add to Current Map' to add the feature service to your project.
+Paste the URL into the `Add ArcGIS Server Connection` pop-up window in the `Server URL` box. Click `OK`. The ArcGIS Server connection will now appear in the Catalog Pane in the `Project` menu under `Servers`. Click on the right arrow to expand all server connections, and then click on the right arrow next to your desired server connection to see all feature services within the server. Right click on the desired feature service and click `Add to Current Map` to add the feature service to your project.
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/arcgispro_catalog_server.png")
