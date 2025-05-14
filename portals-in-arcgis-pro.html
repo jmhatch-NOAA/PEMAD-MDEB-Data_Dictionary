@@ -11,14 +11,14 @@
 <title>5 Portals in ArcGIS Pro | MDEBdb Data Dictionary</title>
 <meta name="author" content="Joshua Hatch">
 <meta name="author" content="Nicole Mucci">
-<meta name="description" content="[TBD by Nicole]">
+<meta name="description" content="To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add data to your favorites or 2) connect to an ArcGIS Server using a REST URL.  5.1 Add data to favorites To add data to...">
 <meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="5 Portals in ArcGIS Pro | MDEBdb Data Dictionary">
 <meta property="og:type" content="book">
-<meta property="og:description" content="[TBD by Nicole]">
+<meta property="og:description" content="To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add data to your favorites or 2) connect to an ArcGIS Server using a REST URL.  5.1 Add data to favorites To add data to...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="5 Portals in ArcGIS Pro | MDEBdb Data Dictionary">
-<meta name="twitter:description" content="[TBD by Nicole]">
+<meta name="twitter:description" content="To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add data to your favorites or 2) connect to an ArcGIS Server using a REST URL.  5.1 Add data to favorites To add data to...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -66,15 +66,45 @@
 <h1>
 <span class="header-section-number">5</span> Portals in ArcGIS Pro<a class="anchor" aria-label="anchor" href="#portals-in-arcgis-pro"><i class="fas fa-link"></i></a>
 </h1>
-<p>[TBD by Nicole]</p>
+<p>To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add data to your favorites or 2) connect to an ArcGIS Server using a REST URL.</p>
+<div id="add-data-to-favorites" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Add data to favorites<a class="anchor" aria-label="anchor" href="#add-data-to-favorites"><i class="fas fa-link"></i></a>
+</h2>
+<p>To add data to your favorites, navigate to the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/">MDEB GIS Data Hub</a> and find your desired feature service using either the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a> or the Content gallery. We will use the Content gallery in this example. You must be signed in to ArcGIS Online to add content to your favorites. Click ‘Sign In’ in the top-right corner of the MDEB GIS Data Hub to log in to your AGOL account. Follow prompts to log in.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_signin.png" width="100%"></div>
+<p>After signing in, scroll through the gallery and find the feature service that you would like to add to your favorites. Click on the ‘Add to Favorites’ button.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_addtofavs.png" width="100%"></div>
+<p>Alternatively, navigate to the feature service landing page by clicking on ‘View item details’ in the Content gallery. On the feature service landing page, click ‘Add to Favorites’ below the feature service thumbnail.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_landingpagefavs.png" width="100%"></div>
+<p>In ArcGIS Pro, ensure that you are logged in to your portal. If you are logged in, your name and portal name will appear in the top-right corner of the ArcGIS Pro window. If you are not signed in, click ‘Sign in’ using the ‘Sign-in Status’ button in the top-right corner of the ArcGIS Pro window and follow prompts to log in to your portal. Next, navigate to the Catalog Pane, click on ‘Portal’, then ‘My Favorites’. Any feature services that you have added to your favorites will appear here. Right click on the feature service and click ‘Add to Current Map’ to add the feature service to your project.</p>
+<div class="inline-figure"><img src="img/arcgispro_portal_favorites.png" width="100%"></div>
+</div>
+<div id="connect-to-an-arcgis-server-using-a-rest-url" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Connect to an ArcGIS Server using a REST URL<a class="anchor" aria-label="anchor" href="#connect-to-an-arcgis-server-using-a-rest-url"><i class="fas fa-link"></i></a>
+</h2>
+<p>First, obtain the REST URL for the desired feature service from ArcGIS Online. You can obtain this REST URL from the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/">MDEB GIS Data Hub</a> using either the <a href="https://mdeb-nefsc-noaa.hub.arcgis.com/search">Content library</a> or the Content gallery. We will use the Content gallery in this example. First, scroll through the gallery and find the feature service that you are interested in. Click on ‘View item details’ to be taken to the feature service landing page.</p>
+<div class="inline-figure"><img src="img/mdeb_gis_data_hub_viewitemdetails.png" width="100%"></div>
+<p>On the landing page, scroll to the bottom until you see ‘URL’ in the right-side pane. Click the ‘Copy’ button to copy the REST URL to your clipboard.</p>
+<div class="inline-figure"><img src="img/agol_landingpage_url.png" width="100%"></div>
+<p>Then, open a new or existing project in ArcGIS Pro. On ArcGIS Pro, in the Header Ribbon click on ‘Insert’. In ‘Insert’, click on ‘Connections’, then ‘Server’, then ‘New ArcGIS Server’.</p>
+<div class="inline-figure"><img src="img/arcgispro_server.png" width="100%"></div>
+<p>Paste the URL into the ‘Add ArcGIS Server Connection’ pop-up window in the ‘Server URL’ box. Click OK. The ArcGIS Server connection will now appear in the Catalog Pane in the ‘Project’ menu under ‘Servers’. Click on the right arrow to expand all server connections, and then click on the right arrow next to your desired server connection to see all feature services within the server. Right click on the desired feature service and click ‘Add to Current Map’ to add the feature service to your project.</p>
+<div class="inline-figure"><img src="img/arcgispro_catalog_server.png" width="100%"></div>
 
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="connecting-r-and-agol.html"><span class="header-section-number">4</span> Connecting R and AGOL</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#portals-in-arcgis-pro"><span class="header-section-number">5</span> Portals in ArcGIS Pro</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#portals-in-arcgis-pro"><span class="header-section-number">5</span> Portals in ArcGIS Pro</a></li>
+<li><a class="nav-link" href="#add-data-to-favorites"><span class="header-section-number">5.1</span> Add data to favorites</a></li>
+<li><a class="nav-link" href="#connect-to-an-arcgis-server-using-a-rest-url"><span class="header-section-number">5.2</span> Connect to an ArcGIS Server using a REST URL</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -91,7 +121,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-05-13.</p>
+    <p>"<strong>MDEBdb Data Dictionary</strong>" was written by Joshua Hatch, Nicole Mucci. It was last built on 2025-05-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
