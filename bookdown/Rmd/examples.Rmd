@@ -116,7 +116,7 @@ knitr::include_graphics("img/ecomon_sne_strata.png")
 
 You can also select a subset of columns or fields to return from the feature layer, just populate the `fields` argument in the `arc_read()` function.
 
-# Portals in ArcGIS Pro
+# Connecting ArcGIS Pro and AGOL
 
 To access and use data from ArcGIS Online (AGOL) in ArcGIS Pro, you can 1) add data to your favorites or 2) connect to an ArcGIS Server using a REST URL.
 
