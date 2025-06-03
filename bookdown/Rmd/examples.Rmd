@@ -170,5 +170,4 @@ Paste the URL into the `Add ArcGIS Server Connection` pop-up window in the `Serv
 
 ```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("img/arcgispro_catalog_server.png")
-
 ```
