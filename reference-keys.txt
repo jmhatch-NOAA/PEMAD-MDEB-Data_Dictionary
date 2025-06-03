@@ -134,6 +134,6 @@ view-data-source
 connecting-r-and-agol
 find-a-feature-layer-url
 read-in-data-from-a-feature-layer
-portals-in-arcgis-pro
+connecting-arcgis-pro-and-agol
 add-data-to-favorites
 connect-to-an-arcgis-server-using-a-rest-url
