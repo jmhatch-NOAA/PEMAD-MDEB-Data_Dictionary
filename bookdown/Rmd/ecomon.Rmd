@@ -5,7 +5,7 @@
 ecomon_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Ecosystem_Monitoring_Survey/FeatureServer'
 
 # metadata
-ecomon_meta = arcgisutils::fetch_layer_metadata(url = ecomon_url, token = token)
+ecomon_meta = arcgisutils::fetch_layer_metadata(url = ecomon_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ ecomon_layers = ecomon_meta$layers
 ecomon_fields = purrr::map(.x = 1:nrow(ecomon_layers), .f = function(.x) {
   
   # open layer
-  ecomon_layer = arcgislayers::arc_open(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]), token = token)
+  ecomon_layer = arcgislayers::arc_open(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]))
   
   # get metadata for layer
-  ecomon_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]), token = token)
+  ecomon_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(ecomon_url, '/', ecomon_layers$id[.x]))
   
   # layer description
   layer_desc =  ecomon_layer_meta$description

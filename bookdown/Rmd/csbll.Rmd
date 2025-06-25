@@ -5,7 +5,7 @@
 csbll_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Coastal_Shark_Bottom_Longline_Survey/FeatureServer'
 
 # metadata
-csbll_meta = arcgisutils::fetch_layer_metadata(url = csbll_url, token = token)
+csbll_meta = arcgisutils::fetch_layer_metadata(url = csbll_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ csbll_layers = csbll_meta$layers
 csbll_fields = purrr::map(.x = 1:nrow(csbll_layers), .f = function(.x) {
   
   # open layer
-  csbll_layer = arcgislayers::arc_open(url = paste0(csbll_url, '/', csbll_layers$id[.x]), token = token)
+  csbll_layer = arcgislayers::arc_open(url = paste0(csbll_url, '/', csbll_layers$id[.x]))
   
     # get metadata for layer
-  csbll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(csbll_url, '/', csbll_layers$id[.x]), token = token)
+  csbll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(csbll_url, '/', csbll_layers$id[.x]))
   
   # layer description
   layer_desc =  csbll_layer_meta$description

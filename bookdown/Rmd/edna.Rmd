@@ -5,7 +5,7 @@
 edna_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/eDNA_Survey/FeatureServer'
 
 # metadata
-edna_meta = arcgisutils::fetch_layer_metadata(url = edna_url, token = token)
+edna_meta = arcgisutils::fetch_layer_metadata(url = edna_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ edna_layers = edna_meta$layers
 edna_fields = purrr::map(.x = 1:nrow(edna_layers ), .f = function(.x) {
   
   # open layer
-  edna_layer = arcgislayers::arc_open(url = paste0(edna_url, '/', edna_layers$id[.x]), token = token)
+  edna_layer = arcgislayers::arc_open(url = paste0(edna_url, '/', edna_layers$id[.x]))
   
   # get metadata for layer
-  edna_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(edna_url, '/', edna_layers$id[.x]), token = token)
+  edna_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(edna_url, '/', edna_layers$id[.x]))
   
   # layer description
   layer_desc =  edna_layer_meta$description

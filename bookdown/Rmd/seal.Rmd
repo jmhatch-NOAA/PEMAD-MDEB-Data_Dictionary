@@ -5,7 +5,7 @@
 seal_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Seal_Aerial_Survey/FeatureServer'
 
 # metadata
-seal_meta = arcgisutils::fetch_layer_metadata(url = seal_url, token = token)
+seal_meta = arcgisutils::fetch_layer_metadata(url = seal_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,7 +68,7 @@ seal_layers = seal_meta$layers
 seal_fields = purrr::map(.x = 1:nrow(seal_layers ), .f = function(.x) {
   
   # open layer
-  seal_layer = arcgislayers::arc_open(url = paste0(seal_url, '/', seal_layers$id[.x]), token = token)
+  seal_layer = arcgislayers::arc_open(url = paste0(seal_url, '/', seal_layers$id[.x]))
   
   # get fields
   seal_fields = arcgislayers::list_fields(seal_layer) |>

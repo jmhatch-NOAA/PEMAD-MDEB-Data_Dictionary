@@ -5,7 +5,7 @@
 mmst_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Marine_Mammal_and_Sea_Turtle_Survey/FeatureServer'
 
 # metadata
-mmst_meta = arcgisutils::fetch_layer_metadata(url = mmst_url, token = token)
+mmst_meta = arcgisutils::fetch_layer_metadata(url = mmst_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,7 +68,7 @@ mmst_layers = mmst_meta$layers
 mmst_fields = purrr::map(.x = 1:nrow(mmst_layers ), .f = function(.x) {
   
   # open layer
-  mmst_layer = arcgislayers::arc_open(url = paste0(mmst_url, '/', mmst_layers$id[.x]), token = token)
+  mmst_layer = arcgislayers::arc_open(url = paste0(mmst_url, '/', mmst_layers$id[.x]))
   
   # get fields
   mmst_fields = arcgislayers::list_fields(mmst_layer) |>

@@ -5,7 +5,7 @@
 gombll_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Gulf_of_Maine_Bottom_Longline_Survey/FeatureServer'
 
 # metadata
-gombll_meta = arcgisutils::fetch_layer_metadata(url = gombll_url, token = token)
+gombll_meta = arcgisutils::fetch_layer_metadata(url = gombll_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ gombll_layers = gombll_meta$layers
 gombll_fields = purrr::map(.x = 1:nrow(gombll_layers ), .f = function(.x) {
   
   # open layer
-  gombll_layer = arcgislayers::arc_open(url = paste0(gombll_url, '/', gombll_layers$id[.x]), token = token)
+  gombll_layer = arcgislayers::arc_open(url = paste0(gombll_url, '/', gombll_layers$id[.x]))
   
   # get metadata for layer
-  gombll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(gombll_url, '/', gombll_layers$id[.x]), token = token)
+  gombll_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(gombll_url, '/', gombll_layers$id[.x]))
   
   # layer description
   layer_desc =  gombll_layer_meta$description

@@ -5,7 +5,7 @@
 scallop_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Sea_Scallop_Survey/FeatureServer'
 
 # metadata
-scallop_meta = arcgisutils::fetch_layer_metadata(url = scallop_url, token = token)
+scallop_meta = arcgisutils::fetch_layer_metadata(url = scallop_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ scallop_layers = scallop_meta$layers
 scallop_fields = purrr::map(.x = 1:nrow(scallop_layers ), .f = function(.x) {
   
   # open layer
-  scallop_layer = arcgislayers::arc_open(url = paste0(scallop_url, '/', scallop_layers$id[.x]), token = token)
+  scallop_layer = arcgislayers::arc_open(url = paste0(scallop_url, '/', scallop_layers$id[.x]))
   
   # get metadata for layer
-  scallop_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(scallop_url, '/', scallop_layers$id[.x]), token = token)
+  scallop_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(scallop_url, '/', scallop_layers$id[.x]))
   
   # layer description
   layer_desc =  scallop_layer_meta$description
