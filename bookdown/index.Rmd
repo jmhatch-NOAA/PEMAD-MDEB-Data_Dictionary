@@ -53,11 +53,8 @@ file.remove(old_rmd)
 # copy files
 file.copy(from = here::here('bookdown', 'Rmd') |> list.files(full.names = TRUE), to = here::here('bookdown'), overwrite = TRUE)
 
-# remove pam
-file.remove(here::here('bookdown', 'pam.Rmd'))
-
 # rename files
-rmd = c('survey_mitigation.Rmd', 'clam_quahog.Rmd', 'edna.Rmd', 'hook_line.Rmd', 'gombll.Rmd', 'scallop.Rmd', 'csbll.Rmd', 'bottom_trawl.Rmd', 'shrimp.Rmd', 'coastspan.Rmd', 'ecomon.Rmd', 'seal.Rmd', 'narw.Rmd', 'mmst.Rmd', 'turtle.Rmd', 'smit_sop.Rmd', 'data_hub.Rmd', 'examples.Rmd')
+rmd = c('survey_mitigation.Rmd', 'clam_quahog.Rmd', 'edna.Rmd', 'hook_line.Rmd', 'gombll.Rmd', 'scallop.Rmd', 'csbll.Rmd', 'bottom_trawl.Rmd', 'shrimp.Rmd', 'coastspan.Rmd', 'ecomon.Rmd', 'seal.Rmd', 'narw.Rmd', 'mmst.Rmd', 'turtle.Rmd', 'pam.Rmd', 'smit_sop.Rmd', 'data_hub.Rmd', 'examples.Rmd')
 rmd_files = paste0(stringr::str_pad(1:length(rmd), width = 2, side = 'left', pad = "0"), '-', rmd)
 file.rename(from = rmd, to = rmd_files)
 ```

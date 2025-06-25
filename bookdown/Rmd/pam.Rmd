@@ -5,7 +5,7 @@
 pam_url = 'https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Passive_Acoustic_Monitoring_Survey/FeatureServer'
 
 # metadata
-pam_meta = arcgisutils::fetch_layer_metadata(url = pam_url, token = token)
+pam_meta = arcgisutils::fetch_layer_metadata(url = pam_url)
 ```
 
 ### ArcGIS Feature Service
@@ -20,18 +20,18 @@ inport_href = pam_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-pam_desc = gsub("<a(.|\n)*?</a>", '', pam_meta$serviceDescription)
+pam_desc = gsub('<a href=\"https://www.fisheries.noaa.gov/inport/item/76232\">Passive Acoustic Monitoring InPort Metadata</a><br>', '', pam_meta$serviceDescription)
 pam_desc = gsub("<p>|<br>|</p>|\\n", '', pam_desc)
 
 # only grab the 1st two sentences
 pam_sentences = stringr::str_split(pam_desc, pattern = '\\.') |>
   unlist()
-pam_desc = paste0(paste(pam_sentences[c(1:2, 4)], collapse = '.'), '.')
+pam_desc = paste0(pam_sentences[1], '.', paste(pam_sentences[2:3], collapse = '.'), '.')
 ```
 
 ### InPort Metadata
 
-Not yet.
+Yes, see [here](`r inport_href`).
 
 ### Description
 
