@@ -78,7 +78,7 @@ rwsc_pam_fields = arcgislayers::list_fields(rwsc_pam_layer) |>
   dplyr::rename(dataType = type)
 
 # layer metadata
-pam_layer = arcgisutils::fetch_layer_metadata(url = paste0(pam_url, '/0'), token = token)
+pam_layer = arcgisutils::fetch_layer_metadata(url = paste0(pam_url, '/0'))
 
 # output
 cat('\n####', pam_layer$name, '\n')
