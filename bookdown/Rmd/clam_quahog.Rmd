@@ -5,7 +5,7 @@
 clam_quahog_url='https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/Atlantic_Surfclam_and_Ocean_Quahog_Survey/FeatureServer'
 
 # metadata
-clam_quahog_meta = arcgisutils::fetch_layer_metadata(url = clam_quahog_url, token = token)
+clam_quahog_meta = arcgisutils::fetch_layer_metadata(url = clam_quahog_url)
 ```
 
 ### ArcGIS Feature Service
@@ -68,10 +68,10 @@ clam_quahog_layers = clam_quahog_meta$layers
 clam_quahog_fields = purrr::map(.x = 1:nrow(clam_quahog_layers ), .f = function(.x) {
   
   # open layer
-  clam_quahog_layer = arcgislayers::arc_open(url = paste0(clam_quahog_url, '/', clam_quahog_layers$id[.x]), token = token)
+  clam_quahog_layer = arcgislayers::arc_open(url = paste0(clam_quahog_url, '/', clam_quahog_layers$id[.x]))
   
    # get metadata for layer
-  clam_quahog_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(clam_quahog_url, '/', clam_quahog_layers$id[.x]), token = token)
+  clam_quahog_layer_meta = arcgisutils::fetch_layer_metadata(url = paste0(clam_quahog_url, '/', clam_quahog_layers$id[.x]))
   
   # layer description
   layer_desc =  clam_quahog_layer_meta$description
