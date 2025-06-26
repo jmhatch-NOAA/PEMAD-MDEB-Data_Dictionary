@@ -77,6 +77,26 @@ rwsc_pam_fields = arcgislayers::list_fields(rwsc_pam_layer) |>
   dplyr::select(name, alias, type) |>
   dplyr::rename(dataType = type)
 
+# get field descriptions
+rwsc_pam_layer_meta = 'https://rwsc.env.duke.edu/arcgis/rest/services/Passive_Acoustic_Monitoring/MapServer/1/metadata' |>
+  xml2::read_xml()
+
+# fields
+field_names = rwsc_pam_layer_meta |>
+  xml2::xml_find_all(xpath = './/attrlabl') |>
+  xml2::xml_text()
+  
+# descriptions
+field_desc = rwsc_pam_layer_meta |>
+  xml2::xml_find_all(xpath = './/attrdef') |>
+  xml2::xml_text()
+
+# add descriptions
+field_df = data.frame(name = field_names |> tolower(), description = field_desc)
+rwsc_pam_fields = rwsc_pam_fields |>
+  dplyr::left_join(field_df, by = 'name') |>
+  dplyr::select(name, alias, description, dataType)
+
 # layer metadata
 pam_layer = arcgisutils::fetch_layer_metadata(url = paste0(pam_url, '/0'))
 
