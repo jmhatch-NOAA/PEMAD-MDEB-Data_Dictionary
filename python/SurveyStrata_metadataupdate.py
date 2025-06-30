@@ -1,13 +1,14 @@
-#This script is to edit metadata template xml file and update using metadata stored in oracle database to update ArcGIS Online feature services
+#This script is to edit metadata template xml file and fill using metadata stored in oracle database to update ArcGIS Online feature services
 
 #IMPORT LIBRARIES
 import tempfile
 import json
 import os, sys
 import arcpy
+import base64
 import xml.etree.ElementTree as ET
 import sqlalchemy
-from sqlalchemy import create_engine, select, MetaData, Table
+from sqlalchemy import create_engine, select, MetaData, Table, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import create_engine
 from datetime import datetime
@@ -25,7 +26,7 @@ SQL_DRIVER = 'cx_oracle'
 USERNAME = '' #enter your username
 PASSWORD = '' #enter your password
 HOST = '' #enter the oracle db host url
-PORT =   # enter the oracle port number
+PORT =   #enter the oracle port number
 SERVICE = '' # enter the oracle db service name
 ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD +'@' + HOST + ':' + str(PORT) + '/?service_name=' + SERVICE
 engine = create_engine(ENGINE_PATH_WIN_AUTH)
@@ -49,17 +50,17 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     tree = ET.parse(metadata_xml)
     root = tree.getroot()
   
-    metadata_table = 'SMIT_META_FEATURES' #metdata table name in oracle
-    metadata = MetaData(bind=engine)
+    metadata_table = 'smit_meta_features' #metdata table name in oracle
+    metadata = MetaData()
     table = Table(metadata_table, metadata, autoload_with=engine)
     #query the table for metadata based on the short survey names (strata_short)
     
     with engine.connect() as connection:
-      query = select([table]).where(table.c.strata_short==survey_short)
+      query = select(table).where(table.c.strata_short==survey_short)
       result = connection.execute(query).fetchone() #fetch a row from metadata table for survey
         
     if result:
-        print(result.keys())
+        print(result)
   
     #extract metadata values
     if result:
@@ -85,12 +86,23 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       raise ValueError("No metadata found in SQL Table")
     
     print('Done') 
+
+    #extract the feature service thumbnail from oracle db
+    thumbnail_table = 'smit_meta_thumbnails' #metdata table name in oracle
+    name = 'AGOL_FEATURESERVICE_ALL.png' #name of thumbnail
+    metadata = MetaData()
+    table = Table(thumbnail_table, metadata, autoload_with=engine)
+    
+    with engine.connect() as connection:
+      query = select(table).where(table.c.thumbnail_name==name)
+      thumbnail_result = connection.execute(query).mappings().fetchone()
+    blob = thumbnail_result["thumbnail"]  
+    encoded_thumbnail = base64.b64encode(blob).decode("utf-8")
   
     #edit xml file using metadata from oracle
-    #first remove the thumbnail element, this cannot be updated using xml
-    to_remove = root.find(".//Binary")
-    if to_remove is not None:
-      root.remove(to_remove)
+    #update thumbnail
+    thumbnail_element = root.find(".//Binary/Thumbnail/Data")
+    thumbnail_element.text = encoded_thumbnail
     #update abstract
     abs_element = root.find(".//dataIdInfo/idAbs")
     abs_element.text = f'<p>{link if link else ""}<br>{abstract}</p>'
@@ -159,19 +171,19 @@ print("All feature service metadata updated!")
 for survey_short in survey_names:
   
   #extract the layer ID value from oracle metadata table using survey name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_META_FEATURES WHERE STRATA_SHORT = '{survey_short}'"
-  layerID = session.execute(layer_sql_query).fetchone()
-  layerID = str(layerID[0])
+  layer_sql_query = text("SELECT file_id from smit_meta_features WHERE strata_short = :survey_short")
+  layerID = session.execute(layer_sql_query, {"survey_short": survey_short}).mappings().fetchone()
+  layerID = str(layerID["file_id"])
   
   item = gis.content.get(layerID)
   #extract REST url from metadata table
-  metadata_table = 'SMIT_META_FEATURES' #metdata table name in oracle
-  metadata = MetaData(bind=engine)
+  metadata_table = 'smit_meta_features' #metdata table name in oracle
+  metadata = MetaData()
   table = Table(metadata_table, metadata, autoload_with=engine)
     #query the table for metadata based on the short survey names (strata_short)
     
   with engine.connect() as connection:
-    query = select([table]).where(table.c.strata_short==survey_short)
+    query = select(table).where(table.c.strata_short==survey_short)
     result = connection.execute(query).fetchone()
   rest_url = result.rest_url     
 
@@ -193,12 +205,12 @@ for survey_short in survey_names:
 
   try: 
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = "SMIT_META_LAYERS"
+    table_name = "smit_meta_layers"
     column_name = "abstract"
     with engine.connect() as connection:
-      metadata= MetaData(bind=engine)
+      metadata= MetaData()
       table = Table(table_name, metadata, autoload_with=engine)
-      query = select([table.c[column_name]]).where(table.c.rest_url == f'{layer_url}')
+      query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
       
       result = connection.execute(query).fetchone()
     description = result[0] if result and result[0] is not None else ''
@@ -220,12 +232,12 @@ for survey_short in survey_names:
   layer_url = f"{rest_url}/{layer_id}"
   try:
     #pull out description from oracle metadata table to fill in layer level description
-    table_name = "SMIT_META_LAYERS"
+    table_name = "smit_meta_layers"
     column_name = "abstract"
     with engine.connect() as connection:
       metadata= MetaData(bind=engine)
       table = Table(table_name, metadata, autoload_with=engine)
-      query = select([table.c[column_name]]).where(table.c.rest_url == f'{layer_url}')
+      query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
     
       result = connection.execute(query).fetchone()
     description = result[0] if result and result[0] is not None else ''
