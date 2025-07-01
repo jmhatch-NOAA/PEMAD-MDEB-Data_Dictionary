@@ -82,22 +82,13 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       extent_w = result.geoextent_w
       rest_url = result.rest_url
       file_ID = result.file_id
+      thumbnail = result.thumbnail
+      #convert thumbnail to base 64 encoded
+      encoded_thumbnail = base64.b64encode(thumbnail).decode("utf-8")
     else:
       raise ValueError("No metadata found in SQL Table")
     
     print('Done') 
-
-    #extract the feature service thumbnail from oracle db
-    thumbnail_table = 'smit_meta_thumbnails' #metdata table name in oracle
-    name = 'AGOL_FEATURESERVICE_ALL.png' #name of thumbnail
-    metadata = MetaData()
-    table = Table(thumbnail_table, metadata, autoload_with=engine)
-    
-    with engine.connect() as connection:
-      query = select(table).where(table.c.thumbnail_name==name)
-      thumbnail_result = connection.execute(query).mappings().fetchone()
-    blob = thumbnail_result["thumbnail"]  
-    encoded_thumbnail = base64.b64encode(blob).decode("utf-8")
   
     #edit xml file using metadata from oracle
     #update thumbnail
@@ -149,7 +140,6 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     meta_title_element = root.find(".//mdContact/rpPosName")
     meta_title_element.text = meta_title 
   
-    
     # #write xml to temp file
     ET.ElementTree(root).write(temp_file.name)
     # #get name of temp file
@@ -160,11 +150,20 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     
     # #update metadata for feature service
     item.update(metadata = temp_file_name)
+
+    #UPDATE THE THUMBNAIL ON THE FEATURE SERVICE LANDING PAGE
+    #(for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated)
+    with tempfile.NamedTemporaryFile(delete=False, suffix = ".jpg") as tmp_file:
+      tmp_file.write(thumbnail)
+      tmp_file_path = tmp_file.name
+    
+    item.update(thumbnail= tmp_file_path)
+    print(f"Thumbnail on landing page updated for {item.title}")
     
     print(f"Metadata for {item.title} updated successfully")
 
 print("All feature service metadata updated!")    
-    
+
 #UPDATE LAYER LEVEL METADATA 
 # #create json dictionary using item properties from feature service 
 
