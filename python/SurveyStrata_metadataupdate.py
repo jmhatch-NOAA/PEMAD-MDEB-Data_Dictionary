@@ -6,12 +6,11 @@ import xml.etree.ElementTree as ET
 import sqlalchemy
 import oracledb
 from sqlalchemy import create_engine, select, MetaData, Table, text
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import create_engine
 from datetime import datetime
 import arcgis
-from arcgis.gis import GIS
 from arcgis import gis
+from arcgis.gis import GIS
 from arcgis.features import FeatureLayerCollection, FeatureLayer
 
 #AUTHENTICATE ARCGIS CREDENTIALS
@@ -28,8 +27,6 @@ password = "" #oracle password
 connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
 engine = create_engine(connection_string)
 connection= engine.connect()
-Session = sessionmaker(bind=engine)
-session= Session()
 
 #UPDATE FEATURE LEVEL METADATA
 #make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml)by pulling data from oracle metadata table
@@ -55,9 +52,6 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     with engine.connect() as connection:
       query = select(table).where(table.c.strata_short==survey_short)
       result = connection.execute(query).fetchone() #fetch a row from metadata table for survey
-        
-    if result:
-        print(result)
   
     #extract metadata values
     if result:
@@ -85,7 +79,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     else:
       raise ValueError("No metadata found in SQL Table")
     
-    print('Done') 
+    print(f"Finished extracting metadata for {survey_short} from oracle db.") 
   
     #edit xml file using metadata from oracle
     #update thumbnail
@@ -139,14 +133,30 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
   
     #write xml to temp file
     ET.ElementTree(root).write(temp_file.name)
+    print('Metadata converted to temp XML file.')
     #get name of temp file
     xml_metadata = temp_file.name
     
     #get arcgis online item using file id
     item = gis.content.get(file_ID)
-    
-    #update metadata for feature service
+    #update metadata for feature service item 
     item.update(metadata = xml_metadata)
+    #create a feature layer collection item
+    item = gis.content.get(file_ID)
+    flc = FeatureLayerCollection.fromitem(item)
+    
+    #create json dictionary to update feature layer collection (metadata on the REST Service page)
+    item_properties = {
+    "title" : item.title,
+    "tags" : item.tags,
+    "snippet" : item.snippet,
+    "description" : item.description,
+    "serviceDescription":item.description,
+    "licenseInfo" : item.licenseInfo,
+    "accessInformation" : item.accessInformation,
+    "copyrightText": item.licenseInfo
+    }
+    flc.manager.update_definition(item_properties)
 
     #UPDATE THE THUMBNAIL ON THE FEATURE SERVICE LANDING PAGE
     #(for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated)
@@ -155,103 +165,62 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
       tmp_file_path = tmp_file.name
     
     item.update(thumbnail= tmp_file_path)
-    print(f"Thumbnail on landing page updated for {item.title}")
+    print(f"Thumbnail on landing page updated for {item.title}.")
     
-    print(f"Metadata for {item.title} updated successfully")
+    print(f"Metadata for {item.title} updated successfully.")
 
 print("All feature service metadata updated!")    
 
 #UPDATE LAYER LEVEL METADATA 
 #layer level metadata cannot be updated with XML, need to use a json dictionary
 #create json dictionary using item properties from hosted feature service
-
-# this script works if there are 1 or 2 layers in the feature service, it would need to be updated if more layers are added 
-
 for survey_short in survey_names:
   
   #extract the layer ID value from oracle metadata table using survey name
-  layer_sql_query = text("SELECT file_id from smit_meta_features WHERE strata_short = :survey_short")
-  layerID = session.execute(layer_sql_query, {"survey_short": survey_short}).mappings().fetchone()
-  layerID = str(layerID["file_id"])
-  
-  item = gis.content.get(layerID)
-  #extract REST url from metadata table
   metadata_table = 'smit_meta_features' #metdata table name in oracle
   metadata = MetaData()
   table = Table(metadata_table, metadata, autoload_with=engine)
-  #query the table for metadata based on the short survey names (strata_short)
+  with engine.connect() as connection:
+    query = select(table).where(table.c.strata_short==survey_short)
+    result = connection.execute(query).fetchone()
+  layerID = result.file_id
+  
+  item = gis.content.get(layerID)
     
   with engine.connect() as connection:
     query = select(table).where(table.c.strata_short==survey_short)
     result = connection.execute(query).fetchone()
-  rest_url = result.rest_url     
+  rest_url = result.rest_url    
 
-  item_properties = {
-  "title" : item.title,
-  "tags" : item.tags,
-  "snippet" : item.snippet,
-  "description" : item.description,
-  "serviceDescription":item.description,
-  "licenseInfo" : item.licenseInfo,
-  "accessInformation" : item.accessInformation,
-  "copyrightText": item.licenseInfo
-  }
-  # 
-  feature_service = FeatureLayer(rest_url)
-  feature_service.manager.update_definition(item_properties)
-  layer_id = '0'
-  layer_url = f"{rest_url}/{layer_id}"
+  layer_nums = ['0', '1']
+  #update script if there are more than 2 layers, add numbers to layer_nums 
+  for layer_num in layer_nums: 
 
-  try: 
-    #pull out abstract from oracle metadata table to fill in layer level description
-    table_name = "smit_meta_layers"
-    column_name = "abstract"
-    with engine.connect() as connection:
-      metadata= MetaData()
-      table = Table(table_name, metadata, autoload_with=engine)
-      query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
+    layer_url = f"{rest_url}/{layer_num}"
+
+    try: 
+      #pull out abstract from oracle metadata table to fill in layer level description
+      table_name = "smit_meta_layers"
+      column_name = "abstract"
+      with engine.connect() as connection:
+        metadata= MetaData()
+        table = Table(table_name, metadata, autoload_with=engine)
+        query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
+        
+        result = connection.execute(query).fetchone()
+      description = result[0] if result and result[0] is not None else ''
       
-      result = connection.execute(query).fetchone()
-    description = result[0] if result and result[0] is not None else ''
-    
-    layer_properties = {
-      "description" : description,
-      "licenseInfo" : item.licenseInfo,
-      "copyrightText": item.licenseInfo
-      }
-    
-    layer = FeatureLayer(layer_url)
-    print(f"{survey_short} layer {layer_id} exists, proceeding with update...")
-    layer.manager.update_definition(layer_properties)
-    print(f"{survey_short} layer {layer_id} updated successfully!")
-  except Exception as e:
-    print(f"layer {layer_id} does not exist or could not be retrieved.") 
-  
-  layer_id = '1'
-  layer_url = f"{rest_url}/{layer_id}"
-  try: 
-    #pull out abstract from oracle metadata table to fill in layer level description
-    table_name = "smit_meta_layers"
-    column_name = "abstract"
-    with engine.connect() as connection:
-      metadata= MetaData()
-      table = Table(table_name, metadata, autoload_with=engine)
-      query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
+      layer_properties = {
+        "description" : description,
+        "licenseInfo" : item.licenseInfo,
+        "copyrightText": item.licenseInfo
+        }
       
-      result = connection.execute(query).fetchone()
-    description = result[0] if result and result[0] is not None else '' 
-
-    layer_properties = {
-    "description" : description,
-    "licenseInfo" : item.licenseInfo,
-    "copyrightText": item.licenseInfo
-    }
-    
-    layer = FeatureLayer(layer_url)
-    print(f"{survey_short} layer {layer_id} exists, proceeding with update...")
-    layer.manager.update_definition(layer_properties)
-    print(f"{survey_short} layer {layer_id} updated successfully!")
-  except Exception as e:
-    print(f"layer {layer_id} does not exist or could not be retrieved.")
-
-print("All layer level metadata updated!")    
+      layer = FeatureLayer(layer_url)
+      print(f"{survey_short} layer {layer_num} exists, proceeding with update...")
+      layer.manager.update_definition(layer_properties)
+      print(f"{survey_short} layer {layer_num} updated successfully!")
+    except Exception as e:
+      print(f"layer {layer_num} does not exist or could not be retrieved.") 
+      
+print("All layer level metadata updated!")
