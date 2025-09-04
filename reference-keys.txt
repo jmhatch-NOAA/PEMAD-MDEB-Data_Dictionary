@@ -132,7 +132,7 @@ smit_pam_deployments
 standard-operating-procedure
 naming-convention-for-spatial-tables-in-oracle-database
 table-1.-nefsc-scientific-survey-names-and-survey-codes
-data-hub
+gis-data-hub
 explore-by-category
 view-all-datasets
 use-the-interactive-mapper
