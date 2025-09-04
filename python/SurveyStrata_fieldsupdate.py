@@ -1,98 +1,52 @@
-#Original code from GitHub repo: https://github.com/lisaberrygis/AliasUpdater
-#Edited and updated by Nicole Mucci, January 2025
-#Included metadata pull from oracle and data storage in memory in excel file
-#No other major changes to original code
-#
-# This script uses a lookup table to update alias names on a hosted feature service.
-# The script updates the alias names in two places:
-#   - The REST endpoint
-#   - The layer's pop-up JSON via fieldInfos
-#   - *If the layer was saved in the new Map Viewer in ArcGIS Online, updates the additional popupElement fieldInfos
-# The pop-up configuration will not be altered with this implementation
-# The script also allows you to update the long description, field type, and pop-up decimals/thousand separator for any field
-#
-# The script will use the input excel document and update any fields it finds that matches from the excel document.
-# This script allows for multiple REST layers to be updated. Specify the REST layer count in the inputs.
-# You must have ArcGIS Pro installed on your computer in order to run this script.
-#
-# Python version: 3.7 - Make sure your interpreter is calling to the arcgispro-py3 python.exe
-# Updated: April 2020 - all http calls removed and replaced with python API calls
-# Updated: July 2022 - Converted XLRD to OPENPYXL to read in excel file. XLRD no longer supports .xlsx files.
-# Updated: August 2022 - can also update decimals for popup JSON.
-#          Also updates popupElement in JSON if saved in new Map Viewer
-# Updated: August 2023 - no longer need to input layer count, which is determined automatically. Also, blank values
-#            in the excel doc are now handled by checking if they exist first, fixing NoneType error
-# NOTE: As of 6/24, the script will alert you if you try to pass a long description with a < or > character. This will
-#           not run as expected since the REST API cannot pass the characters to the service.
+#This script updates field names, aliases, and descriptions for AGOL hosted feature service layers
+#It pulls info from oracle database and updates an excel spreadsheet
+#The excel spreadsheet is then passed to the hosted feature service layers to update field info in:
+#1. the REST endpoint and
+#2. the layer's pop-up JSON in the fieldsInfo section
 
-# Comments about inputs:_________________________________________________________________________________________
-# username and password are your ArcGIS Online or ArcGIS Enterprise credentials
-#
-# layerID is the ID to a hosted feature service.
-# *** You must own the service to run this script.
-#
-# lookupTable must be an excel document (.xlsx) with a header row.
-#   The first column should be the field names
-#   The second column should be the intended alias names for each field.
-#   *optional* The third column should be the intended description for each field.
-#   *optional* The fourth column can include the field type. This must be formatted
-#           to match the backend JSON.
-#           Ex:  nameOrTitle, description, typeOrCategory, countOrAmount, percentageOrRatio
-#               measurement, currency, uniqueIdentifier, phoneNumber, emailAddress,
-#               orderedOrRanked, binary, locationOrPlaceName, coordinate, dateAndTime
-#   *optional* The fifth column can include a specification for how many decimals you want for each field
-#               to have in the pop-up.
-#   *optional* The sixth column can include a specification for if a numeric attribute should have a thousands comma
-#                separator. Only specify this if it is a numeric field.
-#               Ex: can use "true" or "yes" to specify. You can leave this column blank for any fields that are string
-#                   or don't need a comma. You can also specify those as "no" or "false".
-#
-# If your script is having issues, make sure you at least have these 5 headers in the excel document,
-# even if no values appear in the rows. This can cause the script to fail sometimes. Also make sure your excel file is closed.
+#Original script from GitHub repo: https://github.com/lisaberrygis/AliasUpdater
+#see original GitHub repo for more info
 
-# portalName can be left as-is if you are working in ArcGIS Online. Change to your portal URL otherwise.
-
+#IMPORT LIBRARIES
 import tempfile
 import os
+import openpyxl
 import pandas as pd
 from io import BytesIO
-import sqlalchemy
-from sqlalchemy import create_engine, select, MetaData, Table
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.engine import create_engine
-from arcgis.gis import GIS
+import oracledb
+from sqlalchemy import create_engine, select, MetaData, Table, text
+from sqlalchemy.engine import create_engine  
 from arcgis import gis
+from arcgis.gis import GIS
 from arcgis.features import FeatureLayer
-import openpyxl
 from copy import deepcopy
-import os
-import copy
 
-#Pull fields data from tables in oracle db
 #CONNECT TO ORACLE
-#Connect to oracle database using SQL alchemy engine
-DIALECT = 'oracle'
-SQL_DRIVER = 'cx_oracle'
-USERNAME = '' #enter your username
-PASSWORD = '' #enter your password
-HOST = '' #enter the oracle db host url
-PORT =  # enter the oracle port number
-SERVICE = '' # enter the oracle db service name
-ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD +'@' + HOST + ':' + str(PORT) + '/?service_name=' + SERVICE
-engine = create_engine(ENGINE_PATH_WIN_AUTH)
+#enable thick mode, using oracle instant client and tnsnames.ora
+oracledb.init_oracle_client()
+#Connect to oracle database using SQL alchemy engine and TNS names alias
+tns_name = "" #TNS name
+username = "" #oracle username
+password = "" #oracle password
+connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
+engine = create_engine(connection_string)
 connection= engine.connect()
-Session = sessionmaker(bind=engine)
-session= Session()
 
-tables = ['SMIT_ECOMON_STATIONS','SMIT_SCALLOP_STRATA_HISTORIC','SMIT_OQ_STRATA','SMIT_SEAL_STATIONS','SMIT_TURTLE_STRATA','SMIT_COASTSPAN_STRATA','SMIT_GOMBLL_STRATA','SMIT_CSBLL_STRATA','SMIT_SCALLOP_STRATA','SMIT_MMST_STRATA', 'SMIT_ECOMON_STRATA', 'SMIT_EDNA_STRATA', 'SMIT_NARW_LINES', 'SMIT_NARW_STRATA', 'SMIT_SC_STRATA','SMIT_GOMBLL_SUBSTRATA', 'SMIT_EDNA_STATIONS','SMIT_HL_STRATA','SMIT_SHRIMP_STRATA','SMIT_BTS_STRATA','SMIT_CSBLL_STATIONS']
+#AUTHENTICATE ARCGIS CREDENTIALS
+#using ArcGIS Pro to authenticate, change authentication scheme if necessary
+gis = GIS("PRO")  
+#names of oracle spatial tables
+survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA", "SHRIMP", "COASTSPAN","OQ","SC"]
 
-for table in tables:
+for tab in survey_names:
   
-  #sql query to pull field names, aliases, and descriptions from oracle
-  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_META_FIELDS WHERE TABLE_NAME = '{table}'"
-  df = pd.read_sql(sql_query, con=connection)
-  #add two columns to dataframe, keep them null- field type and decimals
-  #the code doesn't work without having these columns, see above description
+  #sql query to pull field names, aliases, and descriptions from oracle metadata fields tables
+  sql_query = f"SELECT DISTINCT COL_NAME, COL_ALIAS, COL_DESCRIPTION from SMIT_META_FIELDS WHERE STRATA_SHORT = '{tab}'"
+  with engine.connect() as connection:
+    df = pd.read_sql(text(sql_query), connection)
+
+  #add three columns to dataframe, keep them null- field type, number of decimals, and whether to have comma in number columns
+  #the code doesn't work without having these columns, see description in original GitHub repo
   df['col_type'] = None
   df['col_dec'] = None 
   df['col_comma']= "no"
@@ -109,18 +63,17 @@ for table in tables:
     temp_file_path = temp_file.name
   
   #extract the layer ID value from oracle metadata table using survey layer name
-  layer_sql_query = f"SELECT FILE_ID from SMIT_META_LAYERS WHERE TABLE_NAME = '{table}'"
-  layerID = session.execute(layer_sql_query).fetchone()
-  layerID = str(layerID[0])
+  metadata_table = 'smit_meta_layers' #metdata table name in oracle
+  metadata = MetaData()
+  table = Table(metadata_table, metadata, autoload_with=engine)
+  with engine.connect() as connection:
+    query = select(table).where(table.c.strata_short==tab)
+    result = connection.execute(query).fetchone()
+  layerID = result.file_id
 
-# MAIN SCRIPT___________________________________________________________________________________________________
-# Login to your arcgis account
-  gis = GIS("PRO")
-  portalName = "https://noaa.maps.arcgis.com/"
   # Get layer count from service
   updateItem = gis.content.get(layerID)
   restLayerCount = len(updateItem.layers)
-  
   
   # format the path to the excel document so it is recognized as a path
   lookupTable = os.path.normpath(temp_file_path)
@@ -182,9 +135,6 @@ for table in tables:
                       if lookupField[2]:
                           longDesc = lookupField[2]
                           # Remove escape characters like double quotes, newlines, or encoding issues
-                          if "<" or ">" in longDesc:
-                              print("Special character > or < found in field: " + fieldName)
-                              print("Script will not run as expected. Please remove all hyperlinks or > < characters from your long description and rerun the script.")
                           longDesc = longDesc.replace('"', '\\\"').replace("\n", " ").replace("\t", " ").replace(u'\xa0', u' ').replace(">=", " greater than or equal to ").replace("<=", " less than or equal to ").replace(">", " greater than ").replace("<", " less than ")
                       else:
                           longDesc = ""
@@ -202,93 +152,12 @@ for table in tables:
   
           if updateJSON:
               print("\tUpdating alias names of the REST service...")
-              #jsonFormat =  json.dumps(updateJSON)
               aliasUpdateDict = {'fields': updateJSON}
-              #aliasUpdateJSON = json.dumps(aliasUpdateDict)
               # Use the update definition call to push the new alias names into the service
               featureLayer.manager.update_definition(aliasUpdateDict)
               print("\tAlias names updated on service!")
-  
-          # Now check if the item has a pop-up configuration saving the alias names as well
-          # First, grab the item JSON for the layer and create an item to hold the new edited JSON
-          print("\tUpdating the alias names within the pop-up configuration on the item...")
-          item = gis.content.get(layerID)
-  
-          # Grab the existing JSON for the popup, store a copy, and edit the aliases
-          itemJSON = item.get_data(try_json=True)
-          # Loop through the existing layer and check if any alias names don't match
-          counter = 0
-          if itemJSON:
-              print("\tFinding all replacements of alias names within pop-up...")
-              newItemJSON = copy.deepcopy(itemJSON)
-              print("\t\tUpdating alias names in popup fieldInfos...")
-              for i in itemJSON['layers'][looper]['popupInfo']['fieldInfos']:
-                  fieldName2 = i['fieldName']
-                  for lookup in lookupList:
-                      if lookup[0] == fieldName2:
-                          if lookup[1] != None:
-                              newItemJSON['layers'][looper]['popupInfo']['fieldInfos'][counter]['label'] = lookup[1]
-                          # Check if there is a decimal spec
-                          if "format" in i and "places" in i["format"]:
-                              # If a value is specified in the lookup doc, assign that
-                              if lookup[4] != None:
-                                  newItemJSON['layers'][looper]['popupInfo']['fieldInfos'][counter]['format']['places'] = lookup[4]
-                              # If a value is not specified and the decimals have defaulted to 6, change to 2
-                              else:
-                                  if newItemJSON['layers'][looper]['popupInfo']['fieldInfos'][counter]['format']['places'] == 6:
-                                      newItemJSON['layers'][looper]['popupInfo']['fieldInfos'][counter]['format']['places'] = 2
-                          # Update thousands separator if lookup document specifies and if it exists in JSON
-                          if lookup[5] != None and str(lookup[5]).lower() != "no" and str(lookup[5]).lower() != "false" and "format" in i and "digitSeparator" in i["format"]:
-                              newItemJSON['layers'][looper]['popupInfo']['fieldInfos'][counter]['format']['digitSeparator'] = True
-
-
-                  counter += 1
-
-              # Check if layer was updated in new Map Viewer and contains a popupElement JSON section with fieldInfos
-              if "popupElements" in itemJSON['layers'][looper]['popupInfo'] and itemJSON['layers'][looper]['popupInfo']["popupElements"]:
-                  c = 0
-                  for i in itemJSON['layers'][looper]['popupInfo']["popupElements"]:
-                      if i['type'] == 'fields':
-                          print("\t\tUpdating popupElement fieldInfo...")
-                          counter2 = 0
-                          if "fieldInfos" in itemJSON['layers'][looper]['popupInfo']["popupElements"][c]:
-                              for j in itemJSON['layers'][looper]['popupInfo']["popupElements"][c]["fieldInfos"]:
-                                  fldName = j["fieldName"]
-                                  for lkup in lookupList:
-                                      if lkup[0] == fldName:
-                                          if lkup[1] != None:
-                                              newItemJSON['layers'][looper]['popupInfo']['popupElements'][c]["fieldInfos"][counter2]['label'] = lkup[1]
-                                          # Check if there is a decimal spec
-                                          if "format" in j and "places" in j["format"]:
-                                              # If a value is specified in the lookup doc, assign that
-                                              if lkup[4] != None:
-                                                  newItemJSON['layers'][looper]['popupInfo']['popupElements'][c]["fieldInfos"][counter2]['format']['places'] = lkup[4]
-                                              # If a value is not specified and the decimals have defaulted to 6, change to 2
-                                              else:
-                                                  if newItemJSON['layers'][looper]['popupInfo']['popupElements'][c]["fieldInfos"][counter2]['format']['places'] == 6:
-                                                      newItemJSON['layers'][looper]['popupInfo']['popupElements'][c]["fieldInfos"][counter2]['format']['places'] = 2
-                                          # Update thousands separator if lookup document specifies and if it exists in JSON
-                                          if lkup[5] != None and str(lkup[5]).lower() != "no" and str(lkup[5]).lower() != "false" and "format" in j and "digitSeparator" in j["format"]:
-                                              newItemJSON['layers'][looper]['popupInfo']['popupElements'][c]["fieldInfos"][counter2]['format']['digitSeparator'] = True
-                                  counter2 += 1
-                      c += 1
-
-
-              # Update json
-              print("\tUpdating the alias names within the existing item pop-up...")
-              portal = portalName
-              update = item.update(item_properties={'text': newItemJSON})
-              if update:
-                  print("\tSuccess! Your alias names have been updated. Please check your service to confirm.")
-              else:
-                  print("\tUpdating pop-up failed.")
-          else:
-              print("\tNo pop-up JSON. Skipping.")
 
           looper += 1
           restLayerCount -= 1
 
-  print(f"Completed table {table}")
-
-print("Completed update of all fields!")        
-os.remove(temp_file_path)
+print("Completed update of all fields!")

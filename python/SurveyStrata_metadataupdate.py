@@ -1,4 +1,7 @@
-#This script is to edit metadata template xml file and fill using metadata stored in oracle database to update ArcGIS Online feature service and layer metadata
+#This script updates ArcGIS Online feature service and layer metadata
+#It pulls info from the oracle database and uses it to fill an XML metadata template
+#The XML file is passed to the AGOL feature service
+#Layer level metadata (layers within the feature servcice) is also updated
 
 #IMPORT LIBRARIES
 import json, os, sys, base64, tempfile
@@ -81,7 +84,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     
     print(f"Finished extracting metadata for {survey_short} from oracle db.") 
   
-    #edit xml file using metadata from oracle
+    #edit xml template file using metadata from oracle
     #update thumbnail
     thumbnail_element = root.find(".//Binary/Thumbnail/Data")
     thumbnail_element.text = encoded_thumbnail
@@ -105,7 +108,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     geonorth_element.text = str(extent_n)
     geosouth_element = root.find(".//dataIdInfo/dataExt/geoEle/GeoBndBox/southBL")
     geosouth_element.text = str(extent_s)
-    # #update tags by itearting through list of tags
+    #update tags by itearting through list of tags
     tags_element = root.find(".//dataIdInfo/searchKeys")
     #delete old tags
     for tag in list(tags_element):
@@ -141,7 +144,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     item = gis.content.get(file_ID)
     #update metadata for feature service item 
     item.update(metadata = xml_metadata)
-    #create a feature layer collection item
+    #create a feature layer collection item (to update metadata on REST Service page)
     item = gis.content.get(file_ID)
     flc = FeatureLayerCollection.fromitem(item)
     
@@ -158,13 +161,13 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     }
     flc.manager.update_definition(item_properties)
 
-    #UPDATE THE THUMBNAIL ON THE FEATURE SERVICE LANDING PAGE
-    #(for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated)
+    #update the thumbnail on the feature service landing page
+    #for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated
     with tempfile.NamedTemporaryFile(delete=False, suffix = ".jpg") as tmp_file:
       tmp_file.write(thumbnail)
       tmp_file_path = tmp_file.name
     
-    item.update(thumbnail= tmp_file_path)
+    item.update(thumbnail= tmp_file_path) #calling the thumbnail item specifically updates the thumbnail
     print(f"Thumbnail on landing page updated for {item.title}.")
     
     print(f"Metadata for {item.title} updated successfully.")
@@ -199,7 +202,7 @@ for survey_short in survey_names:
     layer_url = f"{rest_url}/{layer_num}"
 
     try: 
-      #pull out abstract from oracle metadata table to fill in layer level description
+      #pull out abstract from oracle metadata table to fill in the layer level description
       table_name = "smit_meta_layers"
       column_name = "abstract"
       with engine.connect() as connection:
