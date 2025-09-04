@@ -4,21 +4,18 @@
 #Layer level metadata (layers within the feature servcice) is also updated
 
 #IMPORT LIBRARIES
-import json, os, sys, base64, tempfile
+import base64
+import tempfile
 import xml.etree.ElementTree as ET
-import sqlalchemy
 import oracledb
-from sqlalchemy import create_engine, select, MetaData, Table, text
-from sqlalchemy.engine import create_engine
-from datetime import datetime
-import arcgis
-from arcgis import gis
+from sqlalchemy import select, MetaData, Table
+from sqlalchemy.engine import create_engine 
 from arcgis.gis import GIS
 from arcgis.features import FeatureLayerCollection, FeatureLayer
 
 #AUTHENTICATE ARCGIS CREDENTIALS
 #using ArcGIS Pro to authenticate, change authentication scheme if necessary
-gis = GIS("PRO")
+gis = GIS("PRO")  
 
 #CONNECT TO ORACLE
 #enable thick mode, using oracle instant client and tnsnames.ora
@@ -194,9 +191,9 @@ for survey_short in survey_names:
     query = select(table).where(table.c.strata_short==survey_short)
     result = connection.execute(query).fetchone()
   rest_url = result.rest_url    
-
+  
   layer_nums = ['0', '1']
-  #update script if there are more than 2 layers, add numbers to layer_nums 
+  #update script if there are more than 2 layers in feature service, add numbers to layer_nums or create a looping mechanism 
   for layer_num in layer_nums: 
 
     layer_url = f"{rest_url}/{layer_num}"
@@ -223,7 +220,7 @@ for survey_short in survey_names:
       print(f"{survey_short} layer {layer_num} exists, proceeding with update...")
       layer.manager.update_definition(layer_properties)
       print(f"{survey_short} layer {layer_num} updated successfully!")
-    except Exception as e:
+    except Exception:
       print(f"layer {layer_num} does not exist or could not be retrieved.") 
       
 print("All layer level metadata updated!")

@@ -14,9 +14,8 @@ import openpyxl
 import pandas as pd
 from io import BytesIO
 import oracledb
-from sqlalchemy import create_engine, select, MetaData, Table, text
+from sqlalchemy import select, MetaData, Table, text
 from sqlalchemy.engine import create_engine  
-from arcgis import gis
 from arcgis.gis import GIS
 from arcgis.features import FeatureLayer
 from copy import deepcopy
@@ -152,10 +151,11 @@ for tab in survey_names:
   
           if updateJSON:
               print("\tUpdating alias names of the REST service...")
-              aliasUpdateDict = {'fields': updateJSON}
+              UpdateDict = {'fields': updateJSON}
               # Use the update definition call to push the new alias names into the service
-              featureLayer.manager.update_definition(aliasUpdateDict)
-              print("\tAlias names updated on service!")
+              featureLayer.manager.update_definition(UpdateDict)
+          
+              print("Field aliases, descriptions, and types updated on layer " + str(looper) + " of " + str(layerName)+ ".")
 
           looper += 1
           restLayerCount -= 1
