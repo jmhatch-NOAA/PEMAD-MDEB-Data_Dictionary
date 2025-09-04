@@ -37,9 +37,10 @@ jobs:
           install.packages(c("cli", "dbplyr", "DT", "here", "httr2", "RcppSimdJson", "rlang", "rvest", "sf"))
         shell: Rscript {0}
 
+        # install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
       - name: Install arcgis
         run: |
-          install.packages("arcgis", repos = c("https://r-arcgis.r-universe.dev", "https://cloud.r-project.org"))
+          install.packages(c("arcgisutils", "arcgislayers"))
         shell: Rscript {0}
 
       - name: Install bookdown

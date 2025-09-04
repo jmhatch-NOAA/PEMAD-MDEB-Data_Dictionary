@@ -1,5 +1,5 @@
 ---
-title: "MDEBdb Data Dictionary"
+title: "MDEB_SPATIAL Data Dictionary"
 author:
   - Joshua Hatch
   - Nicole Mucci
