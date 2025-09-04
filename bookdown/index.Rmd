@@ -1,5 +1,5 @@
 ---
-title: "MDEB_SPATIAL Data Dictionary"
+title: "MDEB_SPATIAL <br> Data Dictionary"
 author:
   - Joshua Hatch
   - Nicole Mucci
@@ -29,7 +29,7 @@ The Marine Development and Ecology Branch database (MDEB_SPATIAL) serves as a ce
 
 The development of this database was partially funded by the Federal Permitting Improvement Steering Council (FPISC) and reflects a "shared database, shared schema" approach to data management, which promotes data sharing across scientific and regulatory initiatives.
 
-This data dictionary is meant to catalog and communicate the structure and content of the MDEBdb, and provide meaningful descriptions of the data objects for users.
+This data dictionary is meant to catalog and communicate the structure and content of the MDEB_SPATIAL, and provide meaningful descriptions of the data objects for users.
 
 ## GIS Data Pipeline
 
