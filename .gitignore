@@ -1,9 +1,16 @@
 .Rproj.user
+.Rhistory
+.github/workflows/.gitleaks.toml
 hidden.R
 example.R
+scrape_hub.R
+chk_mdeb_spatial.R
+chk_nicole_python.R
+metadata_standards.R
 narw_aerial_footprint.R
 /bookdown/_book/
 /bookdown/*.Rmd
 data/
 data-raw/
 inst/
+python/SurveyStrata_metadataupdate_jhatch.py
