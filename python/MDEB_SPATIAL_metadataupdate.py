@@ -1,85 +1,93 @@
-#This script updates ArcGIS Online feature service and layer metadata
-#It pulls info from the oracle database and uses it to fill an XML metadata template
-#The XML file is passed to the AGOL feature service
-#Layer level metadata (layers within the feature servcice) is also updated
+###############################################################################
+## This script is to edit metadata template xml file and fill using metadata ##
+##   stored in oracle database to update ArcGIS Online feature service       ##
+##   and layer metadata                                                      ##
+###############################################################################
 
 #IMPORT LIBRARIES
+from dotenv import load_dotenv
+import os
 import base64
 import tempfile
+import pandas as pd
 import xml.etree.ElementTree as ET
 import oracledb
-from sqlalchemy import select, MetaData, Table
 from sqlalchemy.engine import create_engine 
 from arcgis.gis import GIS
 from arcgis.features import FeatureLayerCollection, FeatureLayer
 
 #AUTHENTICATE ARCGIS CREDENTIALS
 #using ArcGIS Pro to authenticate, change authentication scheme if necessary
-gis = GIS("PRO")  
+gis = GIS("PRO")
 
 #CONNECT TO ORACLE
-#enable thick mode, using oracle instant client and tnsnames.ora
+#Enable thick mode, using oracle instant client and tnsnames.ora
 oracledb.init_oracle_client()
+
+#Access .env variables
+load_dotenv(dotenv_path=os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
+tns_name = os.getenv("TNS_NAME_DEV") 
+username = os.getenv("USERNAME_DEV")
+password = os.getenv("PASSWORD_DEV") 
+
 #Connect to oracle database using SQL alchemy engine and TNS names alias
-tns_name = "" #TNS name
-username = "" #oracle username
-password = "" #oracle password
 connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
 engine = create_engine(connection_string)
 connection= engine.connect()
 
 #UPDATE FEATURE LEVEL METADATA
-#make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml)by pulling data from oracle metadata table
+#make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml) by pulling data from oracle metadata table
 #for each survey, then push to arcgis online to update survey metadata
-#names of surveys, from oracle table
-survey_names=["ECOMON","SCALLOP","HL","BTS","CSBLL","MMST","NARW","GOMBLL","SEAL","TURTLE","EDNA", "SHRIMP", "COASTSPAN","OQ","SC"]
 
+# query smit_meta_features
+sql_query = "SELECT * FROM mdeb_spatial.smit_meta_features"
+df_features = pd.read_sql(sql_query, con = connection)
+
+#extract shortened survey names
+survey_names = [survey for survey in df_features.strata_short]
+
+#build xml file and push to AGOL
 with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp_file:
   
   for survey_short in survey_names:
   
     #use metadata template (already has correct parent and child elements to fulfill metadata requirements)
     metadata_xml = "python/ARCGIS_METADATA_TEMPLATE.xml"
+    
     #import xml and get xml roots
     tree = ET.parse(metadata_xml)
     root = tree.getroot()
+
+    # filter df_features for survey
+    result = df_features.query("strata_short == @survey_short")
   
-    metadata_table = 'smit_meta_features' #metdata table name in oracle
-    metadata = MetaData()
-    table = Table(metadata_table, metadata, autoload_with=engine)
-    #query the table for metadata based on the short survey names (strata_short)
-    
-    with engine.connect() as connection:
-      query = select(table).where(table.c.strata_short==survey_short)
-      result = connection.execute(query).fetchone() #fetch a row from metadata table for survey
-  
-    #extract metadata values
-    if result:
-      title = result.survey_name
-      abstract = result.abstract
-      purpose = result.purpose
-      tags = result.tags.split(', ')
-      credits = result.useterms
-      pub_date = result.publish_date
-      meta_contact = result.meta_contact_name
-      meta_title = result.meta_contact_title
-      meta_email = result.meta_contact_email
-      source = result.source
-      useterms = result.useterms
-      link= result.link
-      extent_n = result.geoextent_n
-      extent_s = result.geoextent_s
-      extent_e = result.geoextent_e
-      extent_w = result.geoextent_w
-      rest_url = result.rest_url
-      file_ID = result.file_id
-      thumbnail = result.thumbnail
-      #convert thumbnail to base 64 encoded
+    # extract metadata values
+    if not result.empty:
+      title = result.survey_name.iloc[0]
+      abstract = result.abstract.iloc[0]
+      purpose = result.purpose.iloc[0]
+      tags = result.tags.iloc[0].split(', ')
+      credits = result.useterms.iloc[0]
+      pub_date = result.publish_date.iloc[0]
+      meta_contact = result.meta_contact_name.iloc[0]
+      meta_title = result.meta_contact_title.iloc[0]
+      meta_email = result.meta_contact_email.iloc[0]
+      source = result.source.iloc[0]
+      useterms = result.useterms.iloc[0]
+      link = result.link.iloc[0]
+      extent_n = result.geoextent_n.iloc[0]
+      extent_s = result.geoextent_s.iloc[0]
+      extent_e = result.geoextent_e.iloc[0]
+      extent_w = result.geoextent_w.iloc[0]
+      rest_url = result.rest_url.iloc[0]
+      file_ID = result.file_id.iloc[0]
+      thumbnail = result.thumbnail.iloc[0]
+      # convert thumbnail to base 64 encoded
       encoded_thumbnail = base64.b64encode(thumbnail).decode("utf-8")
     else:
       raise ValueError("No metadata found in SQL Table")
     
-    print(f"Finished extracting metadata for {survey_short} from oracle db.") 
+    print(f"Finished extracting metadata for {survey_short} from oracle db.")  
   
     #edit xml template file using metadata from oracle
     #update thumbnail
@@ -93,7 +101,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     title_element.text = title
     #update publish date
     date_element = root.find(".//dataIdInfo/idCitation/date/pubDate")
-    #change timetime to string
+    #change datetime to string
     datetime_string = pub_date.strftime('%Y-%m-%d %H:%M:%S')
     date_element.text = datetime_string
     #update geographic extent
@@ -141,6 +149,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     item = gis.content.get(file_ID)
     #update metadata for feature service item 
     item.update(metadata = xml_metadata)
+    
     #create a feature layer collection item (to update metadata on REST Service page)
     item = gis.content.get(file_ID)
     flc = FeatureLayerCollection.fromitem(item)
@@ -174,53 +183,33 @@ print("All feature service metadata updated!")
 #UPDATE LAYER LEVEL METADATA 
 #layer level metadata cannot be updated with XML, need to use a json dictionary
 #create json dictionary using item properties from hosted feature service
+
+# layer info from smit_meta_layers
+sql_query = "SELECT table_name, strata_short, abstract, rest_url FROM mdeb_spatial.smit_meta_layers"
+df_layers = pd.read_sql(sql_query, con = connection)
+
+#loop through surveys
 for survey_short in survey_names:
   
-  #extract the layer ID value from oracle metadata table using survey name
-  metadata_table = 'smit_meta_features' #metdata table name in oracle
-  metadata = MetaData()
-  table = Table(metadata_table, metadata, autoload_with=engine)
-  with engine.connect() as connection:
-    query = select(table).where(table.c.strata_short==survey_short)
-    result = connection.execute(query).fetchone()
-  layerID = result.file_id
+  # grab file_id, rest_url by survey
+  layerID = df_features.query("strata_short == @survey_short").file_id.iloc[0]
   
   item = gis.content.get(layerID)
-    
-  with engine.connect() as connection:
-    query = select(table).where(table.c.strata_short==survey_short)
-    result = connection.execute(query).fetchone()
-  rest_url = result.rest_url    
   
-  layer_nums = ['0', '1']
-  #update script if there are more than 2 layers in feature service, add numbers to layer_nums or create a looping mechanism 
-  for layer_num in layer_nums: 
-
-    layer_url = f"{rest_url}/{layer_num}"
-
-    try: 
-      #pull out abstract from oracle metadata table to fill in the layer level description
-      table_name = "smit_meta_layers"
-      column_name = "abstract"
-      with engine.connect() as connection:
-        metadata= MetaData()
-        table = Table(table_name, metadata, autoload_with=engine)
-        query = select(table.c[column_name]).where(table.c.rest_url == f'{layer_url}')
-        
-        result = connection.execute(query).fetchone()
-      description = result[0] if result and result[0] is not None else ''
-      
+  survey_layer = df_layers.query("strata_short == @survey_short")
+  for index, row in survey_layer.iterrows():
+    try:
+      description = row['abstract'] if row['abstract'] is not None else ''
       layer_properties = {
         "description" : description,
         "licenseInfo" : item.licenseInfo,
         "copyrightText": item.licenseInfo
-        }
-      
-      layer = FeatureLayer(layer_url)
-      print(f"{survey_short} layer {layer_num} exists, proceeding with update...")
-      layer.manager.update_definition(layer_properties)
-      print(f"{survey_short} layer {layer_num} updated successfully!")
+        } 
+      feature_layer = FeatureLayer(row['rest_url'])
+      print(f"{row['table_name']} layer exists, proceeding with update...")
+      feature_layer.manager.update_definition(layer_properties)
+      print(f"{row['rest_url']} layer updated successfully!")
     except Exception:
-      print(f"layer {layer_num} does not exist or could not be retrieved.") 
+      print(f"layer {row['rest_url']} does not exist or could not be retrieved.") 
       
 print("All layer level metadata updated!")

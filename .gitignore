@@ -14,3 +14,4 @@ data/
 data-raw/
 inst/
 python/SurveyStrata_metadataupdate_jhatch.py
+sqlnet.log
