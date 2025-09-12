@@ -29,19 +29,30 @@ load_dotenv(dotenv_path=os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"
 tns_name = os.getenv("TNS_NAME_DEV") 
 username = os.getenv("USERNAME_DEV")
 password = os.getenv("PASSWORD_DEV") 
+schema = os.getenv("SCHEMA")
+ftr_table = os.getenv("FTR_TABLE")
+lyr_table = os.getenv("LYR_TABLE")
 
 #Connect to oracle database using SQL alchemy engine and TNS names alias
 connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
 engine = create_engine(connection_string)
 connection= engine.connect()
 
+# DATA EXTRACT FROM DATABASE
+# query feature table to get info about feature services
+sql_query_features = f"SELECT * FROM {schema}.{ftr_table}"
+df_features = pd.read_sql(sql_query_features, con = connection)
+
+# query layers table to get layer info
+sql_query_layers = f"SELECT * from {schema}.{lyr_table}"
+df_layers = pd.read_sql(sql_query_layers, con = connection)
+
+#close database connection
+connection.close()
+
 #UPDATE FEATURE LEVEL METADATA
 #make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml) by pulling data from oracle metadata table
 #for each survey, then push to arcgis online to update survey metadata
-
-# query smit_meta_features
-sql_query = "SELECT * FROM mdeb_spatial.smit_meta_features"
-df_features = pd.read_sql(sql_query, con = connection)
 
 #extract shortened survey names
 survey_names = [survey for survey in df_features.strata_short]
@@ -183,10 +194,6 @@ print("All feature service metadata updated!")
 #UPDATE LAYER LEVEL METADATA 
 #layer level metadata cannot be updated with XML, need to use a json dictionary
 #create json dictionary using item properties from hosted feature service
-
-# layer info from smit_meta_layers
-sql_query = "SELECT table_name, strata_short, abstract, rest_url FROM mdeb_spatial.smit_meta_layers"
-df_layers = pd.read_sql(sql_query, con = connection)
 
 #loop through surveys
 for survey_short in survey_names:

@@ -27,6 +27,9 @@ load_dotenv(dotenv_path=os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"
 tns_name = os.getenv("TNS_NAME_DEV") 
 username = os.getenv("USERNAME_DEV")
 password = os.getenv("PASSWORD_DEV") 
+schema = os.getenv("SCHEMA")
+lyr_table = os.getenv("LYR_TABLE")
+fld_table = os.getenv("FLD_TABLE")
 
 #Connect to oracle database using SQL alchemy engine and TNS names alias
 connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
@@ -34,13 +37,16 @@ engine = create_engine(connection_string)
 connection= engine.connect()
 
 #EXTRACT DATA
-# query smit_meta_fields for field names, field aliases, and field descriptions
-fields_sql_query = "SELECT * FROM mdeb_spatial.smit_meta_fields"
+# query field table for field names, field aliases, and field descriptions
+fields_sql_query = f"SELECT * FROM {schema}.{fld_table}"
 df_fields = pd.read_sql(fields_sql_query, con = connection)
 
-# query smit_meta_layers to get layer info (layer name, url, and layer id)
-layers_sql_query = "SELECT table_name, strata_short, rest_url, file_id FROM mdeb_spatial.smit_meta_layers"
+# query layer table to get layer info (layer name, url, and layer id)
+layers_sql_query = f"SELECT * FROM {schema}.{lyr_table}"
 df_layers = pd.read_sql(layers_sql_query, con = connection)
+
+#close database connection
+connection.close()
 
 #UPDATE FIELDS
 #loop through each layer in layers dataframe
