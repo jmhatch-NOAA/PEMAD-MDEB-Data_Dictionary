@@ -23,7 +23,7 @@ gis = GIS("PRO")
 oracledb.init_oracle_client()
 
 # Access .env variables
-load_dotenv(dotenv_path = os.path.expandvars(r"C:/Users/joshua.hatch/Documents/.Renviron"))
+load_dotenv(dotenv_path = os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
 tns_name = os.getenv("TNS_NAME") 
 username = os.getenv("ORACLE_USERNAME")
 password = os.getenv("ORACLE_PASSWORD") 
