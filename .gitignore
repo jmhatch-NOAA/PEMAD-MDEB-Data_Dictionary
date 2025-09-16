@@ -14,4 +14,6 @@ data/
 data-raw/
 inst/
 python/SurveyStrata_metadataupdate_jhatch.py
+python/MDEB_SPATIAL_fieldsupdate_jhatch.py
+python/MDEB_SPATIAL_dataupdate_nmucci2.py
 sqlnet.log

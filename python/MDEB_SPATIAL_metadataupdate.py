@@ -4,7 +4,7 @@
 ##   and layer metadata                                                      ##
 ###############################################################################
 
-#IMPORT LIBRARIES
+# IMPORT LIBRARIES
 from dotenv import load_dotenv
 import os
 import base64
@@ -16,16 +16,16 @@ from sqlalchemy.engine import create_engine
 from arcgis.gis import GIS
 from arcgis.features import FeatureLayerCollection, FeatureLayer
 
-#AUTHENTICATE ARCGIS CREDENTIALS
-#using ArcGIS Pro to authenticate, change authentication scheme if necessary
+# AUTHENTICATE ARCGIS CREDENTIALS
+# using ArcGIS Pro to authenticate, change authentication scheme if necessary
 gis = GIS("PRO")
 
-#CONNECT TO ORACLE
-#Enable thick mode, using oracle instant client and tnsnames.ora
+# CONNECT TO ORACLE
+# Enable thick mode, using oracle instant client and tnsnames.ora
 oracledb.init_oracle_client()
 
-#Access .env variables
-load_dotenv(dotenv_path=os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
+# Access .env variables
+load_dotenv(dotenv_path = os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
 tns_name = os.getenv("TNS_NAME_DEV") 
 username = os.getenv("USERNAME_DEV")
 password = os.getenv("PASSWORD_DEV") 
@@ -33,10 +33,10 @@ schema = os.getenv("SCHEMA")
 ftr_table = os.getenv("FTR_TABLE")
 lyr_table = os.getenv("LYR_TABLE")
 
-#Connect to oracle database using SQL alchemy engine and TNS names alias
+# Connect to oracle database using SQL alchemy engine and TNS names alias
 connection_string = f"oracle+oracledb://{username}:{password}@{tns_name}"
 engine = create_engine(connection_string)
-connection= engine.connect()
+connection = engine.connect()
 
 # DATA EXTRACT FROM DATABASE
 # query feature table to get info about feature services
@@ -47,25 +47,25 @@ df_features = pd.read_sql(sql_query_features, con = connection)
 sql_query_layers = f"SELECT * from {schema}.{lyr_table}"
 df_layers = pd.read_sql(sql_query_layers, con = connection)
 
-#close database connection
+# close database connection
 connection.close()
 
-#UPDATE FEATURE LEVEL METADATA
-#make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml) by pulling data from oracle metadata table
-#for each survey, then push to arcgis online to update survey metadata
+# UPDATE FEATURE LEVEL METADATA
+# make a temporary xml file from template (ARCGIS_METADATA_TEMPLATE.xml) by pulling data from oracle metadata table
+# for each survey, then push to arcgis online to update survey metadata
 
-#extract shortened survey names
+# extract shortened survey names
 survey_names = [survey for survey in df_features.strata_short]
 
-#build xml file and push to AGOL
-with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp_file:
+# build xml file and push to AGOL
+with tempfile.NamedTemporaryFile(mode = "w+", delete = False, suffix = ".xml") as temp_file:
   
   for survey_short in survey_names:
   
-    #use metadata template (already has correct parent and child elements to fulfill metadata requirements)
+    # use metadata template (already has correct parent and child elements to fulfill metadata requirements)
     metadata_xml = "python/ARCGIS_METADATA_TEMPLATE.xml"
     
-    #import xml and get xml roots
+    # import xml and get xml roots
     tree = ET.parse(metadata_xml)
     root = tree.getroot()
 
@@ -100,22 +100,22 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     
     print(f"Finished extracting metadata for {survey_short} from oracle db.")  
   
-    #edit xml template file using metadata from oracle
-    #update thumbnail
+    # edit xml template file using metadata from oracle
+    # update thumbnail
     thumbnail_element = root.find(".//Binary/Thumbnail/Data")
     thumbnail_element.text = encoded_thumbnail
-    #update abstract
+    # update abstract
     abs_element = root.find(".//dataIdInfo/idAbs")
     abs_element.text = f'<p>{link if link else ""}<br>{abstract}</p>'
-    #update title
+    # update title
     title_element = root.find(".//dataIdInfo/idCitation/resTitle")
     title_element.text = title
-    #update publish date
+    # update publish date
     date_element = root.find(".//dataIdInfo/idCitation/date/pubDate")
-    #change datetime to string
+    # change datetime to string
     datetime_string = pub_date.strftime('%Y-%m-%d %H:%M:%S')
     date_element.text = datetime_string
-    #update geographic extent
+    # update geographic extent
     geowest_element = root.find(".//dataIdInfo/dataExt/geoEle/GeoBndBox/westBL")
     geowest_element.text = str(extent_w)
     geoeast_element = root.find(".//dataIdInfo/dataExt/geoEle/GeoBndBox/eastBL")
@@ -124,25 +124,25 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     geonorth_element.text = str(extent_n)
     geosouth_element = root.find(".//dataIdInfo/dataExt/geoEle/GeoBndBox/southBL")
     geosouth_element.text = str(extent_s)
-    #update tags by itearting through list of tags
+    # update tags by itearting through list of tags
     tags_element = root.find(".//dataIdInfo/searchKeys")
-    #delete old tags
+    # delete old tags
     for tag in list(tags_element):
       tags_element.remove(tag)
-    #iterate through tags list
+    # iterate through tags list
     for tag in tags:
       tag_element = ET.SubElement(tags_element, "keyword")
       tag_element.text = tag 
-    #update purpose statement
+    # update purpose statement
     purp_element = root.find(".//dataIdInfo/idPurp")
     purp_element.text = purpose
-    #update credits
+    # update credits
     credit_element = root.find(".//dataIdInfo/idCredit")
     credit_element.text = source
-    #update use terms
+    # update use terms
     constraint_element = root.find(".//dataIdInfo/resConst/Consts/useLimit")
     constraint_element.text = useterms
-    #update metadata contact info
+    # update metadata contact info
     email_element = root.find(".//mdContact/rpCntInfo/cntAddress/eMailAdd")
     email_element.text = meta_email
     contact_element = root.find(".//mdContact/rpIndName")
@@ -150,37 +150,38 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
     meta_title_element = root.find(".//mdContact/rpPosName")
     meta_title_element.text = meta_title 
   
-    #write xml to temp file
+    # write xml to temp file
     ET.ElementTree(root).write(temp_file.name)
     print('Metadata converted to temp XML file.')
-    #get name of temp file
+    
+    # get name of temp file
     xml_metadata = temp_file.name
     
-    #get arcgis online item using file id
+    # get arcgis online item using file id
     item = gis.content.get(file_ID)
-    #update metadata for feature service item 
+    # update metadata for feature service item 
     item.update(metadata = xml_metadata)
     
-    #create a feature layer collection item (to update metadata on REST Service page)
+    # create a feature layer collection item (to update metadata on REST Service page)
     item = gis.content.get(file_ID)
     flc = FeatureLayerCollection.fromitem(item)
     
-    #create json dictionary to update feature layer collection (metadata on the REST Service page)
+    # create json dictionary to update feature layer collection (metadata on the REST Service page)
     item_properties = {
-    "title" : item.title,
-    "tags" : item.tags,
-    "snippet" : item.snippet,
-    "description" : item.description,
-    "serviceDescription":item.description,
-    "licenseInfo" : item.licenseInfo,
-    "accessInformation" : item.accessInformation,
-    "copyrightText": item.licenseInfo
+      "title" : item.title,
+      "tags" : item.tags,
+      "snippet" : item.snippet,
+      "description" : item.description,
+      "serviceDescription":item.description,
+      "licenseInfo" : item.licenseInfo,
+      "accessInformation" : item.accessInformation,
+      "copyrightText": item.licenseInfo
     }
     flc.manager.update_definition(item_properties)
 
-    #update the thumbnail on the feature service landing page
-    #for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated
-    with tempfile.NamedTemporaryFile(delete=False, suffix = ".jpg") as tmp_file:
+    # update the thumbnail on the feature service landing page
+    # for some reason the landing page thumbnail doesn't update when the metadata thumbnail is updated
+    with tempfile.NamedTemporaryFile(delete = False, suffix = ".jpg") as tmp_file:
       tmp_file.write(thumbnail)
       tmp_file_path = tmp_file.name
     
@@ -191,11 +192,11 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".xml") as temp
 
 print("All feature service metadata updated!")    
 
-#UPDATE LAYER LEVEL METADATA 
-#layer level metadata cannot be updated with XML, need to use a json dictionary
-#create json dictionary using item properties from hosted feature service
+# UPDATE LAYER LEVEL METADATA 
+# layer level metadata cannot be updated with XML, need to use a json dictionary
+# create json dictionary using item properties from hosted feature service
 
-#loop through surveys
+# loop through surveys
 for survey_short in survey_names:
   
   # grab file_id, rest_url by survey
@@ -211,7 +212,7 @@ for survey_short in survey_names:
         "description" : description,
         "licenseInfo" : item.licenseInfo,
         "copyrightText": item.licenseInfo
-        } 
+      } 
       feature_layer = FeatureLayer(row['rest_url'])
       print(f"{row['table_name']} layer exists, proceeding with update...")
       feature_layer.manager.update_definition(layer_properties)
