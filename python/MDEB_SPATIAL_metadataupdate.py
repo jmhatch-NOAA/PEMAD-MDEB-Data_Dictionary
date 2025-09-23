@@ -26,9 +26,9 @@ oracledb.init_oracle_client()
 
 # Access .env variables
 load_dotenv(dotenv_path = os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
-tns_name = os.getenv("TNS_NAME_DEV") 
-username = os.getenv("USERNAME_DEV")
-password = os.getenv("PASSWORD_DEV") 
+tns_name = os.getenv("TNS_NAME") 
+username = os.getenv("ORACLE_USERNAME")
+password = os.getenv("ORACLE_PASSWORD") 
 schema = os.getenv("SCHEMA")
 ftr_table = os.getenv("FTR_TABLE")
 lyr_table = os.getenv("LYR_TABLE")
@@ -210,8 +210,7 @@ for survey_short in survey_names:
       description = row['abstract'] if row['abstract'] is not None else ''
       layer_properties = {
         "description" : description,
-        "licenseInfo" : item.licenseInfo,
-        "copyrightText": item.licenseInfo
+        "copyrightText": item.accessInformation
       } 
       feature_layer = FeatureLayer(row['rest_url'])
       print(f"{row['table_name']} layer exists, proceeding with update...")

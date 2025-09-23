@@ -24,9 +24,9 @@ oracledb.init_oracle_client()
 
 # Access .env variables
 load_dotenv(dotenv_path = os.path.expandvars(r"%USERPROFILE%\.config\secrets\.env"))
-tns_name = os.getenv("TNS_NAME_DEV") 
-username = os.getenv("USERNAME_DEV")
-password = os.getenv("PASSWORD_DEV") 
+tns_name = os.getenv("TNS_NAME") 
+username = os.getenv("ORACLE_USERNAME")
+password = os.getenv("ORACLE_PASSWORD") 
 schema = os.getenv("SCHEMA")
 lyr_table = os.getenv("LYR_TABLE")
 fld_table = os.getenv("FLD_TABLE")
