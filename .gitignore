@@ -8,6 +8,7 @@ chk_mdeb_spatial.R
 chk_nicole_python.R
 metadata_standards.R
 narw_aerial_footprint.R
+figure_out_fgdb.R
 /bookdown/_book/
 /bookdown/*.Rmd
 data/
@@ -16,4 +17,6 @@ inst/
 python/SurveyStrata_metadataupdate_jhatch.py
 python/MDEB_SPATIAL_fieldsupdate_jhatch.py
 python/MDEB_SPATIAL_dataupdate_nmucci2.py
+python/MDEB_SPATIAL_dataupdate_jhatch.py
+python/data-update.py
 sqlnet.log

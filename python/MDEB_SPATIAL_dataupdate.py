@@ -62,18 +62,20 @@ with engine.connect() as connection:
 
             columns = df_fields[df_fields['table_name'] == table_name]['col_name'].tolist()
 
-            # Join the known column names into a single string.
+            # Join the known column names into a single string
             columns_sql_str = ", ".join(columns)
 
-            # Build the final SELECT statement.
-            # Manually add the SDO_GEOM conversion for the 'shape' column to every query.
-            final_columns_str = f"{columns_sql_str}, SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS SHAPE_WKT"
+            # Build the final SELECT statement
+            # Manually add the SDO_GEOM conversion for the 'shape' column to every query
+            final_columns_str = f"{columns_sql_str}, TBL.SHAPE.SDO_SRID as SHAPE_SRID, SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS SHAPE_WKT"
 
             # Construct the final SQL query
-            query = text(f'SELECT {final_columns_str} FROM {schema}.{table_name}')
+            query = text(f'SELECT {final_columns_str} FROM {schema}.{table_name} TBL')
 
-            # Execute the query and store the resulting DataFrame.
-            df = pd.read_sql_query(query, connection)
+            # Execute the query and store the resulting DataFram
+            df = pd.read_sql_query(query, con = connection)
+            if df.shape_srid.all() != True:
+                warnings.warn(f"SHAPE column in the DataFrame contains multiple SRID values.")
             dataframes[table_name] = df
             print(f"  Successfully loaded '{table_name}'")
 
@@ -88,16 +90,15 @@ upper_dataframes = {
 }
 print("Converted all data table names and columns to uppercase.")
 
-
 # DATA UPDATE LOOP
 # Loop through each row in df_layers to update a feature layer on AGOL using pandas dataframe
 # Make sure to correctly handle geometry (use shapely and create spatially enabled dataframe)
-
 for index, layer_row in df_layers.iterrows():
     try:
         item_id = layer_row['file_id']
         rest_url = layer_row['rest_url']
         table_name = layer_row['table_name'] # The key to retrieve the data frame from the dictionary
+        
         # Get the WKID for the hosted feature service layer, use this to set the spatial ref for the sedf
         feature_layer_item = gis.content.get(item_id)
         layer_index = int(rest_url[len(rest_url) - 1])
@@ -118,23 +119,28 @@ for index, layer_row in df_layers.iterrows():
         print("  - Converting WKT to geometry using Shapely...")
         sedf = source_df.copy()
 
+        # Get SRID for Oracle data
+        oracle_srid = sedf.SHAPE_SRID.unique()[0]
+        
         # For each WKT string, load it with Shapely, get its standard geo_interface,
-        # and create an arcgis.geometry.Geometry object from that.
-        # Use AGOL feature layer wkid to set spatial reference
-
+        # and create an arcgis.geometry.Geometry object from that
+        # Use Oracle SRID to set spatial reference
         sedf['SHAPE'] = sedf['SHAPE_WKT'].apply(
             lambda wkt: Geometry(
             wkt_loads(wkt).__geo_interface__,
-            spatial_reference={'wkid': latest_wkid}
+            spatial_reference={'wkid': oracle_srid}
             )
         )
-
+        
         # Drop well known text column
         sedf.drop('SHAPE_WKT', axis = 1, inplace = True)
+        
+        # Project to wkid of AGOL feature layer
+        sedf.spatial.project(latest_wkid)
 
         # Access the FeatureLayer object from AGOL
         # Get a count of features
-        feature_count = target_layer.query(return_count_only=True)
+        feature_count = target_layer.query(return_count_only = True)
         print(f"Checking layer... Found {feature_count} features.")
 
         # Delete data in layer
