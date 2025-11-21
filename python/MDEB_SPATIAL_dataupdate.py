@@ -151,11 +151,11 @@ for index, layer_row in df_layers.iterrows():
 
         # Remove the shape_srid column that is automatically created by geopandas
         if 'SHAPE_SRID' in gdf.columns:
-            gdf_project = gdf.drop(columns=['SHAPE_SRID'])
+            gdf = gdf.drop(columns=['SHAPE_SRID'])
 
         # Create a file geodatabase from geopandas dataframe
         # Create within the gdb folder
-        gdf_project.to_file(
+        gdf.to_file(
             filename= f"{fgdb_folder}/{service_name}.gdb",
             layer = table_name,
             driver = "OpenFileGDB"
