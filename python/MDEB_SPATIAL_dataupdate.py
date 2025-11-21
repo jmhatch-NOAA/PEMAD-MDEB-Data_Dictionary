@@ -211,7 +211,7 @@ else:
                 
                 # Use the overwrite method to update the data
                 print(f" - Uploading zip and overwriting data for Item ID: {service_item_id}")
-                update_result = flc.manager.overwrite(zip_filename)
+                update_result = flc.manager.overwrite(zip_filepath)
                 
                 # Print success or failure message
                 if update_result.get('success'):
@@ -223,8 +223,8 @@ else:
                 print("- Cleaning up temporary FGDB and zip file.")
                 if os.path.exists(fgdb_path):
                     shutil.rmtree(fgdb_path) # Remove the .gdb directory
-                if os.path.exists(zip_filename):
-                    os.remove(zip_filename)  # Remove the .zip file
+                if os.path.exists(zip_filepath):
+                    os.remove(zip_filepath)  # Remove the .zip file
 
             except IndexError:
                 print(f" - WARNING: Could not find matching AGOL service ID for service name '{service_name_base}'. Skipping update.")
