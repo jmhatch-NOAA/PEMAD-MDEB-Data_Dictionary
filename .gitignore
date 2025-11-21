@@ -20,3 +20,5 @@ python/MDEB_SPATIAL_dataupdate_nmucci2.py
 python/MDEB_SPATIAL_dataupdate_jhatch.py
 python/data-update.py
 sqlnet.log
+gdb/
+python/MDEB_SPATIAL_addfield.py
