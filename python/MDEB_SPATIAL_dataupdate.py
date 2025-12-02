@@ -1,22 +1,19 @@
 ###############################################################################
 ## This script updates AGOL feature service data. It pulls data from the     ##
-## oracle database and creates file geodatabases. It then updates the        ##
-## feature services using the zipped file geodatabases.                      ##
+## oracle database and creates a pandas dataframe. It then deletes old data  ##
+## from the feature service and loads the new data using the append method.  ##
 ###############################################################################
 
 # IMPORT LIBRARIES
 from dotenv import load_dotenv
 import os
 import pandas as pd
-import geopandas as gpd
 import oracledb
-import zipfile
-import shutil
 from sqlalchemy import create_engine, text
 from arcgis.gis import GIS
 from arcgis.geometry import Geometry
 from shapely.wkt import loads as wkt_loads
-from arcgis.features import FeatureLayerCollection
+import warnings
 
 # AUTHENTICATE ARCGIS CREDENTIALS
 # Using ArcGIS Pro to authenticate, change authentication scheme if necessary
@@ -46,22 +43,18 @@ connection = engine.connect()
 layers_sql_query = f"SELECT * FROM {schema}.{lyr_table}"
 df_layers = pd.read_sql(layers_sql_query, con = connection)
 
-# Add a column to df_layers to capture the hosted feature service name
-# Extract from the url
-regex_pattern = r'.*\/services\/([^/]+)'
-# Use the .str.extract() method
-df_layers['service_name'] = df_layers['rest_url'].str.extract(regex_pattern)
-
 # Query table to get field info within tables
 fields_sql_query = f"SELECT * FROM {schema}.{fld_table}"
 df_fields = pd.read_sql(fields_sql_query, con = connection)
+# Ensure columns are uppercase for comparison consistency later
+df_fields.columns = df_fields.columns.str.upper()
 
-# Now extract all spatial tables from oracle
+# Extract all spatial tables from oracle
 # Create an empty dictionary to hold all dataframes
 dataframes = {}
 
 # Get the list of table names from df_fields
-table_names = df_fields['table_name'].unique()
+table_names = df_fields['TABLE_NAME'].unique()
 print("Getting tables from the database...")
 
 # Make a separate pandas dataframe for each spatial table in the database
@@ -71,7 +64,7 @@ with engine.connect() as connection:
         try:
             print(f"--- Processing table: '{table_name}' ---")
 
-            columns = df_fields[df_fields['table_name'] == table_name]['col_name'].tolist()
+            columns = df_fields[df_fields['TABLE_NAME'] == table_name]['COL_NAME'].tolist()
 
             # Join the known column names into a single string
             columns_sql_str = ", ".join(columns)
@@ -83,40 +76,63 @@ with engine.connect() as connection:
             # Construct the final SQL query
             query = text(f'SELECT {final_columns_str} FROM {schema}.{table_name} TBL')
 
-            # Execute the query and store the resulting DataFram
+            # Execute the query and store the resulting dataframe
             df = pd.read_sql_query(query, con = connection)
-            if df.shape_srid.all() != True:
-                warnings.warn(f"SHAPE column in the DataFrame contains multiple SRID values.")
+            if df.shape_srid.nunique() > 1:
+                warnings.warn("SHAPE column in the DataFrame contains multiple SRID values.")
             dataframes[table_name] = df
-            print(f"  Successfully loaded '{table_name}'")
+            print(f"   Successfully loaded '{table_name}'")
 
         except Exception as e:
             print(f" FAILED to load table '{table_name}': {e}")
 
- # Make all dataframes and columns in dataframes uppercase
- # This is how everything is named in AGOL
+# Make all dataframes and columns in dataframes uppercase
+# This is how everything is named in AGOL
 upper_dataframes = {
     key.upper(): df.rename(columns = str.upper) 
     for key, df in dataframes.items()
 }
 print("Converted all data table names and columns to uppercase.")
 
-# CREATION OF FILE GEODATABASES
-# Loop through each row in df_layers to create a layer within a file geodatabase
-# The first layer will create the file geodatabase and any subsequent layers will be added to the 
-# file geodatabase based on matching service names
+# DATA TYPE MATCHING FUNCTION
+# Maps pandas data types to AGOL field types 
+def map_pandas_to_agol_type(pd_dtype) -> str:
+    """
+    Maps Pandas dtypes to ArcGIS field types.
+    """
+    dtype_name = pd_dtype.name.lower()
+    
+    if 'int' in dtype_name:
+        # Pandas integer to esri type interger
+        return "esriFieldTypeInteger"
+    elif 'float' in dtype_name or 'double' in dtype_name:
+        # Pandas floating-point number to esri type double
+        return "esriFieldTypeDouble"
+    elif 'datetime' in dtype_name:
+        # Pandas datetime converted to esri type date
+        return "esriFieldTypeDate"
+    elif 'bool' in dtype_name:
+        # Booleans stored as intergers in AGOL
+        return "esriFieldTypeInteger"
+    else: # Any other column type will be converted to esri type string
+        return "esriFieldTypeString"
+
+# DATA UPDATE LOOP
+# Loop through each row in df_layers to update a feature layer on AGOL using pandas dataframe
 # Make sure to correctly handle geometry (use shapely and create spatially enabled dataframe)
-
-# Create folder to hold all file geodatabases
-fgdb_folder = "gdb"
-os.mkdir(fgdb_folder)
-
 for index, layer_row in df_layers.iterrows():
     try:
         item_id = layer_row['file_id']
         rest_url = layer_row['rest_url']
         table_name = layer_row['table_name'] # The key to retrieve the data frame from the dictionary
-        service_name = layer_row['service_name'] # Used to name the FGDB (zipped FGDB must match the rest service name exactly)
+        
+        # Get the WKID for the hosted feature service layer, use this to set the spatial ref for the sedf
+        feature_layer_item = gis.content.get(item_id)
+        layer_index = int(rest_url[len(rest_url) - 1])
+        target_layer = feature_layer_item.layers[layer_index]
+        spatial_ref_info = target_layer.properties.spatialReference
+        wkid = spatial_ref_info['wkid']
+        latest_wkid = spatial_ref_info.get('latestWkid', wkid)
         
         print(f"--- Processing Layer: '{table_name}' ---")
 
@@ -126,13 +142,97 @@ for index, layer_row in df_layers.iterrows():
             print(f"  - No data found for table '{table_name}'. Skipping.")
             continue
 
+        # SCHEMA COMPARISON AND UPDATE LOGIC 
+        
+        # Get the list of fields from the source dataframe
+        # Exclude temporary and internal columns used for Oracle geometry handling
+        SOURCE_EXCLUSIONS = {'SHAPE_SRID', 'SHAPE_WKT'}
+        source_fields = set(source_df.columns.str.upper().tolist()) - SOURCE_EXCLUSIONS
+
+        # Get the list of fields from the target AGOL Layer
+        # Exclude AGOL internal/system fields that cannot be managed
+        AGOL_EXCLUSIONS = {'OBJECTID', 'SHAPE', 'GLOBALID', 'SHAPE__AREA', 'SHAPE__LENGTH'}
+        target_fields = set(
+            f['name'].upper() for f in target_layer.properties.fields
+        ) - AGOL_EXCLUSIONS
+
+        # Identify fields to add and/or fields to delete
+        fields_to_add = source_fields - target_fields
+        fields_to_delete = target_fields - source_fields
+        
+        print(f" - Source Columns: {source_fields}")
+        print(f" - Target Columns: {target_fields}")
+        
+        # Deleting Fields 
+        if fields_to_delete:
+            print(f" - Deleting fields: {fields_to_delete}")
+
+            # Construct the working payload: {"fields": [{"name": "FIELD1"}, {"name": "FIELD2"}]}
+            fields_to_delete_list = []
+            for field_name in fields_to_delete:
+                fields_to_delete_list.append({"name": field_name})
+
+            delete_field_payload = {"fields": fields_to_delete_list}
+            try:
+                delete_result = target_layer.manager.delete_from_definition(delete_field_payload)
+                if delete_result.get('success'):
+                    print(f" Successfully deleted fields: {fields_to_delete}")
+                else:
+                    print(f" Failed to delete fields: {fields_to_delete}. Result: {delete_result}")
+            except Exception as e:
+                 print(f" Error deleting fields: {e}")
+        else:
+            print("   - No fields to delete from AGOL feature service.")
+
+        # Adding Fields (using data type matching function)
+        if fields_to_add:
+            print(f" - Adding fields: {fields_to_add}")
+            
+            new_field_definitions = []
+            
+            for field_name in fields_to_add:
+                # Inspect the Pandas dtype of the column
+                pd_dtype = source_df[field_name].dtype
+                
+                # Map the Pandas dtype to the AGOL type using the map_pandas_to_agol_type function
+                agol_type = map_pandas_to_agol_type(pd_dtype)
+                
+                field_def = {
+                    "name": field_name,
+                    "type": agol_type,
+                    "alias": field_name.title()
+                }
+                
+                # Add 'length' only for string fields
+                if agol_type == "esriFieldTypeString":
+                    field_def["length"] = 255 # Safe default string field length
+                    
+                new_field_definitions.append(field_def)
+                print(f" - Preparing to add '{field_name}' (Pandas dtype: {pd_dtype}) as {agol_type}")
+                
+            add_field_payload = {"fields": new_field_definitions}
+            
+            try:
+                add_result = target_layer.manager.add_to_definition(add_field_payload)
+                if add_result.get('success'):
+                    print(f" Successfully added fields: {fields_to_add}")
+                else:
+                    print(f" Failed to add fields: {fields_to_add}. Result: {add_result}")
+            except Exception as e:
+                print(f" Error adding fields: {e}")
+        else:
+            print("   - No fields to add to AGOL feature service.")
+
+        print("  - Finished field/schema comparison and update logic.")
+
+
         # Create spatially enabled dataframe
         print("  - Converting WKT to geometry using Shapely...")
         sedf = source_df.copy()
 
-        # Get SRID from Oracle data
+        # Get SRID for Oracle data
         oracle_srid = sedf.SHAPE_SRID.unique()[0]
-
+        
         # For each WKT string, load it with Shapely, get its standard geo_interface,
         # and create an arcgis.geometry.Geometry object from that
         # Use Oracle SRID to set spatial reference
@@ -144,95 +244,38 @@ for index, layer_row in df_layers.iterrows():
         )
         
         # Drop well known text column
-        sedf.drop('SHAPE_WKT', axis = 1, inplace = True)
+        sedf.drop(['SHAPE_WKT','SHAPE_SRID'], axis = 1, inplace = True)
+        
+        # Project to wkid of AGOL feature layer
+        sedf.spatial.project(latest_wkid)
 
-        # Convert sedf to a geopandas dataframe 
-        gdf = gpd.GeoDataFrame(sedf, geometry='SHAPE', crs=f'EPSG:{oracle_srid}')
+        # Access the FeatureLayer object from AGOL
+        # Get a count of features
+        feature_count = target_layer.query(return_count_only = True)
+        print(f"Checking layer... Found {feature_count} features.")
 
-        # Remove the shape_srid column that is automatically created by geopandas
-        if 'SHAPE_SRID' in gdf.columns:
-            gdf = gdf.drop(columns=['SHAPE_SRID'])
+        # Delete data in layer
+        if feature_count > 0:
+            print("  - Deleting existing features...")
+            delete_result = target_layer.delete_features(where = '1=1')
+            print("Successfully deleted features.")
+        
+        else:
+            print("Layer is already empty. No features to delete.")
+        
+        # Add the new features from Spatially Enabled DataFrame
+        print(f"  - Adding {len(sedf)} new features...")
+        add_result = target_layer.edit_features(adds = sedf)
 
-        # Create a file geodatabase from geopandas dataframe
-        # Create within the gdb folder
-        gdf.to_file(
-            filename= f"{fgdb_folder}/{service_name}.gdb",
-            layer = table_name,
-            driver = "OpenFileGDB"
-        )
+        # Check if the add operation was successful
+        add_errors = [res for res in add_result['addResults'] if not res['success']]
+        if not add_errors:
+            print(f"  - Successfully added new features to '{table_name}'.\n")
+        else:
+            print("Failed to add some or all features.")
+            print(f"Errors: {add_errors}\n")
 
     except Exception as e:
         print(f"An unhandled error occurred for layer '{layer_row.get('layer_name', 'N/A')}': {e}\n")
 
-# ZIP COMPLETED FILE GEODATABASES AND OVERWRITE AGOL HOSTED FEATURE SERVICES
-
-if not os.path.exists(fgdb_folder):
-    print(f"Error: The directory '{fgdb_folder}' was not found. Cannot proceed with update.")
-else:
-    # Iterate through all items in the 'gdb' directory
-    for item_name in os.listdir(fgdb_folder):
-        if item_name.endswith(".gdb") and os.path.isdir(os.path.join(fgdb_folder, item_name)):
-            fgdb_name = item_name                      # ex.'ServiceA.gdb'
-            service_name_base = fgdb_name.split('.')[0] # ex. 'ServiceA'
-            fgdb_path = os.path.join(fgdb_folder, fgdb_name)
-            
-            try:
-                print(f"\nProcessing File Geodatabase: {fgdb_name}")
-
-                # Get the row in df_layers that corresponds to the feature service
-                service_row = df_layers[df_layers['service_name'] == service_name_base].iloc[0]
-                # Retrieve feature service file id
-                service_item_id = service_row['file_id'] 
-                
-                # Zip the FGDB
-                zip_filename = service_name_base + '.zip'
-                zip_filepath = os.path.join(fgdb_folder, zip_filename)
-                base_dir = fgdb_folder # 'gdf'
-                
-                print(f" - Starting compression for: {fgdb_name}")
-                with zipfile.ZipFile(zip_filepath, 'w', zipfile.ZIP_DEFLATED) as zf:
-                    # Walk the FGDB folder to add contents recursively
-                    for root, dirs, files in os.walk(fgdb_path):
-                        # Determine the relative path inside the zip file
-                        archive_root = os.path.relpath(root, base_dir)
-                        for file in files:
-                            full_path = os.path.join(root, file)
-                            archive_path = os.path.join(archive_root, file)
-                            zf.write(full_path, archive_path)
-                
-                print(f" - Successfully created zip file: {zip_filepath}")
-
-                # Update the AGOL hosted feature service 
-                # Get the Item object for the service
-                service_item = gis.content.get(service_item_id)
-
-                # Get the feature layer collection from the service item
-                flc = FeatureLayerCollection.fromitem(service_item)
-                
-                # Use the overwrite method to update the data
-                print(f" - Uploading zip and overwriting data for Item ID: {service_item_id}")
-                update_result = flc.manager.overwrite(zip_filepath)
-                
-                # Print success or failure message
-                if update_result.get('success'):
-                    print(" Success: Hosted Feature Service updated successfully.")
-                else:
-                    print(f" Failed: Update failed. Messages: {update_result.get('messages')}")
-
-                # Clean up temporary files
-                print("- Cleaning up temporary FGDB and zip file.")
-                if os.path.exists(fgdb_path):
-                    shutil.rmtree(fgdb_path) # Remove the .gdb directory
-                if os.path.exists(zip_filepath):
-                    os.remove(zip_filepath)  # Remove the .zip file
-
-            except IndexError:
-                print(f" - WARNING: Could not find matching AGOL service ID for service name '{service_name_base}'. Skipping update.")
-            except Exception as e:
-                print(f" - An unhandled error occurred for FGDB '{fgdb_name}': {e}")
-
-# Final cleanup of the parent directory if empty
-if os.path.exists(fgdb_folder) and not os.listdir(fgdb_folder):
-    os.rmdir(fgdb_folder)
-
-print("\nScript finished. All AGOL feature service data was updated.")
+print("Script finished. All AGOL feature layer data was updated.")
