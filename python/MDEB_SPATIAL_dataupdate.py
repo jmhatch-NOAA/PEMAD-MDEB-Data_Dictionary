@@ -87,16 +87,36 @@ with engine.connect() as connection:
             df = pd.read_sql_query(query, con = connection)
             if df.shape_srid.all() != True:
                 warnings.warn(f"SHAPE column in the DataFrame contains multiple SRID values.")
+
+            # Order and organize columns consistenly
+            # Convert columns to uppercase immediately for consistent processing
+            df.columns = [col.upper() for col in df.columns]
+
+            # Define the columns to be placed first
+            first_columns = ['OID', 'SURVEY_NAME']
+
+            # Get the remaining columns, excluding the first two
+            all_columns = df.columns.tolist()
+            remaining_columns = [col for col in all_columns if col not in first_columns]
+
+            # Sort the remaining columns alphabetically
+            remaining_columns.sort()
+
+            # Create the final desired column order
+            final_column_order = first_columns + remaining_columns
+
+            # Reindex the DataFrame to apply the new column order
+            df = df.reindex(columns=final_column_order)
             dataframes[table_name] = df
             print(f"  Successfully loaded '{table_name}'")
 
         except Exception as e:
             print(f" FAILED to load table '{table_name}': {e}")
 
- # Make all dataframes and columns in dataframes uppercase
+ # Make all dataframes uppercase
  # This is how everything is named in AGOL
 upper_dataframes = {
-    key.upper(): df.rename(columns = str.upper) 
+    key.upper(): df 
     for key, df in dataframes.items()
 }
 print("Converted all data table names and columns to uppercase.")
