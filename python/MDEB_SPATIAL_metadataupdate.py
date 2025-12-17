@@ -80,7 +80,10 @@ with tempfile.NamedTemporaryFile(mode = "w+", delete = False, suffix = ".xml") a
       tags = result.tags.iloc[0].split(', ')
       credits = result.useterms.iloc[0]
       pub_date = result.publish_date.iloc[0]
-      meta_contact = result.meta_contact_name.iloc[0]
+      poc_name = result.contact_name.iloc[0]
+      poc_title = result.contact_title.iloc[0]
+      poc_email = result.contact_email.iloc[0]
+      meta_name = result.meta_contact_name.iloc[0]
       meta_title = result.meta_contact_title.iloc[0]
       meta_email = result.meta_contact_email.iloc[0]
       source = result.source.iloc[0]
@@ -142,11 +145,18 @@ with tempfile.NamedTemporaryFile(mode = "w+", delete = False, suffix = ".xml") a
     # update use terms
     constraint_element = root.find(".//dataIdInfo/resConst/Consts/useLimit")
     constraint_element.text = useterms
+    # update POC contact info
+    poc_email_element = root.find(".//dataIdInfo/idPoC/rpCntInfo/cntAddress/eMailAdd")
+    poc_email_element.text = poc_email
+    poc_contact_element = root.find(".//dataIdInfo/idPoC/rpIndName")
+    poc_contact_element.text = poc_name
+    poc_title_element = root.find(".//dataIdInfo/idPoC/rpPosName")
+    poc_title_element.text = poc_title 
     # update metadata contact info
-    email_element = root.find(".//mdContact/rpCntInfo/cntAddress/eMailAdd")
-    email_element.text = meta_email
-    contact_element = root.find(".//mdContact/rpIndName")
-    contact_element.text = meta_contact
+    meta_email_element = root.find(".//mdContact/rpCntInfo/cntAddress/eMailAdd")
+    meta_email_element.text = meta_email
+    meta_contact_element = root.find(".//mdContact/rpIndName")
+    meta_contact_element.text = meta_name
     meta_title_element = root.find(".//mdContact/rpPosName")
     meta_title_element.text = meta_title 
   
@@ -156,7 +166,7 @@ with tempfile.NamedTemporaryFile(mode = "w+", delete = False, suffix = ".xml") a
     
     # get name of temp file
     xml_metadata = temp_file.name
-    
+
     # get arcgis online item using file id
     item = gis.content.get(file_ID)
     # update metadata for feature service item 
