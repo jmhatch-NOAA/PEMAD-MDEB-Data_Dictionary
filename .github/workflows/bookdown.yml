@@ -1,5 +1,7 @@
 # build bookdown
 on:
+  repository_dispatch:
+    types: [trigger-rebuild]
   push:
     paths:
       - 'bookdown/**'
