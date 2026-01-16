@@ -6,7 +6,7 @@ on:
     paths:
       - 'bookdown/**'
 
-name: build-book
+name: Build book
 jobs:
   build-book:
     env:

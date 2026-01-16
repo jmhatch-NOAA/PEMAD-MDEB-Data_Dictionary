@@ -20,7 +20,7 @@ inport_href = pam_meta$serviceDescription |>
   rvest::html_attr('href')
 
 # description
-pam_desc = gsub('<a href=\"https://www.fisheries.noaa.gov/inport/item/76232\">Passive Acoustic Monitoring InPort Metadata</a><br>', '', pam_meta$serviceDescription)
+pam_desc = gsub('<a href=\"https://www.fisheries.noaa.gov/inport/item/76232\">Passive Acoustic Monitoring Survey InPort Metadata</a><br>', '', pam_meta$serviceDescription)
 pam_desc = gsub("<p>|<br>|</p>|\\n", '', pam_desc)
 
 # only grab the 1st two sentences

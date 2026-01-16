@@ -84,8 +84,9 @@ gombll_fields = purrr::map(.x = 1:nrow(gombll_layers ), .f = function(.x) {
   
   # format description
   gombll_fields = gombll_fields |>
-    dplyr::mutate(description =   gsub("value:(.+),fieldValueType.*", "\\1", gsub('\"|\\{', '', description))) |>
-    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+    dplyr::rowwise() |>
+    dplyr::mutate(description = ifelse(is.na(description), NA, jsonlite::fromJSON(description)$value)) |> 
+    dplyr::filter(!name %in% c('OBJECTID', 'SHAPE__Area', 'SHAPE__Length'))
   
   # output
   cat('\n####', gombll_layers$name[.x], '\n')

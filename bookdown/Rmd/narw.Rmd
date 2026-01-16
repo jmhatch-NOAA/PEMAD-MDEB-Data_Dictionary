@@ -84,8 +84,9 @@ narw_fields = purrr::map(.x = 1:nrow(narw_layers ), .f = function(.x) {
   
   # format description
   narw_fields = narw_fields |>
-    dplyr::mutate(description = gsub(':|\\"', '', stringr::str_extract(description, ':\\s*([^,]+)'))) |>
-    dplyr::filter(!name %in% c('Shape__Area', 'Shape__Length'))
+    dplyr::rowwise() |>
+    dplyr::mutate(description = ifelse(is.na(description), NA, jsonlite::fromJSON(description)$value)) |> 
+    dplyr::filter(!name %in% c('OBJECTID', 'SHAPE__Area', 'SHAPE__Length'))
   
   # output
   cat('\n####', narw_layers$name[.x], '\n')
