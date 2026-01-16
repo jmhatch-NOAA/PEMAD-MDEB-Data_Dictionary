@@ -9,8 +9,8 @@ description
 spatial-extent
 layers
 fields
-smit_sc_strata
 smit_oq_strata
+smit_sc_strata
 edna-survey
 arcgis-feature-service-1
 inport-metadata-1
@@ -35,8 +35,8 @@ description-3
 spatial-extent-3
 layers-3
 fields-3
-smit_gombll_substrata
 smit_gombll_strata
+smit_gombll_substrata
 sea-scallop-survey
 arcgis-feature-service-4
 inport-metadata-4
